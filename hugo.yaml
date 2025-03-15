@@ -1,0 +1,97 @@
+baseURL: https://oNya685.github.io/
+languageCode: 'zh-cn'
+title: oNya's Blog
+theme: PaperMod
+
+params:
+  env: production
+  title: oNya's Blog
+  description: Explore
+  author: oNya
+  DateFormat: 2006年1月2日
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowCodeCopyButtons: true
+  ShowFullTextinRSS: true
+  defaultTheme: auto
+  disableThemeToggle: false
+  disableSpecial1stPost: false
+  disableScrollToTop: false
+  disableAnchoredHeadings: false
+  hideMeta: false
+  hideSummary: false
+  showtoc: true
+  tocopen: false
+  ShowPostNavLinks: false
+  ShowBreadCrumbs: true
+  ShareButtons: false
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: true
+  UseHugoToc: false
+  comments: true
+  hideFooter: false
+  CanonicalLinkText: 点击跳转
+  displayFullLangName: false
+  label:
+    text: 主页 | oNya's Blog
+    icon: '#'
+  homeInfoParams:
+    Title: oNya
+    Content: >
+      👋 Hello there! 
+      
+      - **・** I'm **oNya**, currently pursuing my education in Computer Science at [Beihang University](https://buaa.edu.cn/) in Beijing.
+      
+      - **・** Hope I can be of assistance to you.
+
+  socialIcons:
+    - name: GitHub
+      title: "GitHub/oNya685"
+      url: "https://github.com/oNya685"
+    - name: Email
+      title: Contact Me
+      url: "mailto:oNya685@outlook.com"
+    - name: QQ
+      title: Access Me
+      url: "https://qm.qq.com/q/uhHIqz9hV6"
+
+menu:
+  main:
+    - name: 归档
+      url: /archives/
+      weight: 10
+    - name: 分类
+      url: /categories/
+      weight: 20
+    - name: 标签
+      url: /tags/
+      weight: 30
+    - name: 链接
+      url: /links/
+      weight: 40
+    - name: 搜索
+      url: /search/
+      weight: 50
+
+enableEmoji: true
+enableInlineShortcodes: true
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+builfExpired: false
+hasCJKLanguage: true
+
+minify:
+  disableXML: true
+  minifyOutput: true
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
+    
+module:
+  mounts:
+  - source: content
+    target: content
