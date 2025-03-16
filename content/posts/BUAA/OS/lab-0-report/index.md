@@ -21,7 +21,7 @@ ShowRssButtonInSectionTermList: true
 ## Thinking 0.1
 
 > 思考下列有关Git的问题：
-> - 在前述已初始化的~/learnGit 目录下，创建一个名为README.txt的文件。执 行命令git status > Untracked.txt（其中的 > 为输出重定向，我们将在0.6.3中详细介绍）。
+> - 在前述已初始化的~/learnGit 目录下，创建一个名为README.txt的文件。执行命令git status > Untracked.txt（其中的 > 为输出重定向，我们将在0.6.3中详细介绍）。
 > - 在README.txt 文件中添加任意文件内容，然后使用add命令，再执行命令git status > Stage.txt。
 > - 提交README.txt，并在提交说明里写入自己的学号。
 > - 执行命令cat Untracked.txt 和cat Stage.txt，对比两次运行的结果，体会README.txt两次所处位置的不同。
@@ -278,7 +278,7 @@ echo 'echo $c>file1' >> test
 echo 'echo save b to ./file2' >> test
 echo 'echo $b>file2' >> test
 echo 'echo save a to ./file3' >> test
-echo 'echo $a>file3' >> test  # 注意此处逻辑错误，应为echo $a>file3
+echo 'echo $a>file3' >> test
 echo 'echo save file1 file2 file3 to file4' >> test
 echo 'cat file1>file4' >> test
 echo 'cat file2>>file4' >> test
