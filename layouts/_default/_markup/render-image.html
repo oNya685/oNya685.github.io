@@ -1,0 +1,34 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $src := $u.String -}}
+{{- $thumb := $src -}}
+{{- if not $u.IsAbs -}}
+    {{- $path := strings.TrimPrefix "./" $u.Path }}
+    {{- with or (.PageInner.Resources.Get $path) (resources.Get $path) -}}
+        {{- with .Process "webp" -}}
+            {{- $thumb = .RelPermalink -}}
+            {{- with $u.RawQuery -}}
+            {{- $thumb = printf "%s?%s" $thumb . -}}
+            {{- end -}}
+            {{- with $u.Fragment -}}
+            {{- $thumb = printf "%s#%s" $thumb . -}}
+            {{- end -}}
+        {{- end -}}
+    {{- else -}}
+        {{- $thumb = $src -}}
+    {{- end -}}
+{{- else -}}
+    {{- $thumb = $src -}}
+{{- end -}}
+
+{{- $attributes := merge .Attributes (dict "alt" .Text "src" $thumb "title" (.Title | transform.HTMLEscape) "loading" "lazy") -}}
+<div class="post-img-view">
+    <a data-fancybox="gallery"
+        {{ printf " href=%q" $src | safeHTMLAttr }}>
+        <img
+        {{- range $k, $v := $attributes -}}
+            {{- if $v -}}
+            {{- printf " %s=%q" $k $v | safeHTMLAttr -}}
+            {{- end -}}
+        {{- end -}}>
+    </a>
+</div>

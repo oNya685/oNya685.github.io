@@ -36,6 +36,7 @@ params:
     text: 主页 | oNya's Blog
     icon: '#'
   homeInfoParams:
+    enabled: true
     Title: oNya
     Content: >
       👋 Hello there! 
@@ -43,6 +44,10 @@ params:
       - **・** I'm **oNya**, currently pursuing my education in Computer Science at [Beihang University](https://buaa.edu.cn/) in Beijing.
       
       - **・** Hope I can be of assistance to you.
+    imageUrl: '/img/avatar.png'
+    imageTitle: oNya
+    imageWidth: 200
+    imageHeight: 200
 
   socialIcons:
     - name: GitHub
@@ -95,3 +100,7 @@ module:
   mounts:
   - source: content
     target: content
+  - source: assets
+    target: assets
+  - source: static
+    target: assets

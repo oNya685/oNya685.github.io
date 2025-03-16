@@ -1,0 +1,96 @@
+{{- with site.Params.homeInfoParams -}}
+<article class="first-entry home-info">
+    <div class="home-info-container">
+        {{- if .imageUrl -}}
+        <div class="home-info-avatar" style="--avatar-width: {{ .imageWidth | default 150 }}px;">
+            {{- $img := "" -}}
+            {{- if not (urls.Parse .imageUrl).IsAbs -}}
+                {{- $img = resources.Get .imageUrl -}}
+            {{- end -}}
+            {{- if $img -}}
+                {{- $src := $img.RelPermalink -}}
+                {{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "bmp" "gif") -}}
+                {{- if hugo.IsExtended -}}
+                    {{- $processableFormats = $processableFormats | append "webp" -}}
+                {{- end -}}
+                {{- $thumb := "" -}}
+                {{- with $img -}}
+                    {{- with .Process "webp" -}}
+                        {{- $thumb = .RelPermalink -}}
+                    {{- end -}}
+                {{- end -}}
+                <a data-fancybox="gallery" href="{{ $src }}">
+                    <img class="home-info-avatar-img" 
+                         src="{{ $thumb }}" 
+                         alt="{{ .imageTitle | default "avatar" }}"
+                         width="{{ .imageWidth | default 150 }}"
+                         height="{{ .imageHeight | default 150 }}"
+                         loading="lazy">
+                </a>
+            {{- else -}}
+                <img class="home-info-avatar-img" 
+                     src="{{ .imageUrl | absURL }}" 
+                     alt="{{ .imageTitle | default "avatar" }}"
+                     width="{{ .imageWidth | default 150 }}"
+                     height="{{ .imageHeight | default 150 }}"
+                     loading="lazy">
+            {{- end -}}
+        </div>
+        {{- end -}}
+
+        <div class="home-info-content">
+            <header class="entry-header">
+                <h1>{{ .Title | markdownify -}}</h1>
+            </header>
+            <div class="entry-content">
+                {{ .Content | markdownify -}}
+            </div>
+            <footer class="entry-footer">
+                {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) -}}
+            </footer>
+        </div>
+    </div>
+</article>
+
+<style>
+.home-info-container {
+    display: flex;
+    gap: 1rem;
+    max-width: var(--main-width);
+    margin: auto;
+    padding: 0;
+}
+
+.home-info-avatar {
+    flex: 0 var(--avatar-width);
+    padding: 0.5rem 0;
+}
+
+.home-info-avatar-img {
+    border-radius: 8px;
+    object-fit: cover;
+    aspect-ratio: 1;
+    width: 100%;
+    height: auto;
+}
+
+.home-info-content {
+    flex: 1;
+}
+
+@media (max-width: 640px) {
+    .home-info-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0;
+    }
+    
+    .home-info-avatar {
+        flex: 1;
+        max-width: var(--avatar-width);
+        padding: 0;
+    }
+}
+</style>
+{{- end -}}

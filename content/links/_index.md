@@ -15,5 +15,3 @@ ShowWordCount: false
 ShowRssButtonInSectionTermList: false
 
 ---
-
-layout: list
