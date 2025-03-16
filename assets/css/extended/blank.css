@@ -79,10 +79,10 @@
 /* 文章目录放在侧边的css 结束 */
 
 body {
-    font-family: "Ubuntu", "WenQuanYi Micro Hei", sans-serif;
+    font-family: "Ubuntu", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 
-code {
-    font-family: "Ubuntu Mono", "WenQuanYi Micro Hei Mono", monospace, sans-serif;
-    font-optical-sizing: auto;
+.post-content code {
+    font-family: "Ubuntu Mono", "Microsoft YaHei", "WenQuanYi Micro Hei Mono", monospace, sans-serif;
+    font-size: 16px;
 }
