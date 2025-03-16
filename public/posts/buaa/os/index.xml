@@ -16,14 +16,14 @@
       <description>&lt;h1 id=&#34;一思考题&#34;&gt;一、思考题&lt;/h1&gt;
 &lt;h2 id=&#34;thinking-01&#34;&gt;Thinking 0.1&lt;/h2&gt;
 &lt;blockquote&gt;
-&lt;p&gt;思考下列有关 Git 的问题：&lt;/p&gt;
+&lt;p&gt;思考下列有关Git的问题：&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;在前述已初始化的~/learnGit 目录下，创建一个名为 README.txt 的文件。执 行命令git status &amp;gt; Untracked.txt（其中的 &amp;gt; 为输出重定向，我们将在 0.6.3 中 详细介绍）。&lt;/li&gt;
-&lt;li&gt;在README.txt 文件中添加任意文件内容，然后使用 add 命令，再执行命令 git status &amp;gt; Stage.txt。&lt;/li&gt;
+&lt;li&gt;在前述已初始化的~/learnGit 目录下，创建一个名为README.txt的文件。执 行命令git status &amp;gt; Untracked.txt（其中的 &amp;gt; 为输出重定向，我们将在0.6.3中详细介绍）。&lt;/li&gt;
+&lt;li&gt;在README.txt 文件中添加任意文件内容，然后使用add命令，再执行命令git status &amp;gt; Stage.txt。&lt;/li&gt;
 &lt;li&gt;提交README.txt，并在提交说明里写入自己的学号。&lt;/li&gt;
-&lt;li&gt;执行命令cat Untracked.txt 和 cat Stage.txt，对比两次运行的结果，体会 README.txt 两次所处位置的不同。&lt;/li&gt;
+&lt;li&gt;执行命令cat Untracked.txt 和cat Stage.txt，对比两次运行的结果，体会README.txt两次所处位置的不同。&lt;/li&gt;
 &lt;li&gt;修改README.txt 文件，再执行命令git status &amp;gt; Modified.txt。&lt;/li&gt;
-&lt;li&gt;执行命令cat Modified.txt，观察其结果和第一次执行 add 命令之前的 status 是 否一样，并思考原因。&lt;/li&gt;
+&lt;li&gt;执行命令cat Modified.txt，观察其结果和第一次执行add命令之前的status是否一样，并思考原因。&lt;/li&gt;
 &lt;/ul&gt;&lt;/blockquote&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;1-untrackedtxt&#34;&gt;1. Untracked.txt&lt;/h3&gt;
@@ -39,14 +39,14 @@
       <content:encoded><![CDATA[<h1 id="一思考题">一、思考题</h1>
 <h2 id="thinking-01">Thinking 0.1</h2>
 <blockquote>
-<p>思考下列有关 Git 的问题：</p>
+<p>思考下列有关Git的问题：</p>
 <ul>
-<li>在前述已初始化的~/learnGit 目录下，创建一个名为 README.txt 的文件。执 行命令git status &gt; Untracked.txt（其中的 &gt; 为输出重定向，我们将在 0.6.3 中 详细介绍）。</li>
-<li>在README.txt 文件中添加任意文件内容，然后使用 add 命令，再执行命令 git status &gt; Stage.txt。</li>
+<li>在前述已初始化的~/learnGit 目录下，创建一个名为README.txt的文件。执 行命令git status &gt; Untracked.txt（其中的 &gt; 为输出重定向，我们将在0.6.3中详细介绍）。</li>
+<li>在README.txt 文件中添加任意文件内容，然后使用add命令，再执行命令git status &gt; Stage.txt。</li>
 <li>提交README.txt，并在提交说明里写入自己的学号。</li>
-<li>执行命令cat Untracked.txt 和 cat Stage.txt，对比两次运行的结果，体会 README.txt 两次所处位置的不同。</li>
+<li>执行命令cat Untracked.txt 和cat Stage.txt，对比两次运行的结果，体会README.txt两次所处位置的不同。</li>
 <li>修改README.txt 文件，再执行命令git status &gt; Modified.txt。</li>
-<li>执行命令cat Modified.txt，观察其结果和第一次执行 add 命令之前的 status 是 否一样，并思考原因。</li>
+<li>执行命令cat Modified.txt，观察其结果和第一次执行add命令之前的status是否一样，并思考原因。</li>
 </ul></blockquote>
 <hr>
 <h3 id="1-untrackedtxt">1. Untracked.txt</h3>
@@ -89,7 +89,8 @@
 </span></span></code></pre></div><p><code>README.txt</code>经暂存和提交后处于Unmodified状态，修改文件内容使其进入Modified状态等待暂存。</p>
 <h2 id="thinking-02">Thinking 0.2</h2>
 <blockquote>
-<p>仔细看看<a href="%E5%9B%BE%200.10%20-%20Git%20%E4%B8%AD%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%85%B3%E7%B3%BB.png">0.10</a>，思考一下箭头中的add the file、stage the file和 commit分别对应的是Git里的哪些命令呢？</p>
+<p>仔细看看<a href="%e5%9b%be%200.10%20-%20Git%20%e4%b8%ad%e7%9a%84%e5%9b%9b%e7%a7%8d%e7%8a%b6%e6%80%81%e8%bd%ac%e6%8d%a2%e5%85%b3%e7%b3%bb.png" target="_blank">0.10</a>
+，思考一下箭头中的add the file、stage the file和commit分别对应的是Git里的哪些命令呢？</p>
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="%E5%9B%BE%200.10%20-%20Git%20%E4%B8%AD%E7%9A%84%E5%9B%9B%E7%A7%8D%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E5%85%B3%E7%B3%BB.png">
@@ -107,17 +108,17 @@
 <blockquote>
 <p>思考下列问题：</p>
 <ol>
-<li>代码文件 print.c 被错误删除时，应当使用什么命令将其恢复？</li>
-<li>代码文件 print.c 被错误删除后，执行了 git rm print.c 命令，此时应当使用什么命令将其恢复？</li>
-<li>无关文件 hello.txt 已经被添加到暂存区时，如何在不删除此文件的前提下将其移出暂存区？</li>
+<li>代码文件print.c被错误删除时，应当使用什么命令将其恢复？</li>
+<li>代码文件print.c被错误删除后，执行了git rm print.c命令，此时应当使用什么命令将其恢复？</li>
+<li>无关文件hello.txt已经被添加到暂存区时，如何在不删除此文件的前提下将其移出暂存区？</li>
 </ol></blockquote>
 <h3 id="1-代码文件-printc-被错误删除时应当使用什么命令将其恢复">1. 代码文件 print.c 被错误删除时，应当使用什么命令将其恢复？</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git restore print.c
-</span></span></code></pre></div><p>print.c 尚未执行<code>git add</code>，故可以从暂存区将 print.c 恢复到工作区中。</p>
+</span></span></code></pre></div><p>print.c 尚未执行<code>git add</code>，故可以从暂存区将print.c恢复到工作区中。</p>
 <h3 id="2-代码文件-printc-被错误删除后执行了-git-rm-printc-命令此时应当使用什么命令将其恢复">2. 代码文件 print.c 被错误删除后，执行了 git rm print.c 命令，此时应当使用什么命令将其恢复？</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git reset HEAD print.c
 </span></span><span style="display:flex;"><span>git restore print.c
-</span></span></code></pre></div><p>首先撤销暂存区的修改（删除了 print.c ），然后将 print.c 从暂存区恢复到工作区。</p>
+</span></span></code></pre></div><p>首先撤销暂存区的修改（删除了print.c），然后将print.c从暂存区恢复到工作区。</p>
 <h3 id="3-无关文件-hellotxt-已经被添加到暂存区时如何在不删除此文件的前提下将其移出暂存区">3. 无关文件 hello.txt 已经被添加到暂存区时，如何在不删除此文件的前提下将其移出暂存区？</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git reset HEAD hello.txt
 </span></span></code></pre></div><p>撤销暂存区的修改，把暂存区恢复到执行<code>git add</code>之前的状态。</p>
@@ -167,7 +168,7 @@
 </span></span><span style="display:flex;"><span>Date:   Tue Mar <span style="color:#ae81ff">11</span> 19:08:12 <span style="color:#ae81ff">2025</span> +0800
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span>
-</span></span></code></pre></div><p>变化：当前 Git 仓库的状态回到了<code>2</code>。</p>
+</span></span></code></pre></div><p>变化：当前Git仓库的状态回到了<code>2</code>。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$  git reset --hard 3f8eb4043efae29bbb9eb626444f955a825f3535
 </span></span><span style="display:flex;"><span>HEAD 现在位于 3f8eb40 <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span>$  git log
@@ -176,7 +177,7 @@
 </span></span><span style="display:flex;"><span>Date:   Tue Mar <span style="color:#ae81ff">11</span> 19:08:12 <span style="color:#ae81ff">2025</span> +0800
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span>
-</span></span></code></pre></div><p>变化：当前 Git 仓库的状态回到了<code>1</code>。</p>
+</span></span></code></pre></div><p>变化：当前Git仓库的状态回到了<code>1</code>。</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$  git reset --hard a6ebe244272dd6bcb1f57ba9af3c957f3e7235b3
 </span></span><span style="display:flex;"><span>HEAD 现在位于 a6ebe24 <span style="color:#ae81ff">3</span>
 </span></span><span style="display:flex;"><span>$  git log
@@ -197,7 +198,7 @@
 </span></span><span style="display:flex;"><span>Date:   Tue Mar <span style="color:#ae81ff">11</span> 19:08:12 <span style="color:#ae81ff">2025</span> +0800
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#ae81ff">1</span>
-</span></span></code></pre></div><p>变化：当前 Git 仓库的状态回到了<code>3</code>。</p>
+</span></span></code></pre></div><p>变化：当前Git仓库的状态回到了<code>3</code>。</p>
 <h2 id="thinking-05">Thinking 0.5</h2>
 <blockquote>
 <p>执行如下命令, 并查看结果</p>
@@ -219,7 +220,7 @@
 </span></span><span style="display:flex;"><span>forth
 </span></span></code></pre></div><h2 id="thinking-06">Thinking 0.6</h2>
 <blockquote>
-<p>使用你知道的方法（包括重定向）创建下图内容的文件（文件命名为 test），将创建该文件的命令序列保存在 command 文件中，并将 test 文件作为批处理文件运行，将运行结果输出至 result 文件中。给出 command 文件和 result 文件的内容，并对最后的结果进行解释说明（可以从 test 文件的内容入手）. 具体实现的过程中思考下列问题: echo echo Shell Start 与 echo `echo Shell Start` 效果是否有区别; echo echo $c&gt;file1 与 echo `echo $c&gt;file1` 效果是否有区别.</p></blockquote>
+<p>使用你知道的方法（包括重定向）创建下图内容的文件（文件命名为 test），将创建该文件的命令序列保存在command文件中，并将test文件作为批处理文件运行，将运行结果输出至result文件中。给出command文件和result文件的内容，并对最后的结果进行解释说明（可以从test文件的内容入手）。具体实现的过程中思考下列问题: echo echo Shell Start 与 echo `echo Shell Start` 效果是否有区别; echo echo $c&gt;file1 与 echo `echo $c&gt;file1` 效果是否有区别.</p></blockquote>
 <hr>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span><span style="color:#75715e"># command</span>
 </span></span><span style="display:flex;"><span>echo <span style="color:#e6db74">&#39;echo Shell Start...&#39;</span> &gt; test
@@ -322,8 +323,9 @@
 </span></span><span style="display:flex;"><span>make -C code fibo.o
 </span></span></code></pre></div><hr>
 <h1 id="三原创说明">三、原创说明</h1>
-<p>在本次实验中，对工具链的使用参考了官方 manual 和<code>--help</code>参数。</p>
-<p>在 Neovim 和 LazyVim 的安装与配置中，参考了<a href="https://blog.csdn.net/m0_60670525/article/details/136329707">如何在Ubuntu上安装最新版本的Neovim并快速配置_ubuntu安装neovim-CSDN博客</a></p>
+<p>在本次实验中，对工具链的使用参考了官方manual和<code>--help</code>参数。</p>
+<p>在Neovim和LazyVim的安装与配置中，参考了<a href="https://blog.csdn.net/m0_60670525/article/details/136329707" target="_blank">如何在Ubuntu上安装最新版本的Neovim并快速配置_ubuntu安装neovim-CSDN博客</a>
+</p>
 <div class="footnotes" role="doc-endnotes">
 <hr>
 <ol>
@@ -339,43 +341,45 @@
       <link>https://oNya685.github.io/posts/buaa/os/homework-1/</link>
       <pubDate>Sun, 16 Mar 2025 11:19:17 +0800</pubDate>
       <guid>https://oNya685.github.io/posts/buaa/os/homework-1/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;%E4%BD%9C%E4%B8%9A1.pdf&#34;&gt;点此查看作业源文件&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;h1 id=&#34;1-什么是多道程序设计多道程序设计与分时系统的区别是什么&#34;&gt;1. 什么是多道程序设计？多道程序设计与分时系统的区别是什么？&lt;/h1&gt;
-&lt;p&gt;多道程序设计技术，是指允许多个程序同时进⼊内存并运⾏。即同时把多个程序放⼊内存中，并允许它们交替在 CPU 中运⾏，共享系统中的各种硬、软件资源，当⼀道程序因 I/O 请求⽽暂停运⾏时，CPU 便⽴即转去运⾏另⼀道程序。多道程序设计技术提⾼了 CPU、I/O 设备和内存的利⽤率，从⽽提⾼了整个系统的资源利⽤率和系统吞吐量，最终提⾼了整个系统的效率。&lt;/p&gt;</description>
-      <content:encoded><![CDATA[<p><strong><a href="%E4%BD%9C%E4%B8%9A1.pdf">点此查看作业源文件</a></strong></p>
-<h1 id="1-什么是多道程序设计多道程序设计与分时系统的区别是什么">1. 什么是多道程序设计？多道程序设计与分时系统的区别是什么？</h1>
-<p>多道程序设计技术，是指允许多个程序同时进⼊内存并运⾏。即同时把多个程序放⼊内存中，并允许它们交替在 CPU 中运⾏，共享系统中的各种硬、软件资源，当⼀道程序因 I/O 请求⽽暂停运⾏时，CPU 便⽴即转去运⾏另⼀道程序。多道程序设计技术提⾼了 CPU、I/O 设备和内存的利⽤率，从⽽提⾼了整个系统的资源利⽤率和系统吞吐量，最终提⾼了整个系统的效率。</p>
-<p>多道程序设计与分时系统的区别在于：多道程序设计主要关注的是如何让多个程序在内存中同时存在并交替执⾏，以提⾼资源利⽤率。分时系统则是在多道程序设计的基础上进⼀步发展，它不仅允许多个程序并发执⾏，还通过时间⽚轮转的⽅式为每个⽤户分配 CPU 时间，使得多个⽤户可以⼏乎同时使⽤计算机，提供交互式服务。</p>
-<h1 id="2-什么原因推动了操作系统从批处理发展到多道程序进而发展到分时系统">2. 什么原因推动了操作系统从批处理发展到多道程序，进而发展到分时系统？</h1>
-<p>批处理系统的运⾏效率被低速 I/O 设备限制，CPU 空闲时间多，利⽤率低，因此发展出多道程序系统；</p>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;%e4%bd%9c%e4%b8%9a1.pdf&#34; target=&#34;_blank&#34;&gt;点此查看作业源文件&lt;/a&gt;
+&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;1什么是多道程序设计多道程序设计与分时系统的区别是什么&#34;&gt;1.什么是多道程序设计？多道程序设计与分时系统的区别是什么？&lt;/h1&gt;
+&lt;p&gt;多道程序设计技术，是指允许多个程序同时进⼊内存并运⾏。即同时把多个程序放⼊内存中，并允许它们交替在CPU中运⾏，共享系统中的各种硬、软件资源，当⼀道程序因I/O请求⽽暂停运⾏时，CPU便⽴即转去运⾏另⼀道程序。多道程序设计技术提⾼了CPU、I/O设备和内存的利⽤率，从⽽提⾼了整个系统的资源利⽤率和系统吞吐量，最终提⾼了整个系统的效率。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p><strong><a href="%e4%bd%9c%e4%b8%9a1.pdf" target="_blank">点此查看作业源文件</a>
+</strong></p>
+<h1 id="1什么是多道程序设计多道程序设计与分时系统的区别是什么">1.什么是多道程序设计？多道程序设计与分时系统的区别是什么？</h1>
+<p>多道程序设计技术，是指允许多个程序同时进⼊内存并运⾏。即同时把多个程序放⼊内存中，并允许它们交替在CPU中运⾏，共享系统中的各种硬、软件资源，当⼀道程序因I/O请求⽽暂停运⾏时，CPU便⽴即转去运⾏另⼀道程序。多道程序设计技术提⾼了CPU、I/O设备和内存的利⽤率，从⽽提⾼了整个系统的资源利⽤率和系统吞吐量，最终提⾼了整个系统的效率。</p>
+<p>多道程序设计与分时系统的区别在于：多道程序设计主要关注的是如何让多个程序在内存中同时存在并交替执⾏，以提⾼资源利⽤率。分时系统则是在多道程序设计的基础上进⼀步发展，它不仅允许多个程序并发执⾏，还通过时间⽚轮转的⽅式为每个⽤户分配CPU时间，使得多个⽤户可以⼏乎同时使⽤计算机，提供交互式服务。</p>
+<h1 id="2什么原因推动了操作系统从批处理发展到多道程序进而发展到分时系统">2.什么原因推动了操作系统从批处理发展到多道程序，进而发展到分时系统？</h1>
+<p>批处理系统的运⾏效率被低速I/O设备限制，CPU空闲时间多，利⽤率低，因此发展出多道程序系统；</p>
 <p>多道程序系统平均周转时间⻓，不能提供交互作⽤能⼒，因此发展出允许多个⽤户共享计算机，多个程序分时共享硬、软件资源的分时系统。</p>
-<h1 id="3-什么是陷阱与中断的区别是什么什么是系统调用">3. 什么是陷阱？与中断的区别是什么？什么是系统调用？</h1>
+<h1 id="3什么是陷阱与中断的区别是什么什么是系统调用">3.什么是陷阱？与中断的区别是什么？什么是系统调用？</h1>
 <p>陷阱是⼀种同步异常，是程序内部有意设置的某⼀特定指令执⾏的结果，例如系统调⽤。陷阱是程序执⾏过程中预期的⾏为，可以复现，⽤于请求操作系统提供服务等。</p>
-<p>中断是⼀种异步异常，通常由外部事件（I/O 设备、处理器时钟或定时器）触发，与处理器正在执⾏的内容⽆关。中断是不可预测的，⽤于处理外部事件。</p>
+<p>中断是⼀种异步异常，通常由外部事件（I/O设备、处理器时钟或定时器）触发，与处理器正在执⾏的内容⽆关。中断是不可预测的，⽤于处理外部事件。</p>
 <p>系统调⽤是⽤户程序与操作系统内核之间的接⼝，允许⽤户程序请求操作系统提供的服务。系统调⽤本质上是⼀种同步异常，或陷阱，⽤于安全地进⼊内核模式并执⾏特权操作。</p>
-<h1 id="4-判断可移植的操作系统可以从一个系统架构移植到另外一个系统架构而无需修改">4. 判断：可移植的操作系统可以从一个系统架构移植到另外一个系统架构而无需修改。</h1>
+<h1 id="4判断可移植的操作系统可以从一个系统架构移植到另外一个系统架构而无需修改">4.判断：可移植的操作系统可以从一个系统架构移植到另外一个系统架构而无需修改。</h1>
 <p>错误。不同系统架构之间存在指令集差异、内存管理方式不同、硬件寄存器配置不一致等根本性区别，操作系统必须针对这些硬件特性进行调整。</p>
-<h2 id="1-请解释为什么构建完全可移植的-os-是不可能的">(1) 请解释为什么构建完全可移植的 OS 是不可能的？</h2>
+<h2 id="1请解释为什么构建完全可移植的os是不可能的">(1)请解释为什么构建完全可移植的OS是不可能的？</h2>
 <p>不同硬件架构的指令集、总线设计和CPU字长等存在差异，操作系统必须依赖硬件相关代码，⽆法完全通⽤。</p>
-<h2 id="2-如果需要你设计一个高度可移植的-os那么请描述你需要设计的两个层次">(2) 如果需要你设计一个高度可移植的 OS，那么请描述你需要设计的两个层次？</h2>
+<h2 id="2如果需要你设计一个高度可移植的os那么请描述你需要设计的两个层次">(2)如果需要你设计一个高度可移植的OS，那么请描述你需要设计的两个层次？</h2>
 <p>高度可移植的操作系统由机器相关层和机器无关层组成。机器无关层只需实现一次即可。</p>
 <p>机器相关层处理硬件的具体特性，必须针对每个架构单独实现。该层为机器无关层提供统一的接口。为实现高度可移植性，机器相关层的规模应尽可能最小化。</p>
-<h1 id="5-在设计操作系统时一些设计指标是相互矛盾的例如资源利用率吞吐量-处理时间健壮性等请给出一对相互矛盾的设计实例">5. 在设计操作系统时，一些设计指标是相互矛盾的，例如资源利用率、吞吐量、 处理时间、健壮性等。请给出一对相互矛盾的设计实例。</h1>
+<h1 id="5在设计操作系统时一些设计指标是相互矛盾的例如资源利用率吞吐量处理时间健壮性等请给出一对相互矛盾的设计实例">5.在设计操作系统时，一些设计指标是相互矛盾的，例如资源利用率、吞吐量、处理时间、健壮性等。请给出一对相互矛盾的设计实例。</h1>
 <p>资源利⽤率与响应时间。</p>
-<p>资源利⽤率⾼意味着尽可能多地利⽤系统资源，但可能导致频繁的切换和复杂的调度策略，从⽽增加响应时间。响应时间短要求操作系统能够快速响应⽤户请求， 可能保留更多的资源⽤于即时响应，导致资源利⽤率下降。</p>
-<h1 id="6-一个计算机系统有输入机一台打印机两台现有二道程序同时投入运行且程序-a-先开始运行程序-b-后运行程序-a-的运行轨迹为计算-50ms打印信息-100ms再计算-50ms打印信息-100ms结束程序-b-运行的轨迹为计算-50ms输入数据-80ms再计算-100ms结束要求">6. 一个计算机系统有输入机一台、打印机两台，现有二道程序同时投入运行，且程序 A 先开始运行，程序 B 后运行。程序 A 的运行轨迹为：计算 50ms，打印信息 100ms，再计算 50ms，打印信息 100ms，结束。程序 B 运行的轨迹为：计算 50ms，输入数据 80ms，再计算 100ms，结束。要求：</h1>
-<h2 id="1-用图画出这二道程序并发执行时的工作情况">(1) 用图画出这二道程序并发执行时的工作情况。</h2>
+<p>资源利⽤率⾼意味着尽可能多地利⽤系统资源，但可能导致频繁的切换和复杂的调度策略，从⽽增加响应时间。响应时间短要求操作系统能够快速响应⽤户请求，可能保留更多的资源⽤于即时响应，导致资源利⽤率下降。</p>
+<h1 id="6一个计算机系统有输入机一台打印机两台现有二道程序同时投入运行且程序a先开始运行程序b后运行程序a的运行轨迹为计算50ms打印信息100ms再计算50ms打印信息100ms结束程序b运行的轨迹为计算50ms输入数据80ms再计算100ms结束要求">6.一个计算机系统有输入机一台、打印机两台，现有二道程序同时投入运行，且程序A先开始运行，程序B后运行。程序A的运行轨迹为：计算50ms，打印信息100ms，再计算50ms，打印信息100ms，结束。程序B运行的轨迹为：计算50ms，输入数据80ms，再计算100ms，结束。要求：</h1>
+<h2 id="1用图画出这二道程序并发执行时的工作情况">(1)用图画出这二道程序并发执行时的工作情况。</h2>
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="Pasted%20image%2020250316112252.png">
         <img loading="lazy" src="/posts/buaa/os/homework-1/Pasted%20image%2020250316112252_hu_714830f66a53f33c.webp">
     </a>
 </div></p>
-<h2 id="2-说明在二道程序运行时cpu-有无空闲等待若有在哪段时间内等待为什么会空闲等待">(2) 说明在二道程序运行时，CPU 有无空闲等待？若有，在哪段时间内等待？为什么会空闲等待？</h2>
-<p>有。在 100ms~150ms，程序 A 在打印信息，程序 B 在输入数据，故 CPU 处于空闲等待。</p>
-<h2 id="3-程序-ab-运行时有无等待现象在什么时候会发生等待现象">(3) 程序 A、B 运行时有无等待现象？在什么时候会发生等待现象？</h2>
-<p>程序 A 没有，程序 B 有。</p>
-<p>在 180ms~200ms，程序 B 完成了输入数据，在等待 CPU 空闲，而程序 A 占用了处理器，正在进行计算，故程序 B 等待了 20ms。</p>
+<h2 id="2说明在二道程序运行时cpu有无空闲等待若有在哪段时间内等待为什么会空闲等待">(2)说明在二道程序运行时，CPU有无空闲等待？若有，在哪段时间内等待？为什么会空闲等待？</h2>
+<p>有。在100ms~150ms，程序A在打印信息，程序B在输入数据，故CPU处于空闲等待。</p>
+<h2 id="3程序ab运行时有无等待现象在什么时候会发生等待现象">(3)程序A、B运行时有无等待现象？在什么时候会发生等待现象？</h2>
+<p>程序A没有，程序B有。</p>
+<p>在180ms~200ms，程序B完成了输入数据，在等待CPU空闲，而程序A占用了处理器，正在进行计算，故程序B等待了20ms。</p>
 ]]></content:encoded>
     </item>
   </channel>

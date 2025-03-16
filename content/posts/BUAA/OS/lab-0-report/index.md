@@ -1,7 +1,7 @@
 ---
 title: "[BUAA-OS] Lab 0 实验报告"
 date: 2025-03-16T11:27:33+08:00
-categories: 
+categories: Operating System
 tags: 
 showToc: true
 draft: false
@@ -20,13 +20,13 @@ ShowRssButtonInSectionTermList: true
 
 ## Thinking 0.1
 
-> 思考下列有关 Git 的问题：
-> - 在前述已初始化的~/learnGit 目录下，创建一个名为 README.txt 的文件。执 行命令git status > Untracked.txt（其中的 > 为输出重定向，我们将在 0.6.3 中 详细介绍）。
-> - 在README.txt 文件中添加任意文件内容，然后使用 add 命令，再执行命令 git status > Stage.txt。
+> 思考下列有关Git的问题：
+> - 在前述已初始化的~/learnGit 目录下，创建一个名为README.txt的文件。执 行命令git status > Untracked.txt（其中的 > 为输出重定向，我们将在0.6.3中详细介绍）。
+> - 在README.txt 文件中添加任意文件内容，然后使用add命令，再执行命令git status > Stage.txt。
 > - 提交README.txt，并在提交说明里写入自己的学号。
-> - 执行命令cat Untracked.txt 和 cat Stage.txt，对比两次运行的结果，体会 README.txt 两次所处位置的不同。
+> - 执行命令cat Untracked.txt 和cat Stage.txt，对比两次运行的结果，体会README.txt两次所处位置的不同。
 > - 修改README.txt 文件，再执行命令git status > Modified.txt。
-> - 执行命令cat Modified.txt，观察其结果和第一次执行 add 命令之前的 status 是 否一样，并思考原因。
+> - 执行命令cat Modified.txt，观察其结果和第一次执行add命令之前的status是否一样，并思考原因。
 
 ---
 
@@ -86,7 +86,7 @@ $  cat Modified.txt
 
 ## Thinking 0.2
 
-> 仔细看看[0.10](图%200.10%20-%20Git%20中的四种状态转换关系.png)，思考一下箭头中的add the file、stage the file和 commit分别对应的是Git里的哪些命令呢？
+> 仔细看看[0.10](图%200.10%20-%20Git%20中的四种状态转换关系.png)，思考一下箭头中的add the file、stage the file和commit分别对应的是Git里的哪些命令呢？
 > 
 > ![图 0.10 - Git 中的四种状态转换关系](图%200.10%20-%20Git%20中的四种状态转换关系.png)
 
@@ -107,9 +107,9 @@ commit 对应的是`git commit`。
 ## Thinking 0.3
 
 > 思考下列问题：
-> 1. 代码文件 print.c 被错误删除时，应当使用什么命令将其恢复？
-> 2. 代码文件 print.c 被错误删除后，执行了 git rm print.c 命令，此时应当使用什么命令将其恢复？
-> 3. 无关文件 hello.txt 已经被添加到暂存区时，如何在不删除此文件的前提下将其移出暂存区？
+> 1. 代码文件print.c被错误删除时，应当使用什么命令将其恢复？
+> 2. 代码文件print.c被错误删除后，执行了git rm print.c命令，此时应当使用什么命令将其恢复？
+> 3. 无关文件hello.txt已经被添加到暂存区时，如何在不删除此文件的前提下将其移出暂存区？
 
 ### 1. 代码文件 print.c 被错误删除时，应当使用什么命令将其恢复？
 
@@ -117,7 +117,7 @@ commit 对应的是`git commit`。
 git restore print.c
 ```
 
-print.c 尚未执行`git add`，故可以从暂存区将 print.c 恢复到工作区中。
+print.c 尚未执行`git add`，故可以从暂存区将print.c恢复到工作区中。
 
 ### 2. 代码文件 print.c 被错误删除后，执行了 git rm print.c 命令，此时应当使用什么命令将其恢复？
 
@@ -126,7 +126,7 @@ git reset HEAD print.c
 git restore print.c
 ```
 
-首先撤销暂存区的修改（删除了 print.c ），然后将 print.c 从暂存区恢复到工作区。
+首先撤销暂存区的修改（删除了print.c），然后将print.c从暂存区恢复到工作区。
 
 ### 3. 无关文件 hello.txt 已经被添加到暂存区时，如何在不删除此文件的前提下将其移出暂存区？
 
@@ -193,7 +193,7 @@ Date:   Tue Mar 11 19:08:12 2025 +0800
 
 ```
 
-变化：当前 Git 仓库的状态回到了`2`。
+变化：当前Git仓库的状态回到了`2`。
 
 ```bash
 $  git reset --hard 3f8eb4043efae29bbb9eb626444f955a825f3535
@@ -207,7 +207,7 @@ Date:   Tue Mar 11 19:08:12 2025 +0800
 
 ```
 
-变化：当前 Git 仓库的状态回到了`1`。
+变化：当前Git仓库的状态回到了`1`。
 
 ```bash
 $  git reset --hard a6ebe244272dd6bcb1f57ba9af3c957f3e7235b3
@@ -233,7 +233,7 @@ Date:   Tue Mar 11 19:08:12 2025 +0800
 
 ```
 
-变化：当前 Git 仓库的状态回到了`3`。
+变化：当前Git仓库的状态回到了`3`。
 
 ## Thinking 0.5
 
@@ -259,7 +259,7 @@ forth
 
 ## Thinking 0.6
 
-> 使用你知道的方法（包括重定向）创建下图内容的文件（文件命名为 test），将创建该文件的命令序列保存在 command 文件中，并将 test 文件作为批处理文件运行，将运行结果输出至 result 文件中。给出 command 文件和 result 文件的内容，并对最后的结果进行解释说明（可以从 test 文件的内容入手）. 具体实现的过程中思考下列问题: echo echo Shell Start 与 echo \`echo Shell Start\` 效果是否有区别; echo echo $c>file1 与 echo \`echo $c>file1\` 效果是否有区别.
+> 使用你知道的方法（包括重定向）创建下图内容的文件（文件命名为 test），将创建该文件的命令序列保存在command文件中，并将test文件作为批处理文件运行，将运行结果输出至result文件中。给出command文件和result文件的内容，并对最后的结果进行解释说明（可以从test文件的内容入手）。具体实现的过程中思考下列问题: echo echo Shell Start 与 echo \`echo Shell Start\` 效果是否有区别; echo echo $c>file1 与 echo \`echo $c>file1\` 效果是否有区别.
 
 ---
 
@@ -375,6 +375,6 @@ make -C code fibo.o
 
 # 三、原创说明
 
-在本次实验中，对工具链的使用参考了官方 manual 和`--help`参数。
+在本次实验中，对工具链的使用参考了官方manual和`--help`参数。
 
-在 Neovim 和 LazyVim 的安装与配置中，参考了[如何在Ubuntu上安装最新版本的Neovim并快速配置_ubuntu安装neovim-CSDN博客](https://blog.csdn.net/m0_60670525/article/details/136329707)
+在Neovim和LazyVim的安装与配置中，参考了[如何在Ubuntu上安装最新版本的Neovim并快速配置_ubuntu安装neovim-CSDN博客](https://blog.csdn.net/m0_60670525/article/details/136329707)
