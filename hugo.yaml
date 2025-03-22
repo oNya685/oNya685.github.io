@@ -32,6 +32,7 @@ params:
   hideFooter: false
   CanonicalLinkText: 点击跳转
   displayFullLangName: false
+  math: true
   label:
     text: 主页 | oNya's Blog
     icon: '#'
@@ -85,6 +86,7 @@ buildDrafts: false
 buildFuture: false
 builfExpired: false
 hasCJKLanguage: true
+ignoreLogs: ['warning-goldmark-raw-html']
 
 minify:
   disableXML: true
@@ -104,3 +106,18 @@ module:
     target: assets
   - source: static
     target: assets
+
+markup:
+  goldmark:
+    extensions:
+      passthrough:
+        delimiters:
+          block:
+          - - \[
+            - \]
+          - - $$
+            - $$
+          inline:
+          - - \(
+            - \)
+        enable: true
