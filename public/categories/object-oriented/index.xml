@@ -77,7 +77,7 @@
 <ol>
 <li><code>Expr</code> - <code>Term</code> - <code>&lt;Factor&gt; ExprFactor</code> - <code>Expr</code> （见橙色箭头）形成的环，该递归改编自先导课程作业代码。</li>
 <li><code>Expr</code> - <code>Term</code> - <code>&lt;Factor&gt; &lt;VarFactor&gt; FuncCall</code> - <code>&lt;FuncDefine.exprs&gt; Expr</code> 。这一递归赋值处理函数调用的思路详见我在第二次作业中的<a href="http://oo.buaa.edu.cn/assignment/608/discussion/1656" target="_blank">讨论发帖</a>
-，当然，在非校园网环境下，你也可以<a href="https://oNya685.github.io/posts/BUAA/OO/Unit-1/homework-2-function/" target="_blank">从此获取</a>
+，当然，在非校园网环境下，你也可以<a href="https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/" target="_blank">从此获取</a>
 。这一设计有极好的可拓展性，我们将在下一节进一步讨论。</li>
 </ol>
 <h1 id="迭代成型">迭代成型</h1>
@@ -95,7 +95,7 @@
 <p>其实都很明了，但最主要的区别其实是：<strong>重构后的类的设计完全符合了给出的形式化表述</strong>。第二次作业的迭代突然把形式化表述内容几乎翻倍不止，如果要沿着原来的架构像打补丁一样加上这大量的迭代内容，很可能最后根本写不完。</p>
 <p>而重构后的迭代体验也大幅提升：我只需要无脑照抄形式化表述，就能写好解析器，设计好各个类，这不仅省下了时间，也直接跳过了大量与形式化表述不统一而可能引发的潜在的bug。</p>
 <h3 id="另一个大任务是递归函数调用的处理">另一个大任务是递归函数调用的处理</h3>
-<p>在得知该迭代需求后，我耗费了相当久的时间思考如何以合理、优雅的方式处理递归函数调用，最终设计的一套<a href="https://oNya685.github.io/posts/BUAA/OO/Unit-1/homework-2-function/" target="_blank">处理思路</a>
+<p>在得知该迭代需求后，我耗费了相当久的时间思考如何以合理、优雅的方式处理递归函数调用，最终设计的一套<a href="https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/" target="_blank">处理思路</a>
 取得了相当好的<strong>可拓展性</strong>和相对低的耦合度，并结合<strong>动态规划</strong>和藏在其中的部分简化（例如，若某<code>ExprFactor</code>的<code>Expr</code>有且只有一个<code>Term</code>，该<code>Term</code>有且只有一个<code>Factor</code>，则该<code>ExprFactor</code>的简化方法返回该<code>Factor</code>，否则返回自身），实现了时间和空间上的大幅优化，并顺利解决掉了当<code>f{n}</code>的<code>n</code>过大时易爆栈的问题（事实上，事后发现课程组的Cost限制完全不足以超时或爆栈）。</p>
 <h2 id="第三次作业">第三次作业</h2>
 <p>虽说在第二次作业的互测里被打了不少次，理应来说，如果有继续迭代开发的需求，我会继续重构，并明确几点：</p>

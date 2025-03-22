@@ -6,8 +6,20 @@
     <description>Recent content on oNya&#39;s Blog</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 22 Mar 2025 14:16:55 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 22 Mar 2025 16:35:04 +0800</lastBuildDate>
     <atom:link href="https://oNya685.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>迟早会想不出标题的吧</title>
+      <link>https://oNya685.github.io/posts/ramble/250322/</link>
+      <pubDate>Sat, 22 Mar 2025 16:35:04 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/ramble/250322/</guid>
+      <description>&lt;p&gt;也有考虑过要不要把原来的内容搬过来，但好像原来的内容也没有多大价值。&lt;/p&gt;
+&lt;p&gt;给Ramble下的内容都改为了随时更新随时发布，不得不说的是图片太大已经成为hugo build和push的阻碍了，这样继续下去迟早会卡顿的，今后只对增量作编译了。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>也有考虑过要不要把原来的内容搬过来，但好像原来的内容也没有多大价值。</p>
+<p>给Ramble下的内容都改为了随时更新随时发布，不得不说的是图片太大已经成为hugo build和push的阻碍了，这样继续下去迟早会卡顿的，今后只对增量作编译了。</p>
+<p>不过写了一个自动同步webdav的脚本，这样以后就能随时看到渲染后的网页了，hugo server也不需要关了。这样倒是方便不少，大概？</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>[BUAA-OO] Unit 1 总结</title>
       <link>https://oNya685.github.io/posts/buaa/oo/unit-1/summary/</link>
@@ -77,7 +89,7 @@
 <ol>
 <li><code>Expr</code> - <code>Term</code> - <code>&lt;Factor&gt; ExprFactor</code> - <code>Expr</code> （见橙色箭头）形成的环，该递归改编自先导课程作业代码。</li>
 <li><code>Expr</code> - <code>Term</code> - <code>&lt;Factor&gt; &lt;VarFactor&gt; FuncCall</code> - <code>&lt;FuncDefine.exprs&gt; Expr</code> 。这一递归赋值处理函数调用的思路详见我在第二次作业中的<a href="http://oo.buaa.edu.cn/assignment/608/discussion/1656" target="_blank">讨论发帖</a>
-，当然，在非校园网环境下，你也可以<a href="https://oNya685.github.io/posts/BUAA/OO/Unit-1/homework-2-function/" target="_blank">从此获取</a>
+，当然，在非校园网环境下，你也可以<a href="https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/" target="_blank">从此获取</a>
 。这一设计有极好的可拓展性，我们将在下一节进一步讨论。</li>
 </ol>
 <h1 id="迭代成型">迭代成型</h1>
@@ -95,7 +107,7 @@
 <p>其实都很明了，但最主要的区别其实是：<strong>重构后的类的设计完全符合了给出的形式化表述</strong>。第二次作业的迭代突然把形式化表述内容几乎翻倍不止，如果要沿着原来的架构像打补丁一样加上这大量的迭代内容，很可能最后根本写不完。</p>
 <p>而重构后的迭代体验也大幅提升：我只需要无脑照抄形式化表述，就能写好解析器，设计好各个类，这不仅省下了时间，也直接跳过了大量与形式化表述不统一而可能引发的潜在的bug。</p>
 <h3 id="另一个大任务是递归函数调用的处理">另一个大任务是递归函数调用的处理</h3>
-<p>在得知该迭代需求后，我耗费了相当久的时间思考如何以合理、优雅的方式处理递归函数调用，最终设计的一套<a href="https://oNya685.github.io/posts/BUAA/OO/Unit-1/homework-2-function/" target="_blank">处理思路</a>
+<p>在得知该迭代需求后，我耗费了相当久的时间思考如何以合理、优雅的方式处理递归函数调用，最终设计的一套<a href="https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/" target="_blank">处理思路</a>
 取得了相当好的<strong>可拓展性</strong>和相对低的耦合度，并结合<strong>动态规划</strong>和藏在其中的部分简化（例如，若某<code>ExprFactor</code>的<code>Expr</code>有且只有一个<code>Term</code>，该<code>Term</code>有且只有一个<code>Factor</code>，则该<code>ExprFactor</code>的简化方法返回该<code>Factor</code>，否则返回自身），实现了时间和空间上的大幅优化，并顺利解决掉了当<code>f{n}</code>的<code>n</code>过大时易爆栈的问题（事实上，事后发现课程组的Cost限制完全不足以超时或爆栈）。</p>
 <h2 id="第三次作业">第三次作业</h2>
 <p>虽说在第二次作业的互测里被打了不少次，理应来说，如果有继续迭代开发的需求，我会继续重构，并明确几点：</p>
@@ -163,6 +175,41 @@
 <h1 id="心得体会">心得体会</h1>
 <p>虽然第三次作业的轻松要求确实减少了我们的工作量，让我直接放弃了第二次的重构，但我仍没能理解普通函数调用为什么会放在递归函数调用之后作为新要求迭代。第二次作业的任务量也着实有些惊悚，不知是传统还是失误。</p>
 <p>总的来说，第一单元在先导课提供了参考架构的基础上还算顺利，也能明显感到有所收获，期待第二单元的灵异电梯。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>啊，这个title是不是还不能重复</title>
+      <link>https://oNya685.github.io/posts/ramble/250317/</link>
+      <pubDate>Mon, 17 Mar 2025 12:19:49 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/ramble/250317/</guid>
+      <description>&lt;p&gt;马原老师课讲得挺好，特别是对理论的讲解，只可惜她又考勤又严格。&lt;del&gt;但也只是嘴上严格，只提醒不惩罚，上课干别的事也容许了&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;老师提到维特根斯坦的早期的思想，大意是从形式语言的角度证明了世界是可以用语言完备表述的。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>马原老师课讲得挺好，特别是对理论的讲解，只可惜她又考勤又严格。<del>但也只是嘴上严格，只提醒不惩罚，上课干别的事也容许了</del></p>
+<p>老师提到维特根斯坦的早期的思想，大意是从形式语言的角度证明了世界是可以用语言完备表述的。</p>
+<hr>
+<p>走在路上听到旁边人说：“当过皇帝的人都死了。”</p>
+<p>没绷住。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>我的周末呢</title>
+      <link>https://oNya685.github.io/posts/ramble/250316/</link>
+      <pubDate>Mon, 17 Mar 2025 00:40:43 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/ramble/250316/</guid>
+      <description>&lt;p&gt;折腾了两天的Hugo框架和PaperMod主题，总算搭出一套暂且顺手的方案。不得不提到的是，配合上OS实验顺带学会的shell脚本，一些操作得以简化或自动化，方便了不少，包括自动的从WebDAV同步、自动生成commit message和push。脚本源码参见&lt;a href=&#34;https://github.com/oNya685/oNya685.github.io/&#34; target=&#34;_blank&#34;&gt;oNya685/oNya685.github.io&lt;/a&gt;
+。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>折腾了两天的Hugo框架和PaperMod主题，总算搭出一套暂且顺手的方案。不得不提到的是，配合上OS实验顺带学会的shell脚本，一些操作得以简化或自动化，方便了不少，包括自动的从WebDAV同步、自动生成commit message和push。脚本源码参见<a href="https://github.com/oNya685/oNya685.github.io/" target="_blank">oNya685/oNya685.github.io</a>
+。</p>
+<p>费劲了两天，周末也就过去了。本周末的OO互测很没意思，作为Unit 1的收尾，这次迭代难度比上周的要低上太多，也难以写出什么错误，一天下来，七星<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>成功率都是0%。</p>
+<p>偶尔也在想这些东西是在写给谁看，像是埋了颗种子却不发芽，将来挖出来时回忆的是当时埋种子的自己。<del>当然，如果这些碎碎念被发现，说不定也很有趣</del></p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>本周不知为什么被分到了只有七人的房间，按往常，应该是八星。其实有几个七星房间也正常，毕竟<em>对于 $\forall n,a,b\in N^+$，当 $n\geq a\times b$时，必定 $\exists p,q\in N$，使得 $n=p\times a+q\times b$。</em> 这是随手写的，不知道对不对。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
 ]]></content:encoded>
     </item>
     <item>

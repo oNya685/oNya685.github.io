@@ -6,7 +6,54 @@
     <description>Recent content in 碎碎念 on oNya&#39;s Blog</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>zh-cn</language>
-    <lastBuildDate></lastBuildDate>
+    <lastBuildDate>Sat, 22 Mar 2025 16:35:04 +0800</lastBuildDate>
     <atom:link href="https://oNya685.github.io/posts/ramble/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>迟早会想不出标题的吧</title>
+      <link>https://oNya685.github.io/posts/ramble/250322/</link>
+      <pubDate>Sat, 22 Mar 2025 16:35:04 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/ramble/250322/</guid>
+      <description>&lt;p&gt;也有考虑过要不要把原来的内容搬过来，但好像原来的内容也没有多大价值。&lt;/p&gt;
+&lt;p&gt;给Ramble下的内容都改为了随时更新随时发布，不得不说的是图片太大已经成为hugo build和push的阻碍了，这样继续下去迟早会卡顿的，今后只对增量作编译了。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>也有考虑过要不要把原来的内容搬过来，但好像原来的内容也没有多大价值。</p>
+<p>给Ramble下的内容都改为了随时更新随时发布，不得不说的是图片太大已经成为hugo build和push的阻碍了，这样继续下去迟早会卡顿的，今后只对增量作编译了。</p>
+<p>不过写了一个自动同步webdav的脚本，这样以后就能随时看到渲染后的网页了，hugo server也不需要关了。这样倒是方便不少，大概？</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>啊，这个title是不是还不能重复</title>
+      <link>https://oNya685.github.io/posts/ramble/250317/</link>
+      <pubDate>Mon, 17 Mar 2025 12:19:49 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/ramble/250317/</guid>
+      <description>&lt;p&gt;马原老师课讲得挺好，特别是对理论的讲解，只可惜她又考勤又严格。&lt;del&gt;但也只是嘴上严格，只提醒不惩罚，上课干别的事也容许了&lt;/del&gt;&lt;/p&gt;
+&lt;p&gt;老师提到维特根斯坦的早期的思想，大意是从形式语言的角度证明了世界是可以用语言完备表述的。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>马原老师课讲得挺好，特别是对理论的讲解，只可惜她又考勤又严格。<del>但也只是嘴上严格，只提醒不惩罚，上课干别的事也容许了</del></p>
+<p>老师提到维特根斯坦的早期的思想，大意是从形式语言的角度证明了世界是可以用语言完备表述的。</p>
+<hr>
+<p>走在路上听到旁边人说：“当过皇帝的人都死了。”</p>
+<p>没绷住。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>我的周末呢</title>
+      <link>https://oNya685.github.io/posts/ramble/250316/</link>
+      <pubDate>Mon, 17 Mar 2025 00:40:43 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/ramble/250316/</guid>
+      <description>&lt;p&gt;折腾了两天的Hugo框架和PaperMod主题，总算搭出一套暂且顺手的方案。不得不提到的是，配合上OS实验顺带学会的shell脚本，一些操作得以简化或自动化，方便了不少，包括自动的从WebDAV同步、自动生成commit message和push。脚本源码参见&lt;a href=&#34;https://github.com/oNya685/oNya685.github.io/&#34; target=&#34;_blank&#34;&gt;oNya685/oNya685.github.io&lt;/a&gt;
+。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p>折腾了两天的Hugo框架和PaperMod主题，总算搭出一套暂且顺手的方案。不得不提到的是，配合上OS实验顺带学会的shell脚本，一些操作得以简化或自动化，方便了不少，包括自动的从WebDAV同步、自动生成commit message和push。脚本源码参见<a href="https://github.com/oNya685/oNya685.github.io/" target="_blank">oNya685/oNya685.github.io</a>
+。</p>
+<p>费劲了两天，周末也就过去了。本周末的OO互测很没意思，作为Unit 1的收尾，这次迭代难度比上周的要低上太多，也难以写出什么错误，一天下来，七星<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>成功率都是0%。</p>
+<p>偶尔也在想这些东西是在写给谁看，像是埋了颗种子却不发芽，将来挖出来时回忆的是当时埋种子的自己。<del>当然，如果这些碎碎念被发现，说不定也很有趣</del></p>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>本周不知为什么被分到了只有七人的房间，按往常，应该是八星。其实有几个七星房间也正常，毕竟<em>对于 $\forall n,a,b\in N^+$，当 $n\geq a\times b$时，必定 $\exists p,q\in N$，使得 $n=p\times a+q\times b$。</em> 这是随手写的，不知道对不对。&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+]]></content:encoded>
+    </item>
   </channel>
 </rss>

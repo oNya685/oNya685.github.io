@@ -2,5 +2,5 @@
 title: Posts
 hideSummary: true
 hidemeta: true
-draft: true
+draft: false
 ---

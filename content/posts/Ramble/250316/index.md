@@ -5,12 +5,12 @@ categories:
 tags: 
 author: 
 showToc: true
-draft: true
+draft: false
 comments: true
 description: 
 canonicalURL: "{{ .Permalink }}"
 hideSummary: false
-searchHidden: false
+searchHidden: true
 ShowReadingTime: true
 ShowBreadCrumbs: true
 ShowPostNavLinks: false

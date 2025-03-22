@@ -75,7 +75,7 @@ System.out.println(parser
 
 
 1. `Expr` - `Term` - `<Factor> ExprFactor` - `Expr` （见橙色箭头）形成的环，该递归改编自先导课程作业代码。
-2. `Expr` - `Term` - `<Factor> <VarFactor> FuncCall` - `<FuncDefine.exprs> Expr` 。这一递归赋值处理函数调用的思路详见我在第二次作业中的[讨论发帖](http://oo.buaa.edu.cn/assignment/608/discussion/1656)，当然，在非校园网环境下，你也可以[从此获取](https://oNya685.github.io/posts/BUAA/OO/Unit-1/homework-2-function/)。这一设计有极好的可拓展性，我们将在下一节进一步讨论。
+2. `Expr` - `Term` - `<Factor> <VarFactor> FuncCall` - `<FuncDefine.exprs> Expr` 。这一递归赋值处理函数调用的思路详见我在第二次作业中的[讨论发帖](http://oo.buaa.edu.cn/assignment/608/discussion/1656)，当然，在非校园网环境下，你也可以[从此获取](https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/)。这一设计有极好的可拓展性，我们将在下一节进一步讨论。
 
 # 迭代成型
 
@@ -97,7 +97,7 @@ System.out.println(parser
 
 ### 另一个大任务是递归函数调用的处理 
 
-在得知该迭代需求后，我耗费了相当久的时间思考如何以合理、优雅的方式处理递归函数调用，最终设计的一套[处理思路](https://oNya685.github.io/posts/BUAA/OO/Unit-1/homework-2-function/)取得了相当好的**可拓展性**和相对低的耦合度，并结合**动态规划**和藏在其中的部分简化（例如，若某`ExprFactor`的`Expr`有且只有一个`Term`，该`Term`有且只有一个`Factor`，则该`ExprFactor`的简化方法返回该`Factor`，否则返回自身），实现了时间和空间上的大幅优化，并顺利解决掉了当`f{n}`的`n`过大时易爆栈的问题（事实上，事后发现课程组的Cost限制完全不足以超时或爆栈）。
+在得知该迭代需求后，我耗费了相当久的时间思考如何以合理、优雅的方式处理递归函数调用，最终设计的一套[处理思路](https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/)取得了相当好的**可拓展性**和相对低的耦合度，并结合**动态规划**和藏在其中的部分简化（例如，若某`ExprFactor`的`Expr`有且只有一个`Term`，该`Term`有且只有一个`Factor`，则该`ExprFactor`的简化方法返回该`Factor`，否则返回自身），实现了时间和空间上的大幅优化，并顺利解决掉了当`f{n}`的`n`过大时易爆栈的问题（事实上，事后发现课程组的Cost限制完全不足以超时或爆栈）。
 
 ## 第三次作业
 

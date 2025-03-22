@@ -1,4 +1,4 @@
 #!/bin/bash
 #
-./clean-and-copy.sh
+./copy.sh
 hugo
