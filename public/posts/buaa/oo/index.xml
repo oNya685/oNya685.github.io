@@ -10,9 +10,9 @@
     <atom:link href="https://oNya685.github.io/posts/buaa/oo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[BUAA-OO] Unit 1 总结</title>
-      <link>https://oNya685.github.io/posts/buaa/oo/unit-1/</link>
+      <link>https://oNya685.github.io/posts/buaa/oo/unit-1/summary/</link>
       <pubDate>Sat, 22 Mar 2025 14:16:55 +0800</pubDate>
-      <guid>https://oNya685.github.io/posts/buaa/oo/unit-1/</guid>
+      <guid>https://oNya685.github.io/posts/buaa/oo/unit-1/summary/</guid>
       <description>第一单元博客作业</description>
       <content:encoded><![CDATA[<h1 id="架构简介">架构简介</h1>
 <p>在本单元中，作业要求我们对提供了<strong>形式化表述</strong>的复杂表达式进行<strong>解析和化简</strong>，并要求尽可能简短的输出以度量性能分数。</p>
@@ -20,7 +20,7 @@
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="UML.png">
-        <img loading="lazy" src="/posts/buaa/oo/unit-1/UML_hu_c7d81f24e8d7bd9b.webp">
+        <img loading="lazy" src="/posts/buaa/oo/unit-1/summary/UML_hu_c7d81f24e8d7bd9b.webp">
     </a>
 </div></p>
 <p>核心处理部分在于递归解析模块的两个递归，在图中具体表现为两个圈。接下来介绍和分析各模块的结构。</p>
@@ -28,7 +28,7 @@
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="%E4%B8%BB%E7%BA%BF%E6%B5%81%E7%A8%8B.png">
-        <img alt="主线处理" loading="lazy" src="/posts/buaa/oo/unit-1/%E4%B8%BB%E7%BA%BF%E6%B5%81%E7%A8%8B_hu_50ee1355f57dc9d.webp">
+        <img alt="主线处理" loading="lazy" src="/posts/buaa/oo/unit-1/summary/%E4%B8%BB%E7%BA%BF%E6%B5%81%E7%A8%8B_hu_50ee1355f57dc9d.webp">
     </a>
 </div></p>
 <p>本模块是整个项目的主体部分，其中箭头含义表示流程顺序，不代表类的继承关系。主要流程呈现为main方法：</p>
@@ -46,13 +46,13 @@
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="Pasted%20image%2020250321102634.png">
-        <img alt="Method Metrics" loading="lazy" src="/posts/buaa/oo/unit-1/Pasted%20image%2020250321102634_hu_e1b1a3fedae6e702.webp">
+        <img alt="Method Metrics" loading="lazy" src="/posts/buaa/oo/unit-1/summary/Pasted%20image%2020250321102634_hu_e1b1a3fedae6e702.webp">
     </a>
 </div></p>
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="Pasted%20image%2020250321102951.png">
-        <img alt="Class Metrics" loading="lazy" src="/posts/buaa/oo/unit-1/Pasted%20image%2020250321102951_hu_12bd78d8e3f53682.webp">
+        <img alt="Class Metrics" loading="lazy" src="/posts/buaa/oo/unit-1/summary/Pasted%20image%2020250321102951_hu_12bd78d8e3f53682.webp">
     </a>
 </div></p>
 <p>我们会发现，<code>Lexer</code>, <code>Parser</code>, <code>Poly</code>这几个在主线中实现了相当一部分功能的类，因为把大量的<strong>重复性</strong>功能藏在一个类甚至一个方法内部实现（例如Lexer的大量if-else出现了控制分支数目大的问题），出现了耦合度过高、可读性差的问题。</p>
@@ -61,7 +61,7 @@
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="%E8%AE%A1%E7%AE%97%E5%8C%96%E7%AE%80%E6%A8%A1%E5%9D%97.png">
-        <img alt="计算化简" loading="lazy" src="/posts/buaa/oo/unit-1/%E8%AE%A1%E7%AE%97%E5%8C%96%E7%AE%80%E6%A8%A1%E5%9D%97_hu_9a0ff4d29315da4b.webp">
+        <img alt="计算化简" loading="lazy" src="/posts/buaa/oo/unit-1/summary/%E8%AE%A1%E7%AE%97%E5%8C%96%E7%AE%80%E6%A8%A1%E5%9D%97_hu_9a0ff4d29315da4b.webp">
     </a>
 </div></p>
 <p>这个模块内部实现了过多功能，方法个数多，方法规模大，只因它们都涉及到用于存储化简后输出结果的类——<code>Poly</code>（多项式）和<code>Mono</code>（单项式）——这就导致了这一部分难读、难拆、难拓展。</p>
@@ -70,7 +70,7 @@
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="%E9%80%92%E5%BD%92%E8%A7%A3%E6%9E%90%E6%A8%A1%E5%9D%97.png">
-        <img alt="递归解析" loading="lazy" src="/posts/buaa/oo/unit-1/%E9%80%92%E5%BD%92%E8%A7%A3%E6%9E%90%E6%A8%A1%E5%9D%97_hu_94324e327feaacb4.webp">
+        <img alt="递归解析" loading="lazy" src="/posts/buaa/oo/unit-1/summary/%E9%80%92%E5%BD%92%E8%A7%A3%E6%9E%90%E6%A8%A1%E5%9D%97_hu_94324e327feaacb4.webp">
     </a>
 </div></p>
 <p>这一模块的度量值相当良好，故省略去分析。这一部分的递归主要在于</p>
@@ -89,7 +89,7 @@
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="%E9%87%8D%E6%9E%84%E5%AF%B9%E6%AF%94.png">
-        <img loading="lazy" src="/posts/buaa/oo/unit-1/%E9%87%8D%E6%9E%84%E5%AF%B9%E6%AF%94_hu_538427942ba17d30.webp">
+        <img loading="lazy" src="/posts/buaa/oo/unit-1/summary/%E9%87%8D%E6%9E%84%E5%AF%B9%E6%AF%94_hu_538427942ba17d30.webp">
     </a>
 </div></p>
 <p>其实都很明了，但最主要的区别其实是：<strong>重构后的类的设计完全符合了给出的形式化表述</strong>。第二次作业的迭代突然把形式化表述内容几乎翻倍不止，如果要沿着原来的架构像打补丁一样加上这大量的迭代内容，很可能最后根本写不完。</p>
@@ -119,7 +119,7 @@
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="Pasted%20image%2020250321193556.png">
-        <img alt="Bug修复：最后一次Commit" loading="lazy" src="/posts/buaa/oo/unit-1/Pasted%20image%2020250321193556_hu_28ecd893e0e44ae4.webp">
+        <img alt="Bug修复：最后一次Commit" loading="lazy" src="/posts/buaa/oo/unit-1/summary/Pasted%20image%2020250321193556_hu_28ecd893e0e44ae4.webp">
     </a>
 </div></p>
 <p>啊，输出了<code>sin(sin(...)*sin(...))</code>，但里面是一个表达式而非一个因子，所以应该是<code>sin((sin(...)*sin(...)))</code>。省去了不该省的括号。这个小bug从第二次作业互测测到第三次作业互测，都没有被测出来，第三次强测反倒测出来了，如果侥幸一点没测出来，这个bug可能永远都不会被发现了。</p>
@@ -129,7 +129,7 @@
 <p><div class="post-img-view">
     <a data-fancybox="gallery"
          href="2007db7b678091ac411a41f40a2e1d2.jpg">
-        <img loading="lazy" src="/posts/buaa/oo/unit-1/2007db7b678091ac411a41f40a2e1d2_hu_7d7b277097085463.webp">
+        <img loading="lazy" src="/posts/buaa/oo/unit-1/summary/2007db7b678091ac411a41f40a2e1d2_hu_7d7b277097085463.webp">
     </a>
 </div></p>
 <p><code>extraTriangle!!!</code>一位没删用于调试的输出信息的同学如是喊道。</p>
@@ -163,6 +163,113 @@
 <h1 id="心得体会">心得体会</h1>
 <p>虽然第三次作业的轻松要求确实减少了我们的工作量，让我直接放弃了第二次的重构，但我仍没能理解普通函数调用为什么会放在递归函数调用之后作为新要求迭代。第二次作业的任务量也着实有些惊悚，不知是传统还是失误。</p>
 <p>总的来说，第一单元在先导课提供了参考架构的基础上还算顺利，也能明显感到有所收获，期待第二单元的灵异电梯。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>[BUAA-OO] Unit 1 递归函数调用的解析与计算</title>
+      <link>https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/</link>
+      <pubDate>Wed, 05 Mar 2025 20:48:35 +0000</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/</guid>
+      <description>&lt;h1 id=&#34;函数调用处理机制&#34;&gt;函数调用处理机制&lt;/h1&gt;
+&lt;h2 id=&#34;核心思路&#34;&gt;核心思路&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;实参与形参分离&lt;/strong&gt;：通过&lt;code&gt;assignment&lt;/code&gt;哈希表实现参数映射，实现&lt;strong&gt;形参&lt;/strong&gt;（函数定义时的参数名）与&lt;strong&gt;相对实参&lt;/strong&gt;（调用时传入的具体因子）的对应关系。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;递归替换&lt;/strong&gt;：通过&lt;code&gt;assign&lt;/code&gt;方法逐层展开函数调用&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;终止条件&lt;/strong&gt;：当递归到&lt;strong&gt;初始定义&lt;/strong&gt;表达式时完成解析&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;关键实现步骤&#34;&gt;关键实现步骤&lt;/h2&gt;
+&lt;h3 id=&#34;数据结构&#34;&gt;数据结构&lt;/h3&gt;
+&lt;p&gt;为函数调用因子引入通过&lt;code&gt;HashMap&amp;lt;String, Factor&amp;gt;&lt;/code&gt;实现的新成员变量&lt;code&gt;assignment&lt;/code&gt;，并在为语素实现的&lt;code&gt;assign&lt;/code&gt;方法中作为传入参数。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h1 id="函数调用处理机制">函数调用处理机制</h1>
+<h2 id="核心思路">核心思路</h2>
+<ol>
+<li><strong>实参与形参分离</strong>：通过<code>assignment</code>哈希表实现参数映射，实现<strong>形参</strong>（函数定义时的参数名）与<strong>相对实参</strong>（调用时传入的具体因子）的对应关系。</li>
+<li><strong>递归替换</strong>：通过<code>assign</code>方法逐层展开函数调用</li>
+<li><strong>终止条件</strong>：当递归到<strong>初始定义</strong>表达式时完成解析</li>
+</ol>
+<h2 id="关键实现步骤">关键实现步骤</h2>
+<h3 id="数据结构">数据结构</h3>
+<p>为函数调用因子引入通过<code>HashMap&lt;String, Factor&gt;</code>实现的新成员变量<code>assignment</code>，并在为语素实现的<code>assign</code>方法中作为传入参数。</p>
+<p>对于<code>FuncCall</code>因子，引入<code>Integer index</code>，<code>FuncDefine</code>，<code>ArrayList&lt;Factor&gt;</code>，用于实现对Expr中的FuncCall因子的完全解析。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">FuncCall</span> <span style="color:#66d9ef">extends</span> VarFactor {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> ConstantFactor index;  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> FuncDefine define;  
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> HashMap<span style="color:#f92672">&lt;</span>BaseVar, Factor<span style="color:#f92672">&gt;</span> assignment; <span style="color:#75715e">// 实际参数列表</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="处理流程">处理流程</h3>
+<p>通过<code>expr = expr.assign(null)</code>中调用<code>funcCall.define.get(index).assign(assignment).assign(null)</code>，因除<code>FuncCall</code>以外的其他语素有其<code>assign</code>方法，所以将不断递归下降直到<code>funcCall.define.get(1)</code>和<code>funcCall.define.get(0)</code>。此时再递归向下将不再出现<code>FuncCall</code>类，递归结束并逐级返回。从而实现的<code>Expr</code>的去<code>FuncCall</code>流程，以便进行<code>toPoly</code>和<code>simplify</code>。</p>
+<ol>
+<li>
+<p><strong>初始化调用</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span>expr <span style="color:#f92672">=</span> expr.<span style="color:#a6e22e">assign</span>(<span style="color:#66d9ef">null</span>);
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// 通过expr.assign(null)启动替换链条，null参数表示要解析的最上层表达式中的参数为绝对实参</span>
+</span></span></code></pre></div></li>
+<li>
+<p><strong>参数替换机制</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// FuncCall.java</span>
+</span></span><span style="display:flex;"><span>ExprFactor <span style="color:#a6e22e">assign</span>(HashMap<span style="color:#f92672">&lt;</span>String, Factor<span style="color:#f92672">&gt;</span> assignment) {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">define</span>.<span style="color:#a6e22e">get</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">index</span>)
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">assign</span>(<span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">assignment</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 先应用this.assignment当前层的参数绑定</span>
+</span></span><span style="display:flex;"><span>        .<span style="color:#a6e22e">assign</span>(assignment);
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 再应用外层传入的assignment参数，实现参数作用域的嵌套覆盖</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div></li>
+<li>
+<p><strong>递归展开过程</strong></p>
+<pre tabindex="0"><code>// 高层调用 → 中间层展开 → 基础层解析
+funcCall.assign(null)
+→ funcCall.define.get(index).assign(assignment).assign(null)
+→ ...
+→ funcCall&#39;.define.get(index&#39;).assign(assignment&#39;).assign(assignment).assign(null)
+→ ...
+→ funcCall&#39;&#39;.define.get(index&#39;&#39;).assign(assignment&#39;&#39;).assign(assignment&#39;).assign(assignment).assign(null)
+→ ...
+→ funcCall.define.get(0 | 1).assign... // 初始定义表达式
+</code></pre></li>
+</ol>
+<h3 id="类方法实现">类方法实现</h3>
+<p>经<code>assign</code>方法，<code>BaseVar.assign(assignment)</code>返回<code>Factor</code>，<code>PowerFunc.assign(assignment)</code>返回<code>ExprFactor</code>，<code>FuncCall</code>递归调用<code>(Expr)define.get(this.index).assign(this.assignment).assign(assignment)</code>返回<code>ExprFactor</code>，其他语素的<code>assign</code>方法返回同类对象。最终递归返回不含<code>FuncCall</code>的纯<code>Expr</code>，即可施之<code>toPoly</code>方法。</p>
+<table>
+  <thead>
+      <tr>
+          <th>类名</th>
+          <th>assign方法行为</th>
+          <th>返回类型</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>BaseVar</td>
+          <td>直接返回对应的含相对实参的Factor</td>
+          <td>Factor</td>
+      </tr>
+      <tr>
+          <td>PowerFunc</td>
+          <td>返回参数赋值的ExprFactor</td>
+          <td>ExprFactor</td>
+      </tr>
+      <tr>
+          <td>FuncCall</td>
+          <td>递归调用下层定义进行参数替换</td>
+          <td>ExprFactor</td>
+      </tr>
+      <tr>
+          <td>其他因子</td>
+          <td>返回由自身组成语素.assign()构造的同类对象</td>
+          <td>同类对象</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="处理终点">处理终点</h2>
+<p>当递归到<code>define.get(0 | 1)</code>时：</p>
+<ol>
+<li>不再包含FuncCall对象，函数调用结构完全消解</li>
+<li>所有形参已被实际参数替换</li>
+<li>表达式完全展开为基本元素</li>
+<li>可安全调用<code>toPoly()</code>进行多项式转换</li>
+<li>可进行最终化简<code>simplify()</code></li>
+</ol>
 ]]></content:encoded>
     </item>
   </channel>
