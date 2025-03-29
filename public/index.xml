@@ -6,8 +6,522 @@
     <description>Recent content on oNya&#39;s Blog</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 22 Mar 2025 16:35:04 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 28 Mar 2025 19:00:00 +0800</lastBuildDate>
     <atom:link href="https://oNya685.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[BUAA-OS] 理论作业 2</title>
+      <link>https://oNya685.github.io/posts/buaa/os/homework-2/</link>
+      <pubDate>Fri, 28 Mar 2025 19:00:00 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/os/homework-2/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;%e4%bd%9c%e4%b8%9a2.pdf&#34; target=&#34;_blank&#34;&gt;点此查看作业源文件&lt;/a&gt;
+&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;1-动态内存分配需要对内存分区进行管理一般使用位图和空闲链表两种方法128mb的内存以n字节为单元分配对于链表假设内存中数据段和空闲区交替排列长度均为64kb并假设链表中的每个节点需要记录32位的内存地址信息16位长度信息和16位下一节点域信息这两种方法分别需要多少字节的存储空间哪种方法更好&#34;&gt;1. 动态内存分配需要对内存分区进行管理，一般使用位图和空闲链表两种方法。128MB的内存以n字节为单元分配，对于链表，假设内存中数据段和空闲区交替排列，长度均为64KB。并假设链表中的每个节点需要记录32位的内存地址信息、16位长度信息和16位下一节点域信息。这两种方法分别需要多少字节的存储空间？哪种方法更好？&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;若使用位图方法：&lt;/li&gt;
+&lt;/ul&gt;
+$$单元数 = \frac{128MB}{nB} = \frac{2^{27}}{n}块$$$$所需存储空间 = \frac{2^{27}}{n}b = \frac{16}{n}MB$$&lt;ul&gt;
+&lt;li&gt;若使用空闲链表方法：&lt;/li&gt;
+&lt;/ul&gt;
+$$段数=\frac{128MB}{64KB+64KB} = 2^{10}段$$$$所需存储空间 = 2^{10} \times (32 + 16 + 16)b = 8KB$$&lt;ul&gt;
+&lt;li&gt;哪种方法更好：
+&lt;ul&gt;
+&lt;li&gt;当n&amp;lt;2048时，空闲链表所需存储空间更小，空闲链表方法更好；&lt;/li&gt;
+&lt;li&gt;当n&amp;gt;2048时，位图所需存储空间更小，位图方法更好。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;2-在一个交换系统中按内存地址排列的空闲区大小是-10kb4kb20kb18kb7kb9kb12kb和15kb对于连续的段请求12kb10kb9kb使用firstfitbestfitworstfit和nextfit将找出哪些空闲区&#34;&gt;2. 在一个交换系统中，按内存地址排列的空闲区大小是: 10KB、4KB、20KB、18KB、7KB、9KB、12KB和15KB。对于连续的段请求：12KB、10KB、9KB。使用FirstFit、BestFit、WorstFit和NextFit将找出哪些空闲区？&lt;/h1&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;段请求&lt;/th&gt;
+          &lt;th&gt;FirstFit&lt;/th&gt;
+          &lt;th&gt;BestFit&lt;/th&gt;
+          &lt;th&gt;WorstFit&lt;/th&gt;
+          &lt;th&gt;NextFit&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;12KB&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;20KB&lt;/td&gt;
+          &lt;td&gt;12KB&lt;/td&gt;
+          &lt;td&gt;20KB&lt;/td&gt;
+          &lt;td&gt;20KB&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;10KB&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;10KB&lt;/td&gt;
+          &lt;td&gt;10KB&lt;/td&gt;
+          &lt;td&gt;18KB&lt;/td&gt;
+          &lt;td&gt;18KB&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;&lt;strong&gt;9KB&lt;/strong&gt;&lt;/td&gt;
+          &lt;td&gt;18KB&lt;/td&gt;
+          &lt;td&gt;9KB&lt;/td&gt;
+          &lt;td&gt;15KB&lt;/td&gt;
+          &lt;td&gt;9KB&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&#34;3-解释逻辑地址物理地址地址映射并举例说明&#34;&gt;3. 解释逻辑地址、物理地址、地址映射，并举例说明。&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;逻辑地址（Logical Address）：
+逻辑地址是程序运行时由 CPU 生成的地址，也称为虚拟地址。用户进程只能访问逻辑地址，不能直接访问物理内存。&lt;br&gt;
+例如某程序访问地址 &lt;code&gt;0x1234&lt;/code&gt;，但该地址只是进程的逻辑地址空间中的一部分。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p><strong><a href="%e4%bd%9c%e4%b8%9a2.pdf" target="_blank">点此查看作业源文件</a>
+</strong></p>
+<h1 id="1-动态内存分配需要对内存分区进行管理一般使用位图和空闲链表两种方法128mb的内存以n字节为单元分配对于链表假设内存中数据段和空闲区交替排列长度均为64kb并假设链表中的每个节点需要记录32位的内存地址信息16位长度信息和16位下一节点域信息这两种方法分别需要多少字节的存储空间哪种方法更好">1. 动态内存分配需要对内存分区进行管理，一般使用位图和空闲链表两种方法。128MB的内存以n字节为单元分配，对于链表，假设内存中数据段和空闲区交替排列，长度均为64KB。并假设链表中的每个节点需要记录32位的内存地址信息、16位长度信息和16位下一节点域信息。这两种方法分别需要多少字节的存储空间？哪种方法更好？</h1>
+<ul>
+<li>若使用位图方法：</li>
+</ul>
+$$单元数 = \frac{128MB}{nB} = \frac{2^{27}}{n}块$$$$所需存储空间 = \frac{2^{27}}{n}b = \frac{16}{n}MB$$<ul>
+<li>若使用空闲链表方法：</li>
+</ul>
+$$段数=\frac{128MB}{64KB+64KB} = 2^{10}段$$$$所需存储空间 = 2^{10} \times (32 + 16 + 16)b = 8KB$$<ul>
+<li>哪种方法更好：
+<ul>
+<li>当n&lt;2048时，空闲链表所需存储空间更小，空闲链表方法更好；</li>
+<li>当n&gt;2048时，位图所需存储空间更小，位图方法更好。</li>
+</ul>
+</li>
+</ul>
+<h1 id="2-在一个交换系统中按内存地址排列的空闲区大小是-10kb4kb20kb18kb7kb9kb12kb和15kb对于连续的段请求12kb10kb9kb使用firstfitbestfitworstfit和nextfit将找出哪些空闲区">2. 在一个交换系统中，按内存地址排列的空闲区大小是: 10KB、4KB、20KB、18KB、7KB、9KB、12KB和15KB。对于连续的段请求：12KB、10KB、9KB。使用FirstFit、BestFit、WorstFit和NextFit将找出哪些空闲区？</h1>
+<table>
+  <thead>
+      <tr>
+          <th>段请求</th>
+          <th>FirstFit</th>
+          <th>BestFit</th>
+          <th>WorstFit</th>
+          <th>NextFit</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>12KB</strong></td>
+          <td>20KB</td>
+          <td>12KB</td>
+          <td>20KB</td>
+          <td>20KB</td>
+      </tr>
+      <tr>
+          <td><strong>10KB</strong></td>
+          <td>10KB</td>
+          <td>10KB</td>
+          <td>18KB</td>
+          <td>18KB</td>
+      </tr>
+      <tr>
+          <td><strong>9KB</strong></td>
+          <td>18KB</td>
+          <td>9KB</td>
+          <td>15KB</td>
+          <td>9KB</td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="3-解释逻辑地址物理地址地址映射并举例说明">3. 解释逻辑地址、物理地址、地址映射，并举例说明。</h1>
+<ol>
+<li>
+<p>逻辑地址（Logical Address）：
+逻辑地址是程序运行时由 CPU 生成的地址，也称为虚拟地址。用户进程只能访问逻辑地址，不能直接访问物理内存。<br>
+例如某程序访问地址 <code>0x1234</code>，但该地址只是进程的逻辑地址空间中的一部分。</p>
+</li>
+<li>
+<p>物理地址（Physical Address）：<br>
+物理地址是实际存在于内存（RAM）中的地址，由操作系统和硬件管理。<br>
+例子： 逻辑地址 <code>0x1234</code> 可能被映射到物理内存的 <code>0xABCD1234</code>。</p>
+</li>
+<li>
+<p>地址映射（Address Mapping）：<br>
+地址映射是逻辑地址到物理地址的转换过程，通常由MMU通过分页、分段、段页结合等方式完成。
+例子： 在分页系统中，逻辑地址 <code>0x1234</code> 可能属于页号2，页内偏移 <code>0x034</code>，MMU 通过页表找到物理页框5，映射后的物理地址为 <code>0x5034</code>。</p>
+</li>
+</ol>
+<h1 id="4-解释页式段式存储管理中为什么要设置页段表和快表简述页式段式地址转换过程">4. 解释页式（段式）存储管理中为什么要设置页（段）表和快表，简述页式（段式）地址转换过程。</h1>
+<ol>
+<li>
+<p>为什么要设置页（段）表和快表</p>
+<ul>
+<li>页表（段表）：用于记录逻辑地址到物理地址的映射关系，存储完整的映射信息，保证进程可以正确访问物理内存。</li>
+<li>快表：是一种高速缓存，用于存储最近访问的页（段）表项，加速地址转换，提高地址转换效率，减少访问内存的开销。</li>
+</ul>
+</li>
+<li>
+<p>页式存储管理的地址转换过程</p>
+<ol>
+<li>CPU 生成逻辑地址，包含页号和页内偏移。</li>
+<li>查询 TLB，如果页号在 TLB 中，则直接获取对应的物理页框号，得到物理地址。</li>
+<li>若TLB 未命中（缺页表项），需要访问页表，通过页号查找对应的物理页框号。</li>
+<li>组合物理页框号和页内偏移，形成物理地址，访问数据。</li>
+<li>更新 TLB（如果 TLB 未命中，则将新查找的页表项加入 TLB）。</li>
+</ol>
+</li>
+<li>
+<p>段式存储管理的地址转换过程</p>
+<ol>
+<li>CPU 生成逻辑地址，包含段号和段内偏移。</li>
+<li>查询 TLB，如果段号在 TLB 中，则直接获取段的基址，计算物理地址。</li>
+<li>若TLB 未命中，访问段表，查找段号对应的段基址和段界限。</li>
+<li>检查越界，如果段内偏移&gt;段界限，发生段越界异常，否则继续计算。</li>
+<li>物理地址 = 段基址 + 段内偏移，然后访问数据。</li>
+<li>更新 TLB（如果 TLB 未命中，则将新的段表项加入 TLB）。</li>
+</ol>
+</li>
+</ol>
+<h1 id="5-叙述缺页中断的处理流程">5. 叙述缺页中断的处理流程。</h1>
+<p>缺页中断发生在进程访问的页面不在内存时，系统需要从外存加载该页面到内存。处理流程如下：</p>
+<ol>
+<li>
+<p>产生缺页中断</p>
+<ul>
+<li>进程访问某个逻辑地址，CPU 通过页表查找对应的物理页框。</li>
+<li>如果该页表项无效（页不在内存），则触发缺页中断。</li>
+</ul>
+</li>
+<li>
+<p>保存进程状态</p>
+<ul>
+<li>CPU 保存当前进程的上下文，包括程序计数器（PC）和寄存器等，确保中断后能恢复执行。</li>
+</ul>
+</li>
+<li>
+<p>操作系统处理缺页</p>
+<ul>
+<li>查找页表：操作系统检查该页是否有效。
+<ul>
+<li>有效但不在内存 → 继续处理。</li>
+<li>非法访问 → 触发异常（如段错误），终止进程。</li>
+</ul>
+</li>
+<li>选择物理页框：
+<ul>
+<li>若有空闲页框，直接使用。</li>
+<li>若内存已满，使用页面置换算法（如 FIFO、LRU）淘汰一个旧页面。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>读取页面到内存</p>
+<ul>
+<li>从外存（如磁盘）读取所需页面，拷贝到选定的物理页框。</li>
+</ul>
+</li>
+<li>
+<p>更新页表和 TLB</p>
+<ul>
+<li>修改页表项，标记该页已在内存，并更新页框号。</li>
+<li>若该页表项在 TLB（快表）中，需更新或清除 TLB 旧项，保证地址转换正确。</li>
+</ul>
+</li>
+<li>
+<p>恢复进程执行</p>
+<ul>
+<li>恢复进程上下文，重新执行触发缺页的指令。</li>
+<li>由于该页已加载到内存，不会再次触发缺页中断。</li>
+</ul>
+</li>
+</ol>
+<h1 id="6-假设一个机器有38位的虚拟地址和32位的物理地址">6. 假设一个机器有38位的虚拟地址和32位的物理地址。</h1>
+<h2 id="1-与一级页表相比多级页表的主要优点是什么">(1) 与一级页表相比，多级页表的主要优点是什么？</h2>
+<ul>
+<li>空间利用率高。多级页表只在需要时分配低层页表，从而避免为整个虚拟地址空间都预留大量连续的页表空间，节省内存空间。</li>
+</ul>
+<h2 id="2如果使用二级页表页面大小为16kb每个页表项有4个字节应该为虚拟地址中的第一级和第二级页表域各分配多少位">(2) 如果使用二级页表，页面大小为16KB，每个页表项有4个字节。应该为虚拟地址中的第一级和第二级页表域各分配多少位？</h2>
+<p>页面大小为 16KB，即</p>
+$$16\,\text{KB} = 16 \times 1024 = 2^{14}\,\text{字节}$$<p>因此页内偏移需要 14 位，虚拟地址结构如下：</p>
+$$\underbrace{\text{第一级页表域}}_{x\,\text{位}}\,\,\underbrace{\text{第二级页表域}}_{y\,\text{位}}\,\,\underbrace{\text{页内偏移}}_{14\,\text{位}}$$<p>虚拟地址为38位，因此$x + y + 14 = 38位$，所以$x + y = 24,\text{位}$。</p>
+<p>每个页表项为4B，页表页的大小与页面大小相同，即16KB。一个页表页能容纳的页表项个数为</p>
+$$\frac{16\,\text{KB}}{4\,\text{B}} = 4096 = 2^{12}\,\text{项}$$<p>因此第二级页表的索引域需要12位，即$y=12$。</p>
+<p>由$x+y=24$可得$x=12$。即：</p>
+$$\underbrace{\text{第一级页表域}}_{12\,\text{位}}\,\,\underbrace{\text{第二级页表域}}_{12\,\text{位}}\,\,\underbrace{\text{页内偏移}}_{14\,\text{位}}$$<h1 id="7-假设页面的访问存在一定的周期性循环但周期之间会随机出现一些页面的访问例如012511431012511332012511等请思考">7. 假设页面的访问存在一定的周期性循环，但周期之间会随机出现一些页面的访问。例如：0,1,2…,511,431,0,1,2…511,332,0,1,2,…,511等。请思考：</h1>
+<h2 id="1lrufifo和clock算法的效果如何">(1) LRU、FIFO和Clock算法的效果如何？</h2>
+<p>如果物理页框数不足512个，三种算法会发生相同的几乎全部缺页问题。</p>
+<h2 id="2如果有500个页框能否设计一个优于lrufifo和clock的算法">(2) 如果有500个页框，能否设计一个优于LRU、FIFO和Clock的算法？</h2>
+<p>其中499个页框对应存储0-498页，第500个页框用于置换。</p>
+<h1 id="8-一个交换系统通过紧缩技术来清理碎片如果内存碎片和数据区域是随机分配的而且假设读写32位内存字需要10nsec-那么如果紧缩128mb的内存需要多久简单起见假设第0个字是碎片的一部分而最高位的字包含了有效的数据">8. 一个交换系统通过紧缩技术来清理碎片。如果内存碎片和数据区域是随机分配的。而且假设读写32位内存字需要10nsec. 那么如果紧缩128MB的内存需要多久？简单起见，假设第0个字是碎片的一部分而最高位的字包含了有效的数据。</h1>
+$$128MB=\frac{128\times 2^{23}b}{32b/word} = 2^{25}words$$$$T=2^{25}words \times (10ns/word + 10ns/word) = 6.711\times 10^8ns = 0.6711s$$<p>需要约$0.6711s$。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>[BUAA-OS] Lab 1 实验报告</title>
+      <link>https://oNya685.github.io/posts/buaa/os/lab-1-report/</link>
+      <pubDate>Fri, 28 Mar 2025 10:06:33 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/os/lab-1-report/</guid>
+      <description>&lt;h1 id=&#34;一思考题&#34;&gt;一、思考题&lt;/h1&gt;
+&lt;h2 id=&#34;thinking-11&#34;&gt;Thinking 1.1&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在阅读附录中的编译链接详解以及本章内容后，尝试分别使用实验环境中的原生x86工具链（gcc、ld、readelf、objdump等）和MIPS交叉编译工具链（带有mips-linux-gnu-前缀，如mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h1 id="一思考题">一、思考题</h1>
+<h2 id="thinking-11">Thinking 1.1</h2>
+<blockquote>
+<p>在阅读附录中的编译链接详解以及本章内容后，尝试分别使用实验环境中的原生x86工具链（gcc、ld、readelf、objdump等）和MIPS交叉编译工具链（带有mips-linux-gnu-前缀，如mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。</p></blockquote>
+<hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git@23373270:~/test $  gcc -E hello.c &gt; gcc-E.out
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># gcc-E.out:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...<span style="color:#f92672">(</span>&lt;stdio.h&gt;的内容<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2 &#34;hello.c&#34; 2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3 &#34;hello.c&#34;</span>
+</span></span><span style="display:flex;"><span>int main<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    printf<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Hello World!\n&#34;</span><span style="color:#f92672">)</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> 0;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git@23373270:~/test $  mips-linux-gnu-gcc -E hello.c &gt; mips-gcc-E.out
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mips-gcc-E.out:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>...<span style="color:#f92672">(</span>&lt;stdio.h&gt;的内容<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 2 &#34;hello.c&#34; 2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 3 &#34;hello.c&#34;</span>
+</span></span><span style="display:flex;"><span>int main<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    printf<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Hello World!\n&#34;</span><span style="color:#f92672">)</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> 0;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>进行预处理的情况下，两者几乎没有区别。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git@23373270:~/test $  gcc -c hello.c
+</span></span><span style="display:flex;"><span>git@23373270:~/test $  objdump -DS hello.o &gt; objdump-DS.out
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># objdump-DS.out:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hello.o：     文件格式 elf64-x86-64
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .text:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000000000000000</span> &lt;main&gt;:
+</span></span><span style="display:flex;"><span>   0:   f3 0f 1e fa             endbr64
+</span></span><span style="display:flex;"><span>   4:   <span style="color:#ae81ff">55</span>                      push   %rbp
+</span></span><span style="display:flex;"><span>   5:   <span style="color:#ae81ff">48</span> <span style="color:#ae81ff">89</span> e5                mov    %rsp,%rbp
+</span></span><span style="display:flex;"><span>   8:   <span style="color:#ae81ff">48</span> 8d <span style="color:#ae81ff">05</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>    lea    0x0<span style="color:#f92672">(</span>%rip<span style="color:#f92672">)</span>,%rax        <span style="color:#75715e"># f &lt;main+0xf&gt;</span>
+</span></span><span style="display:flex;"><span>   f:   <span style="color:#ae81ff">48</span> <span style="color:#ae81ff">89</span> c7                mov    %rax,%rdi
+</span></span><span style="display:flex;"><span>  12:   e8 <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>          call   <span style="color:#ae81ff">17</span> &lt;main+0x17&gt;
+</span></span><span style="display:flex;"><span>  17:   b8 <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>          mov    $0x0,%eax
+</span></span><span style="display:flex;"><span>  1c:   5d                      pop    %rbp
+</span></span><span style="display:flex;"><span>  1d:   c3                      ret
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .rodata:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000000000000000</span> &lt;.rodata&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .comment:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000000000000000</span> &lt;.comment&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .note.gnu.property:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000000000000000</span> &lt;.note.gnu.property&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .eh_frame:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0000000000000000</span> &lt;.eh_frame&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>git@23373270:~/test $  mips-linux-gnu-gcc -c hello.c
+</span></span><span style="display:flex;"><span>git@23373270:~/test $  mips-linux-gnu-objdump -DS hello.o &gt; mips-objdump-DS.out
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># mips-objdump-DS.out:</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hello.o：     文件格式 elf32-tradbigmips
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .text:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span> &lt;main&gt;:
+</span></span><span style="display:flex;"><span>   0:   27bdffe0        addiu   sp,sp,-32
+</span></span><span style="display:flex;"><span>   4:   afbf001c        sw      ra,28<span style="color:#f92672">(</span>sp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   8:   afbe0018        sw      s8,24<span style="color:#f92672">(</span>sp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>   c:   03a0f025        move    s8,sp
+</span></span><span style="display:flex;"><span>  10:   3c1c0000        lui     gp,0x0
+</span></span><span style="display:flex;"><span>  14:   279c0000        addiu   gp,gp,0
+</span></span><span style="display:flex;"><span>  18:   afbc0010        sw      gp,16<span style="color:#f92672">(</span>sp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  1c:   3c020000        lui     v0,0x0
+</span></span><span style="display:flex;"><span>  20:   <span style="color:#ae81ff">24440000</span>        addiu   a0,v0,0
+</span></span><span style="display:flex;"><span>  24:   8f820000        lw      v0,0<span style="color:#f92672">(</span>gp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  28:   0040c825        move    t9,v0
+</span></span><span style="display:flex;"><span>  2c:   0320f809        jalr    t9
+</span></span><span style="display:flex;"><span>  30:   <span style="color:#ae81ff">00000000</span>        nop
+</span></span><span style="display:flex;"><span>  34:   8fdc0010        lw      gp,16<span style="color:#f92672">(</span>s8<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  38:   <span style="color:#ae81ff">00001025</span>        move    v0,zero
+</span></span><span style="display:flex;"><span>  3c:   03c0e825        move    sp,s8
+</span></span><span style="display:flex;"><span>  40:   8fbf001c        lw      ra,28<span style="color:#f92672">(</span>sp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  44:   8fbe0018        lw      s8,24<span style="color:#f92672">(</span>sp<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  48:   27bd0020        addiu   sp,sp,32
+</span></span><span style="display:flex;"><span>  4c:   03e00008        jr      ra
+</span></span><span style="display:flex;"><span>  50:   <span style="color:#ae81ff">00000000</span>        nop
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .reginfo:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span> &lt;.reginfo&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .MIPS.abiflags:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span> &lt;.MIPS.abiflags&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .pdr:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span> &lt;.pdr&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .rodata:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span> &lt;.rodata&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .comment:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span> &lt;.comment&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Disassembly of section .gnu.attributes:
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">00000000</span> &lt;.gnu.attributes&gt;:
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>只编译不链接，生成目标文件，发现被编译为不同的汇编语言，且分别为64位和32位。</p>
+<p>其中向<code>objdump</code>传入参数<code>-D</code>和<code>-S</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git@23373270:~/test $  objdump --help
+</span></span><span style="display:flex;"><span>    -D, --disassemble-all    Display assembler contents of all sections
+</span></span><span style="display:flex;"><span>    -S, --source             Intermix source code with disassembly
+</span></span></code></pre></div><p><code>-D</code>：显示所有段的汇编内容
+<code>-S</code>：将源代码与反汇编代码混合显示</p>
+<h2 id="thinking-12">Thinking 1.2</h2>
+<blockquote>
+<p>思考下述问题：</p>
+<ul>
+<li>尝试使用我们编写的readelf程序，解析之前在target目录下生成的内核ELF文件。</li>
+<li>也许你会发现我们编写的readelf程序是不能解析readelf文件本身的，而我们刚才介绍的系统工具readelf则可以解析，这是为什么呢？（提示：尝试使用readelf -h，并阅读tools/readelf目录下的Makefile，观察readelf与hello的不同）</li>
+</ul></blockquote>
+<hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git@23373270:~/23373270 <span style="color:#f92672">(</span>lab1<span style="color:#f92672">)</span>$  tools/readelf/readelf target/mos
+</span></span><span style="display:flex;"><span>0:0x0
+</span></span><span style="display:flex;"><span>1:0x80020000
+</span></span><span style="display:flex;"><span>2:0x80021930
+</span></span><span style="display:flex;"><span>3:0x80021948
+</span></span><span style="display:flex;"><span>4:0x80021960
+</span></span><span style="display:flex;"><span>5:0x0
+</span></span><span style="display:flex;"><span>6:0x0
+</span></span><span style="display:flex;"><span>7:0x0
+</span></span><span style="display:flex;"><span>8:0x0
+</span></span><span style="display:flex;"><span>9:0x0
+</span></span><span style="display:flex;"><span>10:0x0
+</span></span><span style="display:flex;"><span>11:0x0
+</span></span><span style="display:flex;"><span>12:0x0
+</span></span><span style="display:flex;"><span>13:0x0
+</span></span><span style="display:flex;"><span>14:0x0
+</span></span><span style="display:flex;"><span>15:0x0
+</span></span><span style="display:flex;"><span>16:0x0
+</span></span><span style="display:flex;"><span>17:0x0
+</span></span><span style="display:flex;"><span>18:0x0
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>git@23373270:~/23373270/tools/readelf <span style="color:#f92672">(</span>lab1<span style="color:#f92672">)</span>$  readelf -h readelf
+</span></span><span style="display:flex;"><span>ELF 头：
+</span></span><span style="display:flex;"><span>  Magic：   7f <span style="color:#ae81ff">45</span> 4c <span style="color:#ae81ff">46</span> <span style="color:#ae81ff">02</span> <span style="color:#ae81ff">01</span> <span style="color:#ae81ff">01</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span> <span style="color:#ae81ff">00</span>
+</span></span><span style="display:flex;"><span>  类别:                              ELF64
+</span></span><span style="display:flex;"><span>  数据:                              <span style="color:#ae81ff">2</span> 补码，小端序 <span style="color:#f92672">(</span>little endian<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  Version:                           <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>current<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  OS/ABI:                            UNIX - System V
+</span></span><span style="display:flex;"><span>  ABI 版本:                          <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>  类型:                              DYN <span style="color:#f92672">(</span>Position-Independent Executable file<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  系统架构:                          Advanced Micro Devices X86-64
+</span></span><span style="display:flex;"><span>  版本:                              0x1
+</span></span><span style="display:flex;"><span>  入口点地址：               0x1180
+</span></span><span style="display:flex;"><span>  程序头起点：          <span style="color:#ae81ff">64</span> <span style="color:#f92672">(</span>bytes into file<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  Start of section headers:          <span style="color:#ae81ff">14488</span> <span style="color:#f92672">(</span>bytes into file<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  标志：             0x0
+</span></span><span style="display:flex;"><span>  Size of this header:               <span style="color:#ae81ff">64</span> <span style="color:#f92672">(</span>bytes<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  Size of program headers:           <span style="color:#ae81ff">56</span> <span style="color:#f92672">(</span>bytes<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  Number of program headers:         <span style="color:#ae81ff">13</span>
+</span></span><span style="display:flex;"><span>  Size of section headers:           <span style="color:#ae81ff">64</span> <span style="color:#f92672">(</span>bytes<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>  Number of section headers:         <span style="color:#ae81ff">31</span>
+</span></span><span style="display:flex;"><span>  Section header string table index: <span style="color:#ae81ff">30</span>
+</span></span></code></pre></div><p>观察<code>tools/readelf/Makefile</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>readelf: main.o readelf.o
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">$(</span>CC<span style="color:#66d9ef">)</span> $^ -o $@
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>hello: hello.c
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">$(</span>CC<span style="color:#66d9ef">)</span> $^ -o $@ -m32 -static -g
+</span></span></code></pre></div><p>区别在于<code>hello</code>为32位程序，<code>readelf</code>是64位程序，且<code>hello</code>的编译有<code>-static</code>修饰，是静态链接的。</p>
+<h2 id="thinking-13">Thinking 1.3</h2>
+<blockquote>
+<p>在理论课上我们了解到，MIPS体系结构上电时，启动入口地址为0xBFC00000（其实启动入口地址是根据具体型号而定的，由硬件逻辑确定，也有可能不是这个地址，但一定是一个确定的地址），但实验操作系统的内核入口并没有放在上电启动地址，而是按照内存布局图放置。思考为什么这样放置内核还能保证内核入口被正确跳转到？
+（提示：思考实验中启动过程的两阶段分别由谁执行。）</p></blockquote>
+<hr>
+<p>系统能够正确跳转到内核入口在于两阶段启动过程和链接脚本控制：</p>
+<ol>
+<li>
+<p>启动阶段划分</p>
+<ul>
+<li>阶段一：硬件上电后执行固化在 ROM 中的代码（地址 0xBFC00000）</li>
+<li>阶段二：Bootloader 加载操作系统内核到指定内存地址</li>
+</ul>
+</li>
+<li>
+<p>链接脚本控制（kernel.lds）</p>
+</li>
+</ol>
+<pre tabindex="0"><code class="language-ld" data-lang="ld">/*
+ * Set the ENTRY point of the program to _start.
+ */
+ENTRY(_start)
+
+SECTIONS {
+    . = 0x80020000;
+    .text : { *(.text) }
+	...
+}
+</code></pre><ol start="3">
+<li>入口地址设置（start.S）</li>
+</ol>
+<pre tabindex="0"><code class="language-mips" data-lang="mips">#include &lt;asm/asm.h&gt;
+#include &lt;mmu.h&gt;
+
+.text
+EXPORT(_start)
+.set at
+.set reorder
+/* Lab 1 Key Code &#34;enter-kernel&#34; */
+    /* clear .bss segment */
+    la      v0, bss_start
+    la      v1, bss_end
+    ...
+    j       mips_init
+</code></pre><p>实现原理：</p>
+<ol>
+<li>Bootloader 将内核镜像加载到链接脚本指定的内存地址（0x80020000）</li>
+<li>通过<code>ENTRY(_start)</code>指定内核入口符号</li>
+<li>汇编代码中 <code>_start</code> 符号通过绝对跳转指令（<code>j mips_init</code>）转移到内核主函数</li>
+</ol>
+<h1 id="二难点分析与实验体会">二、难点分析与实验体会</h1>
+<h2 id="1-elf文件">1. ELF文件</h2>
+<p><div class="post-img-view">
+    <a data-fancybox="gallery"
+         href="Pasted%20image%2020250328172841.png">
+        <img loading="lazy" src="/posts/buaa/os/lab-1-report/Pasted%20image%2020250328172841_hu_42ee11080f61b4c9.webp">
+    </a>
+</div></p>
+<p>对ELF文件的概念缺少理解，写完<code>readelf</code>实际使用后才理解其含义。</p>
+<h1 id="三原创说明">三、原创说明</h1>
+<p>本以为是<code>readelf</code>在运行时无法读取自己，是因为自己正在运行导致的无法读取。在与赵德祥同学讨论后才注意到<code>readelf</code>与<code>hello</code>在64位和32位上的区别，在此致谢。</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>迟早会想不出标题的吧</title>
       <link>https://oNya685.github.io/posts/ramble/250322/</link>
@@ -17,7 +531,12 @@
 &lt;p&gt;给Ramble下的内容都改为了随时更新随时发布，不得不说的是图片太大已经成为hugo build和push的阻碍了，这样继续下去迟早会卡顿的，今后只对增量作编译了。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p>也有考虑过要不要把原来的内容搬过来，但好像原来的内容也没有多大价值。</p>
 <p>给Ramble下的内容都改为了随时更新随时发布，不得不说的是图片太大已经成为hugo build和push的阻碍了，这样继续下去迟早会卡顿的，今后只对增量作编译了。</p>
-<p>不过写了一个自动同步webdav的脚本，这样以后就能随时看到渲染后的网页了，hugo server也不需要关了。这样倒是方便不少，大概？</p>
+<p>不过写了一个自动同步webdav的脚本，这样以后就能随时看到渲染后的网页了，hugo server也不需要关了。这样倒是方便不少。</p>
+<p>专开一栏写Cook，底本是一个<a href="https://cook.aiursoft.cn/" target="_blank">有趣的项目</a>
+！</p>
+<hr>
+<p>有想到人与搜索引擎的交互，尤其是历史记录，一般是天然的版本树，或者说因为有环的存在，可能更像图？或许是一个不错的创业项目，赚不着钱的那种，不过想到就很感兴趣，可能具体实现时很多功能（脏活累活）还得要靠AI来干，小型AI未来可期</p>
+<p>想起来某学长记录的陈震的讲座概要，他预测的几个风口与稚晖君去花了好久在干的方向几乎一致。</p>
 ]]></content:encoded>
     </item>
     <item>

@@ -2,11 +2,35 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://oNya685.github.io/posts/cook/</loc>
+    <lastmod>2025-03-29T14:37:17+08:00</lastmod>
+  </url><url>
     <loc>https://oNya685.github.io/</loc>
-    <lastmod>2025-03-22T16:35:04+08:00</lastmod>
+    <lastmod>2025-03-29T14:37:17+08:00</lastmod>
   </url><url>
     <loc>https://oNya685.github.io/posts/</loc>
-    <lastmod>2025-03-22T16:35:04+08:00</lastmod>
+    <lastmod>2025-03-29T14:37:17+08:00</lastmod>
+  </url><url>
+    <loc>https://oNya685.github.io/posts/cook/unclassified/</loc>
+    <lastmod>2025-03-29T14:37:17+08:00</lastmod>
+  </url><url>
+    <loc>https://oNya685.github.io/posts/buaa/os/homework-2/</loc>
+    <lastmod>2025-03-28T19:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://oNya685.github.io/categories/</loc>
+    <lastmod>2025-03-28T19:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://oNya685.github.io/categories/operating-system/</loc>
+    <lastmod>2025-03-28T19:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://oNya685.github.io/posts/buaa/</loc>
+    <lastmod>2025-03-28T19:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://oNya685.github.io/posts/buaa/os/</loc>
+    <lastmod>2025-03-28T19:00:00+08:00</lastmod>
+  </url><url>
+    <loc>https://oNya685.github.io/posts/buaa/os/lab-1-report/</loc>
+    <lastmod>2025-03-28T10:06:33+08:00</lastmod>
   </url><url>
     <loc>https://oNya685.github.io/posts/ramble/</loc>
     <lastmod>2025-03-22T16:35:04+08:00</lastmod>
@@ -17,13 +41,7 @@
     <loc>https://oNya685.github.io/posts/buaa/oo/unit-1/summary/</loc>
     <lastmod>2025-03-22T14:16:55+08:00</lastmod>
   </url><url>
-    <loc>https://oNya685.github.io/categories/</loc>
-    <lastmod>2025-03-22T14:16:55+08:00</lastmod>
-  </url><url>
     <loc>https://oNya685.github.io/categories/object-oriented/</loc>
-    <lastmod>2025-03-22T14:16:55+08:00</lastmod>
-  </url><url>
-    <loc>https://oNya685.github.io/posts/buaa/</loc>
     <lastmod>2025-03-22T14:16:55+08:00</lastmod>
   </url><url>
     <loc>https://oNya685.github.io/posts/buaa/oo/</loc>
@@ -36,12 +54,6 @@
     <lastmod>2025-03-17T00:40:43+08:00</lastmod>
   </url><url>
     <loc>https://oNya685.github.io/posts/buaa/os/lab-0-report/</loc>
-    <lastmod>2025-03-16T11:27:33+08:00</lastmod>
-  </url><url>
-    <loc>https://oNya685.github.io/categories/operating-system/</loc>
-    <lastmod>2025-03-16T11:27:33+08:00</lastmod>
-  </url><url>
-    <loc>https://oNya685.github.io/posts/buaa/os/</loc>
     <lastmod>2025-03-16T11:27:33+08:00</lastmod>
   </url><url>
     <loc>https://oNya685.github.io/posts/buaa/os/homework-1/</loc>

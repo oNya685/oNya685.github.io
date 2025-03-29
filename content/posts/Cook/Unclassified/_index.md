@@ -1,5 +1,5 @@
 ---
-title: Posts
+title: Unclassified
 hideSummary: true
 hidemeta: true
 ---

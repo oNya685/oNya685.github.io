@@ -1,0 +1,220 @@
+<!doctype html><html lang=en dir=auto><head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=20003&amp;path=livereload" data-no-instant defer></script><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>[BUAA-OS] Lab 1 实验报告 | oNya's Blog</title>
+<meta name=keywords content><meta name=description content="一、思考题
+Thinking 1.1
+
+在阅读附录中的编译链接详解以及本章内容后，尝试分别使用实验环境中的原生x86工具链（gcc、ld、readelf、objdump等）和MIPS交叉编译工具链（带有mips-linux-gnu-前缀，如mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。"><meta name=author content="oNya"><link rel=canonical href=%7b%7b%20.Permalink%20%7d%7d><link crossorigin=anonymous href=/assets/css/stylesheet.79e07885fe54214be03f273758b2bda9bbf1210d3eba9e9b5be2955ca8fdb800.css integrity="sha256-eeB4hf5UIUvgPyc3WLK9qbvxIQ0+up6bW+KVXKj9uAA=" rel="preload stylesheet" as=style><link rel=icon href=http://localhost:20003/favicon.ico><link rel=icon type=image/png sizes=16x16 href=http://localhost:20003/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=http://localhost:20003/favicon-32x32.png><link rel=apple-touch-icon href=http://localhost:20003/apple-touch-icon.png><link rel=mask-icon href=http://localhost:20003/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=http://localhost:20003/posts/buaa/os/lab-1-report/lab-1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel=stylesheet><link rel=preconnect href=https://static.zeoseven.com crossorigin><link rel=stylesheet href=https://static.zeoseven.com/zsft/372/main/result.css onerror='this.href="https://static-host.zeoseven.com/zsft/372/main/result.css"'><link rel=stylesheet href=https://static.zeoseven.com/zsft/25/main/result.css onerror='this.href="https://static-host.zeoseven.com/zsft/25/main/result.css"'><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css integrity=sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js integrity=sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}]})})</script><meta property="og:url" content="http://localhost:20003/posts/buaa/os/lab-1-report/lab-1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"><meta property="og:site_name" content="oNya's Blog"><meta property="og:title" content="[BUAA-OS] Lab 1 实验报告"><meta property="og:description" content="一、思考题 Thinking 1.1 在阅读附录中的编译链接详解以及本章内容后，尝试分别使用实验环境中的原生x86工具链（gcc、ld、readelf、objdump等）和MIPS交叉编译工具链（带有mips-linux-gnu-前缀，如mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。"><meta property="og:locale" content="zh-cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-03-28T10:06:33+08:00"><meta property="article:modified_time" content="2025-03-28T10:06:33+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="[BUAA-OS] Lab 1 实验报告"><meta name=twitter:description content="一、思考题
+Thinking 1.1
+
+在阅读附录中的编译链接详解以及本章内容后，尝试分别使用实验环境中的原生x86工具链（gcc、ld、readelf、objdump等）和MIPS交叉编译工具链（带有mips-linux-gnu-前缀，如mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"http://localhost:20003/posts/"},{"@type":"ListItem","position":2,"name":"北京航空航天大学","item":"http://localhost:20003/posts/buaa/"},{"@type":"ListItem","position":3,"name":"操作系统","item":"http://localhost:20003/posts/buaa/os/"},{"@type":"ListItem","position":4,"name":"[BUAA-OS] Lab 1 实验报告","item":"http://localhost:20003/posts/buaa/os/lab-1-report/lab-1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"[BUAA-OS] Lab 1 实验报告","name":"[BUAA-OS] Lab 1 实验报告","description":"一、思考题 Thinking 1.1 在阅读附录中的编译链接详解以及本章内容后，尝试分别使用实验环境中的原生x86工具链（gcc、ld、readelf、objdump等）和MIPS交叉编译工具链（带有mips-linux-gnu-前缀，如mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。\n","keywords":[],"articleBody":"一、思考题 Thinking 1.1 在阅读附录中的编译链接详解以及本章内容后，尝试分别使用实验环境中的原生x86工具链（gcc、ld、readelf、objdump等）和MIPS交叉编译工具链（带有mips-linux-gnu-前缀，如mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。\ngit@23373270:~/test $ gcc -E hello.c \u003e gcc-E.out # gcc-E.out: ...(的内容) # 2 \"hello.c\" 2 # 3 \"hello.c\" int main() { printf(\"Hello World!\\n\"); return 0; } git@23373270:~/test $ mips-linux-gnu-gcc -E hello.c \u003e mips-gcc-E.out # mips-gcc-E.out: ...(的内容) # 2 \"hello.c\" 2 # 3 \"hello.c\" int main() { printf(\"Hello World!\\n\"); return 0; } 进行预处理的情况下，两者几乎没有区别。\ngit@23373270:~/test $ gcc -c hello.c git@23373270:~/test $ objdump -DS hello.o \u003e objdump-DS.out # objdump-DS.out: hello.o： 文件格式 elf64-x86-64 Disassembly of section .text: 0000000000000000 : 0: f3 0f 1e fa endbr64 4: 55 push %rbp 5: 48 89 e5 mov %rsp,%rbp 8: 48 8d 05 00 00 00 00 lea 0x0(%rip),%rax # f f: 48 89 c7 mov %rax,%rdi 12: e8 00 00 00 00 call 17 17: b8 00 00 00 00 mov $0x0,%eax 1c: 5d pop %rbp 1d: c3 ret Disassembly of section .rodata: 0000000000000000 \u003c.rodata\u003e: ... Disassembly of section .comment: 0000000000000000 \u003c.comment\u003e: ... Disassembly of section .note.gnu.property: 0000000000000000 \u003c.note.gnu.property\u003e: ... Disassembly of section .eh_frame: 0000000000000000 \u003c.eh_frame\u003e: ... git@23373270:~/test $ mips-linux-gnu-gcc -c hello.c git@23373270:~/test $ mips-linux-gnu-objdump -DS hello.o \u003e mips-objdump-DS.out # mips-objdump-DS.out: hello.o： 文件格式 elf32-tradbigmips Disassembly of section .text: 00000000 : 0: 27bdffe0 addiu sp,sp,-32 4: afbf001c sw ra,28(sp) 8: afbe0018 sw s8,24(sp) c: 03a0f025 move s8,sp 10: 3c1c0000 lui gp,0x0 14: 279c0000 addiu gp,gp,0 18: afbc0010 sw gp,16(sp) 1c: 3c020000 lui v0,0x0 20: 24440000 addiu a0,v0,0 24: 8f820000 lw v0,0(gp) 28: 0040c825 move t9,v0 2c: 0320f809 jalr t9 30: 00000000 nop 34: 8fdc0010 lw gp,16(s8) 38: 00001025 move v0,zero 3c: 03c0e825 move sp,s8 40: 8fbf001c lw ra,28(sp) 44: 8fbe0018 lw s8,24(sp) 48: 27bd0020 addiu sp,sp,32 4c: 03e00008 jr ra 50: 00000000 nop ... Disassembly of section .reginfo: 00000000 \u003c.reginfo\u003e: ... Disassembly of section .MIPS.abiflags: 00000000 \u003c.MIPS.abiflags\u003e: ... Disassembly of section .pdr: 00000000 \u003c.pdr\u003e: ... Disassembly of section .rodata: 00000000 \u003c.rodata\u003e: ... Disassembly of section .comment: 00000000 \u003c.comment\u003e: ... Disassembly of section .gnu.attributes: 00000000 \u003c.gnu.attributes\u003e: ... 只编译不链接，生成目标文件，发现被编译为不同的汇编语言，且分别为64位和32位。\n其中向objdump传入参数-D和-S。\ngit@23373270:~/test $ objdump --help -D, --disassemble-all Display assembler contents of all sections -S, --source Intermix source code with disassembly -D：显示所有段的汇编内容 -S：将源代码与反汇编代码混合显示\nThinking 1.2 思考下述问题：\n尝试使用我们编写的readelf程序，解析之前在target目录下生成的内核ELF文件。 也许你会发现我们编写的readelf程序是不能解析readelf文件本身的，而我们刚才介绍的系统工具readelf则可以解析，这是为什么呢？（提示：尝试使用readelf -h，并阅读tools/readelf目录下的Makefile，观察readelf与hello的不同） git@23373270:~/23373270 (lab1)$ tools/readelf/readelf target/mos 0:0x0 1:0x80020000 2:0x80021930 3:0x80021948 4:0x80021960 5:0x0 6:0x0 7:0x0 8:0x0 9:0x0 10:0x0 11:0x0 12:0x0 13:0x0 14:0x0 15:0x0 16:0x0 17:0x0 18:0x0 git@23373270:~/23373270/tools/readelf (lab1)$ readelf -h readelf ELF 头： Magic： 7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00 类别: ELF64 数据: 2 补码，小端序 (little endian) Version: 1 (current) OS/ABI: UNIX - System V ABI 版本: 0 类型: DYN (Position-Independent Executable file) 系统架构: Advanced Micro Devices X86-64 版本: 0x1 入口点地址： 0x1180 程序头起点： 64 (bytes into file) Start of section headers: 14488 (bytes into file) 标志： 0x0 Size of this header: 64 (bytes) Size of program headers: 56 (bytes) Number of program headers: 13 Size of section headers: 64 (bytes) Number of section headers: 31 Section header string table index: 30 观察tools/readelf/Makefile：\nreadelf: main.o readelf.o $(CC) $^ -o $@ hello: hello.c $(CC) $^ -o $@ -m32 -static -g 区别在于hello为32位程序，readelf是64位程序，且hello的编译有-static修饰，是静态链接的。\nThinking 1.3 在理论课上我们了解到，MIPS体系结构上电时，启动入口地址为0xBFC00000（其实启动入口地址是根据具体型号而定的，由硬件逻辑确定，也有可能不是这个地址，但一定是一个确定的地址），但实验操作系统的内核入口并没有放在上电启动地址，而是按照内存布局图放置。思考为什么这样放置内核还能保证内核入口被正确跳转到？ （提示：思考实验中启动过程的两阶段分别由谁执行。）\n系统能够正确跳转到内核入口在于两阶段启动过程和链接脚本控制：\n启动阶段划分\n阶段一：硬件上电后执行固化在 ROM 中的代码（地址 0xBFC00000） 阶段二：Bootloader 加载操作系统内核到指定内存地址 链接脚本控制（kernel.lds）\n/* * Set the ENTRY point of the program to _start. */ ENTRY(_start) SECTIONS { . = 0x80020000; .text : { *(.text) } ... } 入口地址设置（start.S） #include #include .text EXPORT(_start) .set at .set reorder /* Lab 1 Key Code \"enter-kernel\" */ /* clear .bss segment */ la v0, bss_start la v1, bss_end ... j mips_init 实现原理：\nBootloader 将内核镜像加载到链接脚本指定的内存地址（0x80020000） 通过ENTRY(_start)指定内核入口符号 汇编代码中 _start 符号通过绝对跳转指令（j mips_init）转移到内核主函数 二、难点分析与实验体会 1. ELF文件 对ELF文件的概念缺少理解，写完readelf实际使用后才理解其含义。\n三、原创说明 ","wordCount":"1662","inLanguage":"en","datePublished":"2025-03-28T10:06:33+08:00","dateModified":"2025-03-28T10:06:33+08:00","author":{"@type":"Person","name":"oNya"},"mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:20003/posts/buaa/os/lab-1-report/lab-1-%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/"},"publisher":{"@type":"Organization","name":"oNya's Blog","logo":{"@type":"ImageObject","url":"http://localhost:20003/favicon.ico"}}}</script><script src=https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css><script src=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js></script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=http://localhost:20003/ accesskey=h title="主页 | oNya's Blog (Alt + H)"><img src=http://localhost:20003/ alt aria-label=logo height=30>主页 | oNya's Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme"><svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=http://localhost:20003/archives/ title=归档><span>归档</span></a></li><li><a href=http://localhost:20003/categories/ title=分类><span>分类</span></a></li><li><a href=http://localhost:20003/tags/ title=标签><span>标签</span></a></li><li><a href=http://localhost:20003/links/ title=链接><span>链接</span></a></li><li><a href=http://localhost:20003/search/ title=搜索><span>搜索</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=http://localhost:20003/>Home</a>&nbsp;»&nbsp;<a href=http://localhost:20003/posts/>Posts</a>&nbsp;»&nbsp;<a href=http://localhost:20003/posts/buaa/>北京航空航天大学</a>&nbsp;»&nbsp;<a href=http://localhost:20003/posts/buaa/os/>操作系统</a></div><h1 class="post-title entry-hint-parent">[BUAA-OS] Lab 1 实验报告</h1><div class=post-meta><span title='2025-03-28 10:06:33 +0800 CST'>2025年3月28日</span>&nbsp;·&nbsp;4 min&nbsp;·&nbsp;1662 words&nbsp;·&nbsp;oNya</div></header><aside id=toc-container class="toc-container wide"><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#%e4%b8%80%e6%80%9d%e8%80%83%e9%a2%98 aria-label=一、思考题>一、思考题</a><ul><li><a href=#thinking-11 aria-label="Thinking 1.1">Thinking 1.1</a></li><li><a href=#thinking-12 aria-label="Thinking 1.2">Thinking 1.2</a></li><li><a href=#thinking-13 aria-label="Thinking 1.3">Thinking 1.3</a></li></ul></li><li><a href=#%e4%ba%8c%e9%9a%be%e7%82%b9%e5%88%86%e6%9e%90%e4%b8%8e%e5%ae%9e%e9%aa%8c%e4%bd%93%e4%bc%9a aria-label=二、难点分析与实验体会>二、难点分析与实验体会</a><ul><li><a href=#1-elf%e6%96%87%e4%bb%b6 aria-label="1. ELF文件">1. ELF文件</a></li></ul></li><li><a href=#%e4%b8%89%e5%8e%9f%e5%88%9b%e8%af%b4%e6%98%8e aria-label=三、原创说明>三、原创说明</a></li></ul></div></details></div></aside><script>let activeElement,elements;window.addEventListener("DOMContentLoaded",function(){checkTocPosition(),elements=document.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),activeElement=elements[0];const t=encodeURI(activeElement.getAttribute("id")).toLowerCase();document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active")},!1),window.addEventListener("resize",function(){checkTocPosition()},!1),window.addEventListener("scroll",()=>{activeElement=Array.from(elements).find(e=>{if(getOffsetTop(e)-window.pageYOffset>0&&getOffsetTop(e)-window.pageYOffset<window.innerHeight/2)return e})||activeElement,elements.forEach(e=>{const t=encodeURI(e.getAttribute("id")).toLowerCase();e===activeElement?document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active"):document.querySelector(`.inner ul li a[href="#${t}"]`).classList.remove("active")})},!1);const main=parseInt(getComputedStyle(document.body).getPropertyValue("--article-width"),10),toc=parseInt(getComputedStyle(document.body).getPropertyValue("--toc-width"),10),gap=parseInt(getComputedStyle(document.body).getPropertyValue("--gap"),10);function checkTocPosition(){const e=document.body.scrollWidth;e-main-toc*2-gap*4>0?document.getElementById("toc-container").classList.add("wide"):document.getElementById("toc-container").classList.remove("wide")}function getOffsetTop(e){if(!e.getClientRects().length)return 0;let t=e.getBoundingClientRect(),n=e.ownerDocument.defaultView;return t.top+n.pageYOffset}</script><div class=post-content><h1 id=一思考题>一、思考题<a hidden class=anchor aria-hidden=true href=#一思考题>#</a></h1><h2 id=thinking-11>Thinking 1.1<a hidden class=anchor aria-hidden=true href=#thinking-11>#</a></h2><blockquote><p>在阅读附录中的编译链接详解以及本章内容后，尝试分别使用实验环境中的原生x86工具链（gcc、ld、readelf、objdump等）和MIPS交叉编译工具链（带有mips-linux-gnu-前缀，如mips-linux-gnu-gcc、mips-linux-gnu-ld），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。</p></blockquote><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>git@23373270:~/test $  gcc -E hello.c &gt; gcc-E.out
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># gcc-E.out:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>...<span style=color:#f92672>(</span>&lt;stdio.h&gt;的内容<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 2 &#34;hello.c&#34; 2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 3 &#34;hello.c&#34;</span>
+</span></span><span style=display:flex><span>int main<span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    printf<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;Hello World!\n&#34;</span><span style=color:#f92672>)</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> 0;
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>git@23373270:~/test $  mips-linux-gnu-gcc -E hello.c &gt; mips-gcc-E.out
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># mips-gcc-E.out:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>...<span style=color:#f92672>(</span>&lt;stdio.h&gt;的内容<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 2 &#34;hello.c&#34; 2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 3 &#34;hello.c&#34;</span>
+</span></span><span style=display:flex><span>int main<span style=color:#f92672>()</span> <span style=color:#f92672>{</span>
+</span></span><span style=display:flex><span>    printf<span style=color:#f92672>(</span><span style=color:#e6db74>&#34;Hello World!\n&#34;</span><span style=color:#f92672>)</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> 0;
+</span></span><span style=display:flex><span><span style=color:#f92672>}</span>
+</span></span></code></pre></div><p>进行预处理的情况下，两者几乎没有区别。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>git@23373270:~/test $  gcc -c hello.c
+</span></span><span style=display:flex><span>git@23373270:~/test $  objdump -DS hello.o &gt; objdump-DS.out
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># objdump-DS.out:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>hello.o：     文件格式 elf64-x86-64
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .text:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0000000000000000</span> &lt;main&gt;:
+</span></span><span style=display:flex><span>   0:   f3 0f 1e fa             endbr64
+</span></span><span style=display:flex><span>   4:   <span style=color:#ae81ff>55</span>                      push   %rbp
+</span></span><span style=display:flex><span>   5:   <span style=color:#ae81ff>48</span> <span style=color:#ae81ff>89</span> e5                mov    %rsp,%rbp
+</span></span><span style=display:flex><span>   8:   <span style=color:#ae81ff>48</span> 8d <span style=color:#ae81ff>05</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span>    lea    0x0<span style=color:#f92672>(</span>%rip<span style=color:#f92672>)</span>,%rax        <span style=color:#75715e># f &lt;main+0xf&gt;</span>
+</span></span><span style=display:flex><span>   f:   <span style=color:#ae81ff>48</span> <span style=color:#ae81ff>89</span> c7                mov    %rax,%rdi
+</span></span><span style=display:flex><span>  12:   e8 <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span>          call   <span style=color:#ae81ff>17</span> &lt;main+0x17&gt;
+</span></span><span style=display:flex><span>  17:   b8 <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span>          mov    $0x0,%eax
+</span></span><span style=display:flex><span>  1c:   5d                      pop    %rbp
+</span></span><span style=display:flex><span>  1d:   c3                      ret
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .rodata:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0000000000000000</span> &lt;.rodata&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .comment:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0000000000000000</span> &lt;.comment&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .note.gnu.property:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0000000000000000</span> &lt;.note.gnu.property&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .eh_frame:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0000000000000000</span> &lt;.eh_frame&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>git@23373270:~/test $  mips-linux-gnu-gcc -c hello.c
+</span></span><span style=display:flex><span>git@23373270:~/test $  mips-linux-gnu-objdump -DS hello.o &gt; mips-objdump-DS.out
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># mips-objdump-DS.out:</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>hello.o：     文件格式 elf32-tradbigmips
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .text:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>00000000</span> &lt;main&gt;:
+</span></span><span style=display:flex><span>   0:   27bdffe0        addiu   sp,sp,-32
+</span></span><span style=display:flex><span>   4:   afbf001c        sw      ra,28<span style=color:#f92672>(</span>sp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>   8:   afbe0018        sw      s8,24<span style=color:#f92672>(</span>sp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>   c:   03a0f025        move    s8,sp
+</span></span><span style=display:flex><span>  10:   3c1c0000        lui     gp,0x0
+</span></span><span style=display:flex><span>  14:   279c0000        addiu   gp,gp,0
+</span></span><span style=display:flex><span>  18:   afbc0010        sw      gp,16<span style=color:#f92672>(</span>sp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  1c:   3c020000        lui     v0,0x0
+</span></span><span style=display:flex><span>  20:   <span style=color:#ae81ff>24440000</span>        addiu   a0,v0,0
+</span></span><span style=display:flex><span>  24:   8f820000        lw      v0,0<span style=color:#f92672>(</span>gp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  28:   0040c825        move    t9,v0
+</span></span><span style=display:flex><span>  2c:   0320f809        jalr    t9
+</span></span><span style=display:flex><span>  30:   <span style=color:#ae81ff>00000000</span>        nop
+</span></span><span style=display:flex><span>  34:   8fdc0010        lw      gp,16<span style=color:#f92672>(</span>s8<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  38:   <span style=color:#ae81ff>00001025</span>        move    v0,zero
+</span></span><span style=display:flex><span>  3c:   03c0e825        move    sp,s8
+</span></span><span style=display:flex><span>  40:   8fbf001c        lw      ra,28<span style=color:#f92672>(</span>sp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  44:   8fbe0018        lw      s8,24<span style=color:#f92672>(</span>sp<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  48:   27bd0020        addiu   sp,sp,32
+</span></span><span style=display:flex><span>  4c:   03e00008        jr      ra
+</span></span><span style=display:flex><span>  50:   <span style=color:#ae81ff>00000000</span>        nop
+</span></span><span style=display:flex><span>        ...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .reginfo:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>00000000</span> &lt;.reginfo&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .MIPS.abiflags:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>00000000</span> &lt;.MIPS.abiflags&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .pdr:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>00000000</span> &lt;.pdr&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .rodata:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>00000000</span> &lt;.rodata&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .comment:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>00000000</span> &lt;.comment&gt;:
+</span></span><span style=display:flex><span>...
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Disassembly of section .gnu.attributes:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>00000000</span> &lt;.gnu.attributes&gt;:
+</span></span><span style=display:flex><span>...
+</span></span></code></pre></div><p>只编译不链接，生成目标文件，发现被编译为不同的汇编语言，且分别为64位和32位。</p><p>其中向<code>objdump</code>传入参数<code>-D</code>和<code>-S</code>。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>git@23373270:~/test $  objdump --help
+</span></span><span style=display:flex><span>    -D, --disassemble-all    Display assembler contents of all sections
+</span></span><span style=display:flex><span>    -S, --source             Intermix source code with disassembly
+</span></span></code></pre></div><p><code>-D</code>：显示所有段的汇编内容
+<code>-S</code>：将源代码与反汇编代码混合显示</p><h2 id=thinking-12>Thinking 1.2<a hidden class=anchor aria-hidden=true href=#thinking-12>#</a></h2><blockquote><p>思考下述问题：</p><ul><li>尝试使用我们编写的readelf程序，解析之前在target目录下生成的内核ELF文件。</li><li>也许你会发现我们编写的readelf程序是不能解析readelf文件本身的，而我们刚才介绍的系统工具readelf则可以解析，这是为什么呢？（提示：尝试使用readelf -h，并阅读tools/readelf目录下的Makefile，观察readelf与hello的不同）</li></ul></blockquote><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>git@23373270:~/23373270 <span style=color:#f92672>(</span>lab1<span style=color:#f92672>)</span>$  tools/readelf/readelf target/mos
+</span></span><span style=display:flex><span>0:0x0
+</span></span><span style=display:flex><span>1:0x80020000
+</span></span><span style=display:flex><span>2:0x80021930
+</span></span><span style=display:flex><span>3:0x80021948
+</span></span><span style=display:flex><span>4:0x80021960
+</span></span><span style=display:flex><span>5:0x0
+</span></span><span style=display:flex><span>6:0x0
+</span></span><span style=display:flex><span>7:0x0
+</span></span><span style=display:flex><span>8:0x0
+</span></span><span style=display:flex><span>9:0x0
+</span></span><span style=display:flex><span>10:0x0
+</span></span><span style=display:flex><span>11:0x0
+</span></span><span style=display:flex><span>12:0x0
+</span></span><span style=display:flex><span>13:0x0
+</span></span><span style=display:flex><span>14:0x0
+</span></span><span style=display:flex><span>15:0x0
+</span></span><span style=display:flex><span>16:0x0
+</span></span><span style=display:flex><span>17:0x0
+</span></span><span style=display:flex><span>18:0x0
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>git@23373270:~/23373270/tools/readelf <span style=color:#f92672>(</span>lab1<span style=color:#f92672>)</span>$  readelf -h readelf
+</span></span><span style=display:flex><span>ELF 头：
+</span></span><span style=display:flex><span>  Magic：   7f <span style=color:#ae81ff>45</span> 4c <span style=color:#ae81ff>46</span> <span style=color:#ae81ff>02</span> <span style=color:#ae81ff>01</span> <span style=color:#ae81ff>01</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span> <span style=color:#ae81ff>00</span>
+</span></span><span style=display:flex><span>  类别:                              ELF64
+</span></span><span style=display:flex><span>  数据:                              <span style=color:#ae81ff>2</span> 补码，小端序 <span style=color:#f92672>(</span>little endian<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  Version:                           <span style=color:#ae81ff>1</span> <span style=color:#f92672>(</span>current<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  OS/ABI:                            UNIX - System V
+</span></span><span style=display:flex><span>  ABI 版本:                          <span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span>  类型:                              DYN <span style=color:#f92672>(</span>Position-Independent Executable file<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  系统架构:                          Advanced Micro Devices X86-64
+</span></span><span style=display:flex><span>  版本:                              0x1
+</span></span><span style=display:flex><span>  入口点地址：               0x1180
+</span></span><span style=display:flex><span>  程序头起点：          <span style=color:#ae81ff>64</span> <span style=color:#f92672>(</span>bytes into file<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  Start of section headers:          <span style=color:#ae81ff>14488</span> <span style=color:#f92672>(</span>bytes into file<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  标志：             0x0
+</span></span><span style=display:flex><span>  Size of this header:               <span style=color:#ae81ff>64</span> <span style=color:#f92672>(</span>bytes<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  Size of program headers:           <span style=color:#ae81ff>56</span> <span style=color:#f92672>(</span>bytes<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  Number of program headers:         <span style=color:#ae81ff>13</span>
+</span></span><span style=display:flex><span>  Size of section headers:           <span style=color:#ae81ff>64</span> <span style=color:#f92672>(</span>bytes<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>  Number of section headers:         <span style=color:#ae81ff>31</span>
+</span></span><span style=display:flex><span>  Section header string table index: <span style=color:#ae81ff>30</span>
+</span></span></code></pre></div><p>观察<code>tools/readelf/Makefile</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>readelf: main.o readelf.o
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>$(</span>CC<span style=color:#66d9ef>)</span> $^ -o $@
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>hello: hello.c
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>$(</span>CC<span style=color:#66d9ef>)</span> $^ -o $@ -m32 -static -g
+</span></span></code></pre></div><p>区别在于<code>hello</code>为32位程序，<code>readelf</code>是64位程序，且<code>hello</code>的编译有<code>-static</code>修饰，是静态链接的。</p><h2 id=thinking-13>Thinking 1.3<a hidden class=anchor aria-hidden=true href=#thinking-13>#</a></h2><blockquote><p>在理论课上我们了解到，MIPS体系结构上电时，启动入口地址为0xBFC00000（其实启动入口地址是根据具体型号而定的，由硬件逻辑确定，也有可能不是这个地址，但一定是一个确定的地址），但实验操作系统的内核入口并没有放在上电启动地址，而是按照内存布局图放置。思考为什么这样放置内核还能保证内核入口被正确跳转到？
+（提示：思考实验中启动过程的两阶段分别由谁执行。）</p></blockquote><hr><p>系统能够正确跳转到内核入口在于两阶段启动过程和链接脚本控制：</p><ol><li><p>启动阶段划分</p><ul><li>阶段一：硬件上电后执行固化在 ROM 中的代码（地址 0xBFC00000）</li><li>阶段二：Bootloader 加载操作系统内核到指定内存地址</li></ul></li><li><p>链接脚本控制（kernel.lds）</p></li></ol><pre tabindex=0><code class=language-ld data-lang=ld>/*
+ * Set the ENTRY point of the program to _start.
+ */
+ENTRY(_start)
+
+SECTIONS {
+    . = 0x80020000;
+    .text : { *(.text) }
+	...
+}
+</code></pre><ol start=3><li>入口地址设置（start.S）</li></ol><pre tabindex=0><code class=language-mips data-lang=mips>#include &lt;asm/asm.h&gt;
+#include &lt;mmu.h&gt;
+
+.text
+EXPORT(_start)
+.set at
+.set reorder
+/* Lab 1 Key Code &#34;enter-kernel&#34; */
+    /* clear .bss segment */
+    la      v0, bss_start
+    la      v1, bss_end
+    ...
+    j       mips_init
+</code></pre><p>实现原理：</p><ol><li>Bootloader 将内核镜像加载到链接脚本指定的内存地址（0x80020000）</li><li>通过<code>ENTRY(_start)</code>指定内核入口符号</li><li>汇编代码中 <code>_start</code> 符号通过绝对跳转指令（<code>j mips_init</code>）转移到内核主函数</li></ol><h1 id=二难点分析与实验体会>二、难点分析与实验体会<a hidden class=anchor aria-hidden=true href=#二难点分析与实验体会>#</a></h1><h2 id=1-elf文件>1. ELF文件<a hidden class=anchor aria-hidden=true href=#1-elf文件>#</a></h2><p><div class=post-img-view><a data-fancybox=gallery href=Pasted%20image%2020250328172841.png><img loading=lazy src=Pasted%20image%2020250328172841.png></a></div></p><p>对ELF文件的概念缺少理解，写完<code>readelf</code>实际使用后才理解其含义。</p><h1 id=三原创说明>三、原创说明<a hidden class=anchor aria-hidden=true href=#三原创说明>#</a></h1></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2025 <a href=http://localhost:20003/>oNya's Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script><script>(function(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(e)}),i.parentNode.insertBefore(n,i)})("//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js",function(){pangu.spacingPage()})</script></body></html>
