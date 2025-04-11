@@ -6,8 +6,470 @@
     <description>Recent content on oNya&#39;s Blog</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 28 Mar 2025 19:00:00 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 11 Apr 2025 09:53:55 +0800</lastBuildDate>
     <atom:link href="https://oNya685.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[BUAA-OS] Lab 2 实验报告</title>
+      <link>https://oNya685.github.io/posts/buaa/os/lab-2-report/</link>
+      <pubDate>Fri, 11 Apr 2025 09:53:55 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/os/lab-2-report/</guid>
+      <description>&lt;h1 id=&#34;一思考题&#34;&gt;一、思考题&lt;/h1&gt;
+&lt;h2 id=&#34;thinking-21&#34;&gt;Thinking 2.1&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;请根据上述说明，回答问题：在编写的 C 程序中，指针变量中存储的地址被视为虚拟地址，还是物理地址？MIPS 汇编程序中 lw和sw 指令使用的地址被视为虚拟地址，还是物理地址？&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h1 id="一思考题">一、思考题</h1>
+<h2 id="thinking-21">Thinking 2.1</h2>
+<blockquote>
+<p>请根据上述说明，回答问题：在编写的 C 程序中，指针变量中存储的地址被视为虚拟地址，还是物理地址？MIPS 汇编程序中 lw和sw 指令使用的地址被视为虚拟地址，还是物理地址？</p></blockquote>
+<hr>
+<p>都是<strong>虚拟地址</strong>。本质都是翻译为含虚拟地址的机器码，交由CPU进行访存。</p>
+<h2 id="thinking-22">Thinking 2.2</h2>
+<blockquote>
+<p>请思考下述两个问题：</p>
+<ul>
+<li>从可重用性的角度，阐述用宏来实现链表的好处。</li>
+<li>查看实验环境中的/usr/include/sys/queue.h，了解其中单向链表与循环链表的实现，比较它们与本实验中使用的双向链表，分析三者在插入与删除操作上的性能差异。</li>
+</ul></blockquote>
+<hr>
+<ol>
+<li>通过宏定义，该链表实现了对于各种类型的可重用性。
+上机后补充：例如<code>MBlock</code>与其field（<code>mb_link</code>），可以直接使用该链表以及操作链表的宏（例如<code>LIST_INSERT_AFTER</code>与<code>LIST_REMOVE</code>）。</li>
+<li>比较单向链表、循环链表与双向链表：</li>
+</ol>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">操作</th>
+          <th style="text-align: center">单向链表</th>
+          <th style="text-align: center">循环链表</th>
+          <th style="text-align: center">双向链表</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">插入</td>
+          <td style="text-align: center">性能相似，但插入到尾结点需要完整遍历链表</td>
+          <td style="text-align: center">性能相似，但插入到尾结点更快</td>
+          <td style="text-align: center">性能相似，但插入到尾结点需要完整遍历链表</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">删除</td>
+          <td style="text-align: center">需要找上一结点的位置，O(n)</td>
+          <td style="text-align: center">性能与双向链表相似</td>
+          <td style="text-align: center">性能与循环链表相似</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="thinking-23">Thinking 2.3</h2>
+<blockquote>
+<p>请阅读include/queue.h以及include/pmap.h,将Page_list的结构梳理清楚，选择正确的展开结构。</p></blockquote>
+<hr>
+<p>选C。</p>
+<p>首先，<code>le_prev</code>是指向前继结点的后继指针的指针，类型是<code>struct Type **</code>，排除A。</p>
+<p>其次，<code>lh_first</code>是指向链表首结点的指针，类型是<code>struct Type *</code>，排除B。</p>
+<h2 id="thinking-24">Thinking 2.4</h2>
+<blockquote>
+<p>请思考下面两个问题：</p>
+<ul>
+<li>请阅读上面有关TLB的描述，从虚拟内存和多进程操作系统的实现角度，阐述ASID的必要性。</li>
+<li>请阅读 MIPS 4Kc 文档《MIPS32® 4K™ Processor Core Family Software User’s Manual》的 Section 3.3.1 与 Section 3.4，结合 ASID 段的位数，说明 4Kc 中可容纳不同的地址空间的最大数量。</li>
+</ul></blockquote>
+<hr>
+<ol>
+<li>
+<p>某一虚拟地址在不同地址空间中可以被映射到不同物理地址，所以需要ASID以确定地址空间。</p>
+</li>
+<li>
+<p>可容纳最多64个不同的地址空间。</p>
+</li>
+</ol>
+<pre tabindex="0"><code>Instead, the OS assigns a 6-bit unique code to each task’s distinct address space. Since the ASID is only 6 bits long, OS software does have to lend a hand if there are ever more than 64 address spaces in concurrent use; but it probably won’t happen too often.
+</code></pre><h2 id="thinking-25">Thinking 2.5</h2>
+<blockquote>
+<p>请回答下述三个问题：</p>
+<ul>
+<li>tlb_invalidate和tlb_out的调用关系？</li>
+<li>请用一句话概括tlb_invalidate的作用。</li>
+<li>逐行解释tlb_out中的汇编代码。</li>
+</ul></blockquote>
+<hr>
+<ol>
+<li><code>tlb_invalidate</code>调用了<code>tlb_out</code>。</li>
+<li>调用<code>tlb_invalidate</code>可以将该地址与虚拟地址的映射表项从TLB中清除。</li>
+<li><code>tlb_out</code>：用于清除指定虚拟地址对应的TLB表项。通过先保存当前ENTRYHI值，然后设置新的ENTRYHI进行TLB探测，找到对应表项后通过写入空值实现删除，最后恢复原始ENTRYHI值。</li>
+</ol>
+<pre tabindex="0"><code class="language-mips" data-lang="mips">LEAF(tlb_out)                    // 定义名为tlb_out的叶子函数
+.set noreorder                   // 禁止汇编器重新排列指令顺序
+	mfc0    t0, CP0_ENTRYHI      // 将协处理器CP0的ENTRYHI寄存器值保存到t0
+	mtc0    a0, CP0_ENTRYHI      // 将参数寄存器a0的值写入CP0的ENTRYHI寄存器
+	nop                          // 空操作，确保mtc0操作完成
+	/* Step 1: Use &#39;tlbp&#39; to probe TLB entry */
+	/* Exercise 2.8: Your code here. (1/2) */
+	tlbp                         // TLB探测指令，根据ENTRYHI查找匹配的TLB条目
+	nop                          // 保证tlbp指令完成
+	/* Step 2: Fetch the probe result from CP0.Index */
+	mfc0    t1, CP0_INDEX        // 将CP0的INDEX寄存器值读取到t1
+.set reorder                     // 允许汇编器重新排列指令顺序
+	bltz    t1, NO_SUCH_ENTRY    // 如果未找到该ENTRY，跳转到NO_SUCH_ENTRY
+.set noreorder                   // 再次禁止指令重排
+	mtc0    zero, CP0_ENTRYHI    // 清零CP0的ENTRYHI寄存器
+	mtc0    zero, CP0_ENTRYLO0   // 清零CP0的ENTRYLO0寄存器
+	mtc0    zero, CP0_ENTRYLO1   // 清零CP0的ENTRYLO1寄存器
+	nop                          // 保证寄存器写入操作完成
+	/* Step 3: Use &#39;tlbwi&#39; to write CP0.EntryHi/Lo into TLB at CP0.Index  */
+	/* Exercise 2.8: Your code here. (2/2) */
+	tlbwi                        // 将当前EntryHi/EntryLo写入TLB表项，删除该条目
+.set reorder                     // 恢复指令重排
+
+NO_SUCH_ENTRY:                   // 未找到对应TLB条目时的标签
+	mtc0    t0, CP0_ENTRYHI      // 恢复原始ENTRYHI寄存器值
+	j       ra                   // 函数返回
+END(tlb_out)                     // 函数结束
+</code></pre><h2 id="thinking-26">Thinking 2.6</h2>
+<blockquote>
+<p>请结合 Lab2 开始的 CPU 访存流程与下图中的 Lab2 用户函数部分，尝试将函数调用与CPU访存流程对应起来，思考函数调用与CPU访存流程的关系。</p></blockquote>
+<p><div class="post-img-view">
+    <a data-fancybox="gallery"
+         href="%E5%9B%BE%202.9%20-%20Lab2%20in%20MOS.png">
+        <img alt="图 2.9 - Lab2 in MOS" loading="lazy" src="/posts/buaa/os/lab-2-report/%E5%9B%BE%202.9%20-%20Lab2%20in%20MOS_hu_af7d8134b90ca25f.webp">
+    </a>
+</div></p>
+<hr>
+<p>在 Lab2（以及后续实验）中，4Kc CPU 的访存过程可以概括为以下几个关键步骤</p>
+<ul>
+<li>当 CPU 执行一条访存相关的指令（包含取指令、读数据、写数据）时，会把<strong>虚拟地址</strong>送入 MMU。</li>
+<li>MMU 会首先在 TLB 中查找该虚拟地址是否有对应的物理地址映射。
+<ul>
+<li>若命中（TLB Hit），CPU 即可直接得知该虚拟地址对应的<strong>物理地址</strong>，并进行后续的读写缓存或内存操作。</li>
+<li>若未命中（TLB Miss），CPU 会触发异常，进入内核执行 TLB refill / page fault 处理流程（视情况而定），由操作系统的异常/中断处理例程负责查找该虚拟地址应对应的物理地址、分配物理页、更新 TLB。</li>
+</ul>
+</li>
+<li>当映射关系建立后，CPU 可以“拿到”正确的物理地址并进行实际的内存（或外设寄存器）读写操作。</li>
+</ul>
+<p>在这个过程中，所看到的「kuseg、kseg0、kseg1」等地址段的区别，决定了 CPU 是否直接对高地址位清零映射（无缓存/有缓存）或者需要通过 TLB。<strong>对于用户态的地址（kuseg，0x00000000~0x7fffffff），一定要通过 TLB</strong>。</p>
+<p>在 Lab2 中，当我们调用函数时，背后的硬件过程正是 CPU 发出虚拟地址、经 TLB 查表或异常处理、进而映射到物理地址并访问内存的流程。<strong>函数调用是软件层面分配、管理地址空间的逻辑，而 CPU 访存流程是硬件层面真正将指令和数据从内存取出、写入的机制；两者一一对应、紧密耦合</strong>。通过把它们结合起来，我们就能全面理解操作系统与用户态程序在地址空间管理上的工作原理。</p>
+<h2 id="thinking-27">Thinking 2.7</h2>
+<blockquote>
+<p>从下述三个问题中任选其一回答：</p>
+<ul>
+<li>简单了解并叙述X86体系结构中的内存管理机制，比较X86和MIPS 在内存管理上的区别。</li>
+<li>简单了解并叙述RISC-V 中的内存管理机制，比较RISC-V 与 MIPS 在内存管理上的区别。</li>
+<li>简单了解并叙述LoongArch 中的内存管理机制，比较 LoongArch 与 MIPS 在内存管理上的区别。</li>
+</ul></blockquote>
+<hr>
+<p>X86 与 MIPS 内存管理的主要区别</p>
+<ul>
+<li>分段机制与固定地址区间
+<ul>
+<li><strong>X86：</strong><br>
+传统上依靠分段来实现内存保护和地址转换，虽然现代操作系统多采用扁平模型，但分段概念依然存在，并且在保护模式下提供了多级特权和动态调整段基址的能力。</li>
+<li><strong>MIPS：</strong><br>
+使用固定的地址区间划分（如kuseg、kseg0、kseg1），没有灵活的分段机制，内核与用户空间的划分由硬件地址范围直接确定，整体设计更加简单。</li>
+</ul>
+</li>
+<li>分页管理方式
+<ul>
+<li><strong>X86：</strong><br>
+采用硬件支持的多级页表结构，地址转换过程由硬件直接完成（结合 TLB 缓存），在现代 x86-64 中使用 4 级或更多级页表，同时支持 PAE 和 NX 等扩展特性。</li>
+<li><strong>MIPS：</strong><br>
+通常依赖软件管理的 TLB，当发生 TLB miss 时，通过异常处理由操作系统完成页表查找和 TLB 填充，其页表结构也较为灵活，但整体在硬件自动化管理程度上较 X86 要简单。</li>
+</ul>
+</li>
+<li>TLB 设计
+<ul>
+<li><strong>X86：</strong><br>
+TLB 作为硬件缓存，通常与分页机制紧密结合，自动维护地址映射缓存，减少页表查找延迟。</li>
+<li><strong>MIPS：</strong><br>
+TLB 由软件管理，需要操作系统在 TLB miss 异常处理程序中主动维护，虽然这种设计在一定程度上降低了硬件复杂性，但对操作系统的设计与调度要求更高。</li>
+</ul>
+</li>
+</ul>
+<h1 id="二难点分析与实验体会">二、难点分析与实验体会</h1>
+<h2 id="1-链表宏的理解与使用">1. 链表宏的理解与使用</h2>
+<p>链表中大量指针，指针的指针，混杂在一起，较难理解其具体含义。经过<code>struct Page</code>链表的阅读及补全后初步理解链表宏的使用流程与传参细节。</p>
+<h2 id="2-二级页表的实现">2. 二级页表的实现</h2>
+<p>经过实验代码，我们能发现二级页表的页表项其实是<code>u_long</code>类型，由页框号与有效位组成。通过这一类型的实现有一些反直觉，在理解其为字对齐后便理解了一些实现细节。</p>
+<h1 id="三原创说明">三、原创说明</h1>
+<p>参考资料：</p>
+<ol>
+<li><em>MIPS32® 4K™ Processor Core Family Software User’s Manual</em></li>
+<li><a href="https://zhuanlan.zhihu.com/p/549874101" target="_blank">全网超详细解析！X86/X64处理器体系结构及寻址模式 - 知乎</a>
+</li>
+<li><a href="https://blog.csdn.net/d1306937299/article/details/87874422" target="_blank">X86内存管理机制&ndash;分段机制详析_x86 为什么要这么多段寄存器-CSDN博客</a>
+</li>
+</ol>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>[BUAA-OS] 理论作业 3</title>
+      <link>https://oNya685.github.io/posts/buaa/os/homework-3/</link>
+      <pubDate>Sun, 06 Apr 2025 17:03:00 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/os/homework-3/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;%e4%bd%9c%e4%b8%9a3.pdf&#34; target=&#34;_blank&#34;&gt;点此查看作业源文件&lt;/a&gt;
+&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;第一题&#34;&gt;第一题&lt;/h1&gt;
+&lt;h2 id=&#34;1请问进程整个的地址空间有多少字节一页有多少字节&#34;&gt;（1）请问进程整个的地址空间有多少字节？一页有多少字节？&lt;/h2&gt;
+$$ 进程整个的地址空间 = 2^{32}B = 4GB $$$$一页有 2^{12}B = 4KB$$&lt;h2 id=&#34;2一个进程如果从-0x80000000-开始映射-4mb-大小页表空间求第一级页表页目录的起始逻辑地址并指出从哪个逻辑地址可以读出第一级页表页目录所在的物理页框号说明理由注意-b-代表字节一个-32-位地址占-4-字节&#34;&gt;（2）一个进程如果从 0x80000000 开始映射 4MB 大小页表空间，求第一级页表（页目录）的起始逻辑地址，并指出从哪个逻辑地址可以读出第一级页表（页目录）所在的物理页框号。说明理由。（注意 B 代表字节，一个 32 位地址占 4 字节）&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;进程页表空间映射起始地址为&lt;code&gt;0x80000000&lt;/code&gt;，故页目录起始逻辑地址为&lt;code&gt;0x80000000&lt;/code&gt;。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p><strong><a href="%e4%bd%9c%e4%b8%9a3.pdf" target="_blank">点此查看作业源文件</a>
+</strong></p>
+<h1 id="第一题">第一题</h1>
+<h2 id="1请问进程整个的地址空间有多少字节一页有多少字节">（1）请问进程整个的地址空间有多少字节？一页有多少字节？</h2>
+$$ 进程整个的地址空间 = 2^{32}B = 4GB $$$$一页有 2^{12}B = 4KB$$<h2 id="2一个进程如果从-0x80000000-开始映射-4mb-大小页表空间求第一级页表页目录的起始逻辑地址并指出从哪个逻辑地址可以读出第一级页表页目录所在的物理页框号说明理由注意-b-代表字节一个-32-位地址占-4-字节">（2）一个进程如果从 0x80000000 开始映射 4MB 大小页表空间，求第一级页表（页目录）的起始逻辑地址，并指出从哪个逻辑地址可以读出第一级页表（页目录）所在的物理页框号。说明理由。（注意 B 代表字节，一个 32 位地址占 4 字节）</h2>
+<ul>
+<li>
+<p>进程页表空间映射起始地址为<code>0x80000000</code>，故页目录起始逻辑地址为<code>0x80000000</code>。</p>
+</li>
+<li>
+<p>页目录自映射，其页框号存在自身的首个页目录项中。因此访问页目录起始逻辑地址<code>0x80000000</code>可以读取页目录所在的物理页框号。</p>
+</li>
+</ul>
+<h2 id="3如果当前进程的页目录物理基地址页目录和相应页表内容如图下所示请描述访问以下逻辑地址时系统进行地址转换的过程如可行给出最终访存读取到的数据逻辑地址0x00x008030040x00402001">（3）如果当前进程的页目录物理基地址、页目录和相应页表内容如图下所示，请描述访问以下逻辑地址时系统进行地址转换的过程，如可行，给出最终访存读取到的数据。逻辑地址：0x0、0x00803004、0x00402001</h2>
+<ol>
+<li>访问<code>0x0</code>：
+<ul>
+<li>| 0000 0000 00 | 00 0000 0000 | 0000 0000 0000 |</li>
+<li>找页目录第0项 -&gt; 页表项内容：00000 | 000</li>
+<li>缺页异常</li>
+</ul>
+</li>
+<li>访问<code>0x00803004</code>：
+<ul>
+<li>| 0000 0000 10 | 00 0000 0011 | 0000 0000 0100 |</li>
+<li>找页目录第2项 -&gt; 页表项：00005 | 001</li>
+<li>页表地址：<code>0x5000</code>，有效</li>
+<li>找页表第3项 -&gt; 页表项：00020 | 001</li>
+<li>页地址：<code>0x20000</code></li>
+<li>物理地址：<code>0x20000</code> + <code>0x004</code> = <code>0x20004</code></li>
+<li>读取到的字为<code>0x326001</code></li>
+<li>读取到的数据：<code>0x00</code>（小端序）或<code>0x01</code>（大端序）</li>
+</ul>
+</li>
+<li>访问<code>0x00402001</code>：
+<ul>
+<li>| 0000 0000 01 | 00 0000 0010 | 0000 0000 0001 |</li>
+<li>找页目录第1项 -&gt; 页表项内容：00001 | 001</li>
+<li>页表地址：<code>0x1000</code>，有效</li>
+<li>找页表第2项 -&gt; 页表项：00005 | 001</li>
+<li>页地址：<code>0x5000</code></li>
+<li>物理地址：<code>0x5000</code> + <code>0x001</code> = <code>0x5001</code></li>
+<li>读取到的字为<code>0x0</code></li>
+<li>读取到的数据：<code>0x00</code></li>
+</ul>
+</li>
+</ol>
+<h2 id="4要想访问物理地址-0x326028需要使用哪个逻辑地址">（4）要想访问物理地址 0x326028，需要使用哪个逻辑地址？</h2>
+<ul>
+<li>页内偏移：<code>0x028</code></li>
+<li>页框号：<code>0x326</code>，出现在<code>0x20000</code> + 1 * <code>0x4</code>，所以二级页表号：<code>0x1</code></li>
+<li>页框号：<code>0x20</code>，出现在<code>0x1000</code> + 3 * <code>0x4</code>，所以一级页表号：<code>0x3</code></li>
+<li>逻辑地址：| 0000 0000 11 | 00 0000 0001 | 0000 0010 1000 |</li>
+<li>即：<code>0x00c01028</code></li>
+</ul>
+<h1 id="第二题">第二题</h1>
+<h2 id="1load-0x00001022">（1）Load [0x00001022]</h2>
+<ul>
+<li>页目录号：<code>0x000</code>
+<ul>
+<li>访问<code>0x0020 0000</code> + 4 * <code>0x000</code> = <code>0x0020 0000</code>：<code>0x0010 0007</code>
+<ul>
+<li>二级页表页框号：<code>0x00100</code></li>
+<li>标志位：<code>0x007</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>二级页表号：<code>0x001</code>
+<ul>
+<li>访问<code>0x0010 0000</code> + 4 * <code>0x001</code> = <code>0x0010 0004</code>：<code>0x0000 4067</code>
+<ul>
+<li>物理页框号：<code>0x00004</code></li>
+<li>标志位：<code>0x067</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>页内偏移量：<code>0x022</code>
+<ul>
+<li>访问<code>0x0000 4000</code> + <code>0x022</code> = <code>0x0000 4022</code>：<code>0x20</code></li>
+</ul>
+</li>
+<li><strong>成功：<code>0x20</code></strong></li>
+</ul>
+<h2 id="2store-0x00c07222">（2）Store [0x00C07222]</h2>
+<ul>
+<li>页目录号：<code>0x003</code>
+<ul>
+<li>访问<code>0x0020 0000</code> + 4 * <code>0x003</code> = <code>0x0020 000C</code>：<code>0x0010 3007</code>
+<ul>
+<li>二级页表页框号：<code>0x00103</code></li>
+<li>标志位：<code>0x007</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>二级页表号：<code>0x007</code>
+<ul>
+<li>访问<code>0x0010 3000</code> + 4 * <code>0x007</code> = <code>0x0010 301C</code>：<code>0xEEFF 0001</code>
+<ul>
+<li>标志位：<code>0x001</code>，Valid, Read Only</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>页内偏移量：<code>0x222</code></li>
+<li><strong>Error: Read Only</strong></li>
+</ul>
+<h2 id="3-store-0x00c005bf">(3) Store [0x00C005BF]</h2>
+<ul>
+<li>页目录号：<code>0x003</code>
+<ul>
+<li>访问<code>0x0020 0000</code> + 4 * <code>0x003</code> = <code>0x0020 000C</code>：<code>0x0010 3007</code>
+<ul>
+<li>二级页表页框号：<code>0x00103</code></li>
+<li>标志位：<code>0x007</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>二级页表号：<code>0x000</code>
+<ul>
+<li>访问<code>0x0010 3000</code> + 4 * <code>0x000</code> = <code>0x0010 3000</code>：<code>0x1122 0067</code>
+<ul>
+<li>物理页框号：<code>0x11220</code></li>
+<li>标志位：<code>0x067</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>页内偏移量：<code>0x5BF</code>
+<ul>
+<li>写入<code>0x1122 0000</code> + <code>0x067</code> = <code>0x1122 0067</code></li>
+</ul>
+</li>
+<li><strong>OK: <code>0x1122 0067</code></strong></li>
+</ul>
+<h2 id="4load-0x00003013">（4）Load [0x00003013]</h2>
+<ul>
+<li>页目录号：<code>0x000</code>
+<ul>
+<li>访问<code>0x0020 0000</code> + 4 * <code>0x000</code> = <code>0x0020 0000</code>：<code>0x0010 0007</code>
+<ul>
+<li>二级页表页框号：<code>0x00100</code></li>
+<li>标志位：<code>0x007</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>二级页表号：<code>0x003</code>
+<ul>
+<li>访问<code>0x0010 0000</code> + 4 * <code>0x003</code> = <code>0x0010 000C</code>：<code>0x0000 4007</code>
+<ul>
+<li>物理页框号：<code>0x00004</code></li>
+<li>标志位：<code>0x007</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>页内偏移量：<code>0x013</code>
+<ul>
+<li>访问<code>0x0000 4000</code> + <code>0x013</code> = <code>0x0000 4013</code>：<code>0x19</code></li>
+</ul>
+</li>
+<li><strong>成功：<code>0x19</code></strong></li>
+</ul>
+<h2 id="5load-0xff80078f">（5）Load [0xFF80078F]</h2>
+<ul>
+<li>页目录号：<code>0x3FE</code>
+<ul>
+<li>访问<code>0x0020 0000</code> + 4 * <code>0x3FE</code> = <code>0x0020 0FF8</code>：<code>0x001F E007</code>
+<ul>
+<li>二级页表页框号：<code>0x001FE</code></li>
+<li>标志位：<code>0x007</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>二级页表号：<code>0x000</code>
+<ul>
+<li>访问<code>0x001F E000</code> + 4 * <code>0x000</code> = <code>0x001F E000</code>：<code>0x0415 0000</code>
+<ul>
+<li>标志位：<code>0x000</code>，Invalid</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>页内偏移量：<code>0x78F</code></li>
+<li><strong>Error: Invalid</strong></li>
+</ul>
+<h2 id="6load-0xfffff005">（6）Load [0xFFFFF005]</h2>
+<ul>
+<li>页目录号：<code>0x3FF</code>
+<ul>
+<li>访问<code>0x0020 0000</code> + 4 * <code>0x3FF</code> = <code>0x0020 0FFC</code>：<code>0x001F F007</code>
+<ul>
+<li>二级页表页框号：<code>0x001FF</code></li>
+<li>标志位：<code>0x007</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>二级页表号：<code>0x3FF</code>
+<ul>
+<li>访问<code>0x001F F000</code> + 4 * <code>0x3FF</code> = <code>0x001F FFFC</code>：<code>0x0010 3067</code>
+<ul>
+<li>物理页框号：<code>0x00103</code></li>
+<li>标志位：<code>0x067</code>，Valid, Read/Write</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>页内偏移量：<code>0x005</code>
+<ul>
+<li>访问<code>0x0010 3000</code> + <code>0x005</code> = <code>0x0010 3005</code>：<code>0x66</code></li>
+</ul>
+</li>
+<li><strong>成功：<code>0x66</code></strong></li>
+</ul>
+<p>综上所述：</p>
+<table>
+  <thead>
+      <tr>
+          <th>指令</th>
+          <th>结果</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Load [0x00001022]</td>
+          <td><code>0x20</code></td>
+      </tr>
+      <tr>
+          <td>Store [0x00C07222]</td>
+          <td>Error</td>
+      </tr>
+      <tr>
+          <td>Store [0x00C005BF]</td>
+          <td>OK</td>
+      </tr>
+      <tr>
+          <td>Load [0x00003013]</td>
+          <td><code>0x19</code></td>
+      </tr>
+      <tr>
+          <td>Load [0xFF80078F]</td>
+          <td>Error</td>
+      </tr>
+      <tr>
+          <td>Load [0xFFFFF005]</td>
+          <td><code>0x66</code></td>
+      </tr>
+  </tbody>
+</table>
+]]></content:encoded>
+    </item>
     <item>
       <title>[BUAA-OS] 理论作业 2</title>
       <link>https://oNya685.github.io/posts/buaa/os/homework-2/</link>
@@ -694,6 +1156,352 @@ EXPORT(_start)
 <h1 id="心得体会">心得体会</h1>
 <p>虽然第三次作业的轻松要求确实减少了我们的工作量，让我直接放弃了第二次的重构，但我仍没能理解普通函数调用为什么会放在递归函数调用之后作为新要求迭代。第二次作业的任务量也着实有些惊悚，不知是传统还是失误。</p>
 <p>总的来说，第一单元在先导课提供了参考架构的基础上还算顺利，也能明显感到有所收获，期待第二单元的灵异电梯。</p>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>用Condition干掉notifyAll</title>
+      <link>https://oNya685.github.io/posts/buaa/oo/condition/</link>
+      <pubDate>Mon, 17 Mar 2025 16:04:09 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/oo/condition/</guid>
+      <description>介绍notify()与notifyAll()的区别，推荐ReentrantLock</description>
+      <content:encoded><![CDATA[<p><code>synchronized</code>关键字修饰的局部代码块内，我们能通过<code>wait()</code>, <code>notify()</code>, <code>notifyAll()</code>方法来调控线程之间的协作。</p>
+<h1 id="notify和notifyall是什么"><code>notify()</code>和<code>notifyAll()</code>是什么？</h1>
+<p>我们先定义两个概念，一个是<strong>等待池</strong>，一个是<strong>锁池</strong>，它们都是随一个锁而形成的<strong>暂存线程</strong>的容器。具体来说：</p>
+<p><strong>等待池</strong>中的线程只有被<strong>通知</strong>（notify）时，才会进入<strong>锁池</strong>；否则什么也不做。</p>
+<p><strong>锁池</strong>中的线程会不断尝试<strong>抢锁</strong>，如果抢到了锁，会进入<code>synchronized</code>，从开头或上次离开的位置（通过wait离开时）继续执行。</p>
+<p>当某线程尝试进入<code>synchronized</code>，即尝试<strong>抢锁</strong>，但<strong>失败</strong>了（因为有其他线程在占用这把锁）时，它会进入<strong>锁池</strong>，持续不断尝试抢锁。</p>
+<p>当某线程<strong>抢锁成功</strong>，进入了<code>synchronized</code>，它会离开<strong>锁池</strong>。</p>
+<p>当某线程进入了<code>synchronized</code>，并遵循程序的设计，执行了<code>wait()</code>方法，它会进入<strong>等待池</strong>。</p>
+<p>当某线程在<code>synchronized</code>中执行了<code>notify()</code>方法，会从<strong>等待池</strong>中随机选取一个线程让其移动到<strong>锁池</strong>。</p>
+<p>当某线程在<code>synchronized</code>中执行了<code>notifyAll()</code>方法，会将<strong>等待池</strong>中的所有线程移动到<strong>锁池</strong>。</p>
+<h1 id="什么时候用notify什么时候用notifyall">什么时候用<code>notify()</code>，什么时候用<code>notifyAll</code>？</h1>
+<h2 id="考虑某多线程任务">考虑某多线程任务</h2>
+<p>假设我们有一个资源池，生产者线程向其中添加资源，消费者线程从中获取资源。我们需要确保生产者在资源池满时等待，消费者在资源池空时等待。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.LinkedList;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Queue;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ResourcePool</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Queue<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> resources <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedList<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> capacity;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Object lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ResourcePool</span>(<span style="color:#66d9ef">int</span> capacity) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">capacity</span> <span style="color:#f92672">=</span> capacity;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rent</span>(Object resource) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">synchronized</span> (lock) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (resources.<span style="color:#a6e22e">size</span>() <span style="color:#f92672">&gt;=</span> capacity) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>	                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;生产者进入等待&#34;</span>);
+</span></span><span style="display:flex;"><span>                    lock.<span style="color:#a6e22e">wait</span>(); <span style="color:#75715e">// 如果资源池已满，生产者等待</span>
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;生产者被唤醒&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            resources.<span style="color:#a6e22e">add</span>(resource);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;生产者: 生产了一个资源, 当前资源数: &#34;</span> <span style="color:#f92672">+</span> resources.<span style="color:#a6e22e">size</span>());
+</span></span><span style="display:flex;"><span>            lock.<span style="color:#a6e22e">notify</span>(); <span style="color:#75715e">// 唤醒等待的消费者线程</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">consume</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">synchronized</span> (lock) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (resources.<span style="color:#a6e22e">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>	                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;消费者进入等待&#34;</span>);
+</span></span><span style="display:flex;"><span>                    lock.<span style="color:#a6e22e">wait</span>(); <span style="color:#75715e">// 如果资源池为空，消费者等待</span>
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;消费者被唤醒&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            Object resource <span style="color:#f92672">=</span> resources.<span style="color:#a6e22e">remove</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;消费者: 消费了一个资源, 当前资源数: &#34;</span> <span style="color:#f92672">+</span> resources.<span style="color:#a6e22e">size</span>());
+</span></span><span style="display:flex;"><span>            lock.<span style="color:#a6e22e">notify</span>(); <span style="color:#75715e">// 唤醒等待的生产者线程</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> resource;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        ResourcePool pool <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ResourcePool(1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 借用者1</span>
+</span></span><span style="display:flex;"><span>        Thread renter <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 5; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                pool.<span style="color:#a6e22e">rent</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        producer.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>        consumer.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在本例中，只有一个生产者线程和一个消费者线程，它们<code>notify()</code>时，只会唤醒彼此，它们被唤醒并继续运行的条件均为<code>resources</code>暂时没被其他人访问。</p>
+<h2 id="考虑生产者-消费者多线程任务">考虑生产者-消费者多线程任务</h2>
+<p>在生产者-消费者模型中，生产者和消费者线程需要协调工作。生产者在资源池满时等待，消费者在资源池空时等待。当资源池有空间或有资源时，相应的线程被唤醒。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.LinkedList;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Queue;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ResourcePool</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Queue<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> resources <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedList<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> capacity;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Object lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ResourcePool</span>(<span style="color:#66d9ef">int</span> capacity) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">capacity</span> <span style="color:#f92672">=</span> capacity;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">produce</span>(Object resource) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">synchronized</span> (lock) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (resources.<span style="color:#a6e22e">size</span>() <span style="color:#f92672">&gt;=</span> capacity) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>	                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;生产者进入等待&#34;</span>);
+</span></span><span style="display:flex;"><span>                    lock.<span style="color:#a6e22e">wait</span>(); <span style="color:#75715e">// 如果资源池已满，生产者等待</span>
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;生产者被唤醒&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            resources.<span style="color:#a6e22e">add</span>(resource);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;生产者: 生产了一个资源, 当前资源数: &#34;</span> <span style="color:#f92672">+</span> resources.<span style="color:#a6e22e">size</span>());
+</span></span><span style="display:flex;"><span>            lock.<span style="color:#a6e22e">notifyAll</span>(); <span style="color:#75715e">// 唤醒所有等待的消费者线程</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">consume</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">synchronized</span> (lock) {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (resources.<span style="color:#a6e22e">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>	                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;消费者进入等待&#34;</span>);
+</span></span><span style="display:flex;"><span>                    lock.<span style="color:#a6e22e">wait</span>(); <span style="color:#75715e">// 如果资源池为空，消费者等待</span>
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>                System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;消费者被唤醒&#34;</span>);
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            Object resource <span style="color:#f92672">=</span> resources.<span style="color:#a6e22e">remove</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;消费者: 消费了一个资源, 当前资源数: &#34;</span> <span style="color:#f92672">+</span> resources.<span style="color:#a6e22e">size</span>());
+</span></span><span style="display:flex;"><span>            lock.<span style="color:#a6e22e">notifyAll</span>(); <span style="color:#75715e">// 唤醒所有等待的生产者线程</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> resource;
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        ResourcePool pool <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ResourcePool(3);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 生产者线程</span>
+</span></span><span style="display:flex;"><span>        Thread producer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 5; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                pool.<span style="color:#a6e22e">produce</span>(<span style="color:#66d9ef">new</span> Object());
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 消费者线程1</span>
+</span></span><span style="display:flex;"><span>        Thread consumer1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 5; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                pool.<span style="color:#a6e22e">consume</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 消费者线程2</span>
+</span></span><span style="display:flex;"><span>        Thread consumer2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 5; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                pool.<span style="color:#a6e22e">consume</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        producer.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>        consumer1.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>        consumer2.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="为什么要用notifyall用notify会怎么样">为什么要用<code>notifyAll()</code>？用<code>notify()</code>会怎么样？</h3>
+<p>使用<code>notifyAll()</code>会唤醒所有等待的线程，确保它们都能重新评估条件。而使用<code>notify()</code>只唤醒一个线程，可能会导致该锁<strong>假死</strong>：有线程在等待，但没有线程在占用或竞争该锁。</p>
+<p>如果使用<code>notify()</code>：</p>
+<ul>
+<li>如果当前资源数为1，且消费者1消耗了一个资源并执行<code>notify()</code>，此时资源数为0；
+<ul>
+<li>如果消费者1恰好<code>notify()</code>了生产者，正常运行；</li>
+<li>如果不巧，消费者1<code>notify()</code>了消费者2，消费者2会因为没有可用资源而重新<code>wait()</code>；
+<ul>
+<li>此时三者都处于等待池，锁池为空，程序陷入<strong>假死</strong>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>如果使用<code>notifyAll()</code>：</p>
+<ul>
+<li>所有等待的线程都会被唤醒，重新评估条件。</li>
+<li>即使某些线程发现条件不满足并继续等待，其他线程仍然有机会执行。</li>
+</ul>
+<h2 id="如何判断用notify还是notifyall">如何判断用<code>notify()</code>还是<code>notifyAll()</code>？</h2>
+<p>判断使用<code>notify()</code>还是<code>notifyAll()</code>的关键在于线程等待的<strong>条件</strong>（condition）是否相同。</p>
+<ul>
+<li>如果所有等待的线程都在等待同一个条件，使用<code>notify()</code>可能足够。</li>
+<li>如果线程等待的条件不同，或者需要确保所有线程都能重新评估条件，使用<code>notifyAll()</code>更安全。</li>
+</ul>
+<blockquote>
+<p>要是我们能给不同的线程设置不同的等待条件该多好。生产者生产后只唤醒条件为<code>资源不为空</code>的消费者，消费者消费后只唤醒条件为<code>资源不为满</code>的生产者们，那就肯定不会假死了！</p></blockquote>
+<h2 id="用synchronized的代码怎么改造成用reentrantlock和condition">用<code>synchronized</code>的代码怎么改造成用<code>ReentrantLock</code>和<code>Condition</code></h2>
+<h3 id="什么是reentrantlock">什么是<code>ReentrantLock</code></h3>
+<p><code>ReentrantLock</code>是一个可重入的互斥锁，它提供了与<code>synchronized</code>类似的功能，但更加灵活。它允许更细粒度的锁控制，并且可以配合<code>Condition</code>对象使用。</p>
+<h3 id="condition有什么优势"><code>Condition</code>有什么优势</h3>
+<p><code>Condition</code>接口提供了类似于<code>wait()</code>、<code>notify()</code>和<code>notifyAll()</code>的方法，但更加灵活。它允许一个锁对象有多个<code>Condition</code>实例，每个实例可以用于不同的条件等待和通知。</p>
+<h3 id="代码改造">代码改造</h3>
+<p>将上述代码改造成使用<code>ReentrantLock</code>和<code>Condition</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.LinkedList;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.Queue;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.locks.Condition;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.locks.Lock;
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> java.util.concurrent.locks.ReentrantLock;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ResourcePool</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> Queue<span style="color:#f92672">&lt;</span>Object<span style="color:#f92672">&gt;</span> resources <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> LinkedList<span style="color:#f92672">&lt;&gt;</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> capacity;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Lock lock <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ReentrantLock();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Condition notFull <span style="color:#f92672">=</span> lock.<span style="color:#a6e22e">newCondition</span>();
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">final</span> Condition notEmpty <span style="color:#f92672">=</span> lock.<span style="color:#a6e22e">newCondition</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ResourcePool</span>(<span style="color:#66d9ef">int</span> capacity) {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">this</span>.<span style="color:#a6e22e">capacity</span> <span style="color:#f92672">=</span> capacity;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">produce</span>(Object resource) {
+</span></span><span style="display:flex;"><span>        lock.<span style="color:#a6e22e">lock</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (resources.<span style="color:#a6e22e">size</span>() <span style="color:#f92672">&gt;=</span> capacity) {
+</span></span><span style="display:flex;"><span>                notFull.<span style="color:#a6e22e">await</span>(); <span style="color:#75715e">// 如果资源池已满，生产者等待</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            resources.<span style="color:#a6e22e">add</span>(resource);
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;生产者: 生产了一个资源, 当前资源数: &#34;</span> <span style="color:#f92672">+</span> resources.<span style="color:#a6e22e">size</span>());
+</span></span><span style="display:flex;"><span>            notEmpty.<span style="color:#a6e22e">signal</span>(); <span style="color:#75715e">// 唤醒单个等待的消费者线程</span>
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">finally</span> {
+</span></span><span style="display:flex;"><span>            lock.<span style="color:#a6e22e">unlock</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> Object <span style="color:#a6e22e">consume</span>() {
+</span></span><span style="display:flex;"><span>        lock.<span style="color:#a6e22e">lock</span>();
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">while</span> (resources.<span style="color:#a6e22e">isEmpty</span>()) {
+</span></span><span style="display:flex;"><span>                notEmpty.<span style="color:#a6e22e">await</span>(); <span style="color:#75715e">// 如果资源池为空，消费者等待</span>
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>            Object resource <span style="color:#f92672">=</span> resources.<span style="color:#a6e22e">remove</span>();
+</span></span><span style="display:flex;"><span>            System.<span style="color:#a6e22e">out</span>.<span style="color:#a6e22e">println</span>(<span style="color:#e6db74">&#34;消费者: 消费了一个资源, 当前资源数: &#34;</span> <span style="color:#f92672">+</span> resources.<span style="color:#a6e22e">size</span>());
+</span></span><span style="display:flex;"><span>            notFull.<span style="color:#a6e22e">signal</span>(); <span style="color:#75715e">// 唤醒单个等待的生产者线程</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">return</span> resource;
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>            e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>        } <span style="color:#66d9ef">finally</span> {
+</span></span><span style="display:flex;"><span>            lock.<span style="color:#a6e22e">unlock</span>();
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(String<span style="color:#f92672">[]</span> args) {
+</span></span><span style="display:flex;"><span>        ResourcePool pool <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ResourcePool(3);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 生产者线程</span>
+</span></span><span style="display:flex;"><span>        Thread producer <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 5; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                pool.<span style="color:#a6e22e">produce</span>(<span style="color:#66d9ef">new</span> Object());
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 消费者线程1</span>
+</span></span><span style="display:flex;"><span>        Thread consumer1 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 5; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                pool.<span style="color:#a6e22e">consume</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 消费者线程2</span>
+</span></span><span style="display:flex;"><span>        Thread consumer2 <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Thread(() <span style="color:#f92672">-&gt;</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0; i <span style="color:#f92672">&lt;</span> 5; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                pool.<span style="color:#a6e22e">consume</span>();
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">try</span> {
+</span></span><span style="display:flex;"><span>                    Thread.<span style="color:#a6e22e">sleep</span>(1000);
+</span></span><span style="display:flex;"><span>                } <span style="color:#66d9ef">catch</span> (InterruptedException e) {
+</span></span><span style="display:flex;"><span>                    e.<span style="color:#a6e22e">printStackTrace</span>();
+</span></span><span style="display:flex;"><span>                }
+</span></span><span style="display:flex;"><span>            }
+</span></span><span style="display:flex;"><span>        });
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        producer.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>        consumer1.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>        consumer2.<span style="color:#a6e22e">start</span>();
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="改造后的代码解释">改造后的代码解释</h3>
+<ol>
+<li>
+<p><strong>锁的初始化</strong>：</p>
+<ul>
+<li>使用<code>ReentrantLock</code>代替<code>synchronized</code>，提供更灵活的锁控制。</li>
+</ul>
+</li>
+<li>
+<p><strong>条件的初始化</strong>：</p>
+<ul>
+<li>为生产者和消费者分别创建两个<code>Condition</code>实例<code>notFull</code>和<code>notEmpty</code>，分别用于等待资源池满和空的条件。</li>
+</ul>
+</li>
+<li>
+<p><strong>生产者方法</strong>：</p>
+<ul>
+<li>在资源池满时，生产者线程调用<code>notFull.await()</code>进入等待。</li>
+<li>当资源池有空间时，调用<code>notEmpty.signal()</code>唤醒单个消费者线程。</li>
+</ul>
+</li>
+<li>
+<p><strong>消费者方法</strong>：</p>
+<ul>
+<li>在资源池空时，消费者线程调用<code>notEmpty.await()</code>进入等待。</li>
+<li>当资源池有资源时，调用<code>notFull.signal()</code>唤醒单个生产者线程。</li>
+</ul>
+</li>
+</ol>
+<p>通过这种改造，我们使用<code>ReentrantLock</code>和<code>Condition</code>实现了更灵活的线程同步，避免了<code>synchronized</code>的一些限制。</p>
 ]]></content:encoded>
     </item>
     <item>

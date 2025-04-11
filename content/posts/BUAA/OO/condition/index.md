@@ -5,9 +5,9 @@ categories:
 tags: 
 author: 
 showToc: true
-draft: true
+draft: false
 comments: true
-description: Desc Text.
+description: 介绍notify()与notifyAll()的区别，推荐ReentrantLock
 canonicalURL: "{{ .Permalink }}"
 hideSummary: false
 searchHidden: false
