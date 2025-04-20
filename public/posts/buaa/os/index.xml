@@ -4,10 +4,253 @@
     <title>操作系统 on oNya&#39;s Blog</title>
     <link>https://oNya685.github.io/posts/buaa/os/</link>
     <description>Recent content in 操作系统 on oNya&#39;s Blog</description>
-    <generator>Hugo -- 0.145.0</generator>
+    <generator>Hugo -- 0.146.5</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 11 Apr 2025 09:53:55 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 17 Apr 2025 21:25:00 +0800</lastBuildDate>
     <atom:link href="https://oNya685.github.io/posts/buaa/os/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[BUAA-OS] 理论作业 4</title>
+      <link>https://oNya685.github.io/posts/buaa/os/homework-4/</link>
+      <pubDate>Thu, 17 Apr 2025 21:25:00 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/os/homework-4/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;%e4%bd%9c%e4%b8%9a4.pdf&#34; target=&#34;_blank&#34;&gt;点此查看作业源文件&lt;/a&gt;
+&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;1-读者写者问题写者优先&#34;&gt;1. 读者写者问题（写者优先）&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;共享读;&lt;/li&gt;
+&lt;li&gt;互斥写、读写互斥;&lt;/li&gt;
+&lt;li&gt;写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;semaphore room_empty &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;      &lt;span style=&#34;color:#75715e&#34;&gt;// 读写互斥
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;semaphore mutex_read &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;      &lt;span style=&#34;color:#75715e&#34;&gt;// 保护 read_count
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;semaphore mutex_write &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;     &lt;span style=&#34;color:#75715e&#34;&gt;// 保护 write_count
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;semaphore write_priority &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;;  &lt;span style=&#34;color:#75715e&#34;&gt;// 写者优先锁
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;int&lt;/span&gt; read_count &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;, write_count &lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;reader&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(write_priority);         &lt;span style=&#34;color:#75715e&#34;&gt;// 检查是否有写者等待
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(mutex_read);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    read_count&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (read_count &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(room_empty);         &lt;span style=&#34;color:#75715e&#34;&gt;// 第一个读者获取读写锁
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(mutex_read);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(write_priority);         &lt;span style=&#34;color:#75715e&#34;&gt;// 释放写者优先锁
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#75715e&#34;&gt;// 读取
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(mutex_read);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    read_count&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (read_count &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(room_empty);           &lt;span style=&#34;color:#75715e&#34;&gt;// 最后一个读者释放读写锁
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(mutex_read);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#66d9ef&#34;&gt;void&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;writer&lt;/span&gt;() {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(mutex_write);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    write_count&lt;span style=&#34;color:#f92672&#34;&gt;++&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (write_count &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;1&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(write_priority);     &lt;span style=&#34;color:#75715e&#34;&gt;// 第一个写者阻止新读者
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(mutex_write);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(room_empty);             &lt;span style=&#34;color:#75715e&#34;&gt;// 获取读写锁
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;	&lt;span style=&#34;color:#75715e&#34;&gt;// 写入
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;	
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(room_empty);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;P&lt;/span&gt;(mutex_write);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    write_count&lt;span style=&#34;color:#f92672&#34;&gt;--&lt;/span&gt;;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#66d9ef&#34;&gt;if&lt;/span&gt; (write_count &lt;span style=&#34;color:#f92672&#34;&gt;==&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;0&lt;/span&gt;) {
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;        &lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(write_priority);     &lt;span style=&#34;color:#75715e&#34;&gt;// 最后一个写者允许新读者
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;    }
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;    &lt;span style=&#34;color:#a6e22e&#34;&gt;V&lt;/span&gt;(mutex_write);
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h1 id=&#34;2-寿司店问题&#34;&gt;2. 寿司店问题&lt;/h1&gt;
+&lt;p&gt;假设一个寿司店有5个座位，如果你到达的时候有一个空座位，你可以立刻就坐。但是如果你到达的时候5个座位都是满的有人已经就坐，这就意味着这些人都是一起来吃饭的，那么你需要等待所有的人一起离开才能就坐。编写同步原语，实现这个场景的约束。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p><strong><a href="%e4%bd%9c%e4%b8%9a4.pdf" target="_blank">点此查看作业源文件</a>
+</strong></p>
+<h1 id="1-读者写者问题写者优先">1. 读者写者问题（写者优先）</h1>
+<ol>
+<li>共享读;</li>
+<li>互斥写、读写互斥;</li>
+<li>写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）。</li>
+</ol>
+<hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>semaphore room_empty <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;      <span style="color:#75715e">// 读写互斥
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore mutex_read <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;      <span style="color:#75715e">// 保护 read_count
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore mutex_write <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;     <span style="color:#75715e">// 保护 write_count
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore write_priority <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;  <span style="color:#75715e">// 写者优先锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> read_count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>, write_count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reader</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(write_priority);         <span style="color:#75715e">// 检查是否有写者等待
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">P</span>(mutex_read);
+</span></span><span style="display:flex;"><span>    read_count<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (read_count <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">P</span>(room_empty);         <span style="color:#75715e">// 第一个读者获取读写锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(mutex_read);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(write_priority);         <span style="color:#75715e">// 释放写者优先锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 读取
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(mutex_read);
+</span></span><span style="display:flex;"><span>    read_count<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (read_count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">V</span>(room_empty);           <span style="color:#75715e">// 最后一个读者释放读写锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(mutex_read);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">writer</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(mutex_write);
+</span></span><span style="display:flex;"><span>    write_count<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (write_count <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">P</span>(write_priority);     <span style="color:#75715e">// 第一个写者阻止新读者
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(mutex_write);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(room_empty);             <span style="color:#75715e">// 获取读写锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 写入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(room_empty);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(mutex_write);
+</span></span><span style="display:flex;"><span>    write_count<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (write_count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">V</span>(write_priority);     <span style="color:#75715e">// 最后一个写者允许新读者
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(mutex_write);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="2-寿司店问题">2. 寿司店问题</h1>
+<p>假设一个寿司店有5个座位，如果你到达的时候有一个空座位，你可以立刻就坐。但是如果你到达的时候5个座位都是满的有人已经就坐，这就意味着这些人都是一起来吃饭的，那么你需要等待所有的人一起离开才能就坐。编写同步原语，实现这个场景的约束。</p>
+<hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>semaphore mutex <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;         <span style="color:#75715e">// 保护共享变量
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore batch_lock <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;    <span style="color:#75715e">// 批次锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore waiting <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;       <span style="color:#75715e">// 等待新批次
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;               <span style="color:#75715e">// 当前批次人数
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">customer</span>() {
+</span></span><span style="display:flex;"><span>CONSUME:
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(mutex);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 新批次开始
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">P</span>(batch_lock);       <span style="color:#75715e">// 获取批次锁
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (count <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>) {
+</span></span><span style="display:flex;"><span>        count<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">V</span>(mutex);
+</span></span><span style="display:flex;"><span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 就坐
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 离开
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">P</span>(mutex);
+</span></span><span style="display:flex;"><span>        count<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>            <span style="color:#75715e">// 批次结束，唤醒等待者
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            <span style="color:#a6e22e">V</span>(batch_lock);
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">5</span>; i<span style="color:#f92672">++</span>) {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">V</span>(waiting); <span style="color:#75715e">// 唤醒最多5人
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>            }
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">V</span>(mutex);
+</span></span><span style="display:flex;"><span>    } <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">V</span>(mutex);
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">P</span>(waiting);          <span style="color:#75715e">// 等待新批次
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// 上一批次结束，被唤醒
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">goto</span> CONSUME;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="3-进门问题">3. 进门问题。</h1>
+<h2 id="1请给出pv操作和信号量的物理意义">（1）请给出P、V操作和信号量的物理意义。</h2>
+<ol>
+<li>信号量的物理意义：信号量是一种同步机制，用于控制多个进程/线程对共享资源的访问。可以看作是一个计数器，表示当前可用的资源数量或某种状态。</li>
+<li>P操作的物理意义：表示申请资源。在互斥访问中，P(S) 相当于加锁。</li>
+<li>V操作的物理意义：表示释放资源，如果有进程在等待该资源，则唤醒其中一个。在互斥访问中，V(S) 相当于解锁。</li>
+</ol>
+<h2 id="2一个软件公司有5名员工每人刷卡上班员工刷卡后需要等待直到所有员工都刷卡后才能进入公司为了避免拥挤公司要求员工一个一个通过大门所有员工都进入后最后进入的员工负责关门请用pv操作实现员工之间的同步关系">（2）一个软件公司有5名员工，每人刷卡上班。员工刷卡后需要等待，直到所有员工都刷卡后才能进入公司。为了避免拥挤，公司要求员工一个一个通过大门。所有员工都进入后，最后进入的员工负责关门。请用P、V操作实现员工之间的同步关系。</h2>
+<hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>semaphore barrier <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;       <span style="color:#75715e">// 等待所有员工到达
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore door <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;          <span style="color:#75715e">// 控制逐个通过
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore mutex <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;         <span style="color:#75715e">// 保护计数器
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">employee</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(mutex);
+</span></span><span style="display:flex;"><span>    count<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">V</span>(barrier);          <span style="color:#75715e">// 第5人触发屏障
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(mutex);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(barrier);              <span style="color:#75715e">// 所有员工等待在此
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">V</span>(barrier);              <span style="color:#75715e">// 保持屏障信号
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(door);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 通过大门
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(door);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(mutex);
+</span></span><span style="display:flex;"><span>    count<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// 关门
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(mutex);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h1 id="4-搜索-插入-删除问题">4. 搜索-插入-删除问题。</h1>
+<p>三个线程对一个单链表进行并发的访问，分别进行搜索、插入和删除。搜索线程仅仅读取链表，因此多个搜索线程可以并发。插入线程把数据项插入到链表最后的位置；多个插入线程必须互斥防止同时执行插入操作。但是，一个插入线程可以和多个搜索线程并发执行。最后，删除线程可以从链表中任何一个位置删除数据。一次只能有一个删除线程执行；删除线程之间，删除线程和搜索线程，删除线程和插入线程都不能同时执行。</p>
+<p>请编写三类线程的同步互斥代码，描述这种三路的分类互斥问题。</p>
+<hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>semaphore search_mutex <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;    <span style="color:#75715e">// 搜索并发控制
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore insert_mutex <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;    <span style="color:#75715e">// 插入互斥
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>semaphore delete_mutex <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;    <span style="color:#75715e">// 删除独占
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> search_count <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">search</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(search_mutex);
+</span></span><span style="display:flex;"><span>    search_count<span style="color:#f92672">++</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (search_count <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">P</span>(delete_mutex);       <span style="color:#75715e">// 阻止删除
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(search_mutex);
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 搜索
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(search_mutex);
+</span></span><span style="display:flex;"><span>    search_count<span style="color:#f92672">--</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (search_count <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">V</span>(delete_mutex);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(search_mutex);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">insert</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(insert_mutex);           <span style="color:#75715e">// 插入互斥
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 插入
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(insert_mutex);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">void</span> <span style="color:#a6e22e">delete</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">P</span>(delete_mutex);           <span style="color:#75715e">// 独占删除
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 删除
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">V</span>(delete_mutex);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div>]]></content:encoded>
+    </item>
     <item>
       <title>[BUAA-OS] Lab 2 实验报告</title>
       <link>https://oNya685.github.io/posts/buaa/os/lab-2-report/</link>
@@ -212,7 +455,7 @@ TLB 由软件管理，需要操作系统在 TLB miss 异常处理程序中主动
 $$ 进程整个的地址空间 = 2^{32}B = 4GB $$$$一页有 2^{12}B = 4KB$$&lt;h2 id=&#34;2一个进程如果从-0x80000000-开始映射-4mb-大小页表空间求第一级页表页目录的起始逻辑地址并指出从哪个逻辑地址可以读出第一级页表页目录所在的物理页框号说明理由注意-b-代表字节一个-32-位地址占-4-字节&#34;&gt;（2）一个进程如果从 0x80000000 开始映射 4MB 大小页表空间，求第一级页表（页目录）的起始逻辑地址，并指出从哪个逻辑地址可以读出第一级页表（页目录）所在的物理页框号。说明理由。（注意 B 代表字节，一个 32 位地址占 4 字节）&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;进程页表空间映射起始地址为&lt;code&gt;0x80000000&lt;/code&gt;，故页目录起始逻辑地址为&lt;code&gt;0x80000000&lt;/code&gt;。&lt;/p&gt;</description>
+&lt;p&gt;进程页表空间映射起始地址为&lt;code&gt;0x80000000&lt;/code&gt;，所以页目录的第&lt;code&gt;0x200&lt;/code&gt;项指向页表空间，所以第一级页表的起始逻辑地址为&lt;code&gt;0x80200000&lt;/code&gt;。&lt;/p&gt;</description>
       <content:encoded><![CDATA[<p><strong><a href="%e4%bd%9c%e4%b8%9a3.pdf" target="_blank">点此查看作业源文件</a>
 </strong></p>
 <h1 id="第一题">第一题</h1>
@@ -220,10 +463,10 @@ $$ 进程整个的地址空间 = 2^{32}B = 4GB $$$$一页有 2^{12}B = 4KB$$&lt;
 $$ 进程整个的地址空间 = 2^{32}B = 4GB $$$$一页有 2^{12}B = 4KB$$<h2 id="2一个进程如果从-0x80000000-开始映射-4mb-大小页表空间求第一级页表页目录的起始逻辑地址并指出从哪个逻辑地址可以读出第一级页表页目录所在的物理页框号说明理由注意-b-代表字节一个-32-位地址占-4-字节">（2）一个进程如果从 0x80000000 开始映射 4MB 大小页表空间，求第一级页表（页目录）的起始逻辑地址，并指出从哪个逻辑地址可以读出第一级页表（页目录）所在的物理页框号。说明理由。（注意 B 代表字节，一个 32 位地址占 4 字节）</h2>
 <ul>
 <li>
-<p>进程页表空间映射起始地址为<code>0x80000000</code>，故页目录起始逻辑地址为<code>0x80000000</code>。</p>
+<p>进程页表空间映射起始地址为<code>0x80000000</code>，所以页目录的第<code>0x200</code>项指向页表空间，所以第一级页表的起始逻辑地址为<code>0x80200000</code>。</p>
 </li>
 <li>
-<p>页目录自映射，其页框号存在自身的首个页目录项中。因此访问页目录起始逻辑地址<code>0x80000000</code>可以读取页目录所在的物理页框号。</p>
+<p>页目录自映射，访问逻辑地址<code>0x80200800</code>可以读取页目录所在的物理页框号。</p>
 </li>
 </ul>
 <h2 id="3如果当前进程的页目录物理基地址页目录和相应页表内容如图下所示请描述访问以下逻辑地址时系统进行地址转换的过程如可行给出最终访存读取到的数据逻辑地址0x00x008030040x00402001">（3）如果当前进程的页目录物理基地址、页目录和相应页表内容如图下所示，请描述访问以下逻辑地址时系统进行地址转换的过程，如可行，给出最终访存读取到的数据。逻辑地址：0x0、0x00803004、0x00402001</h2>
@@ -322,7 +565,7 @@ $$ 进程整个的地址空间 = 2^{32}B = 4GB $$$$一页有 2^{12}B = 4KB$$<h2 
 <li>页内偏移量：<code>0x222</code></li>
 <li><strong>Error: Read Only</strong></li>
 </ul>
-<h2 id="3-store-0x00c005bf">(3) Store [0x00C005BF]</h2>
+<h2 id="3store-0x00c005bf">（3）Store [0x00C005BF]</h2>
 <ul>
 <li>页目录号：<code>0x003</code>
 <ul>

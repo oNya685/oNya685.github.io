@@ -1,0 +1,273 @@
+<!doctype html><html lang=en dir=auto><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><title>[BUAA-OS] 理论作业 4 | oNya's Blog</title>
+<meta name=keywords content><meta name=description content="点此查看作业源文件
+
+1. 读者写者问题（写者优先）
+
+共享读;
+互斥写、读写互斥;
+写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）。
+
+
+semaphore room_empty = 1;      // 读写互斥
+semaphore mutex_read = 1;      // 保护 read_count
+semaphore mutex_write = 1;     // 保护 write_count
+semaphore write_priority = 1;  // 写者优先锁
+int read_count = 0, write_count = 0;
+
+void reader() {
+    P(write_priority);         // 检查是否有写者等待
+    P(mutex_read);
+    read_count++;
+    if (read_count == 1) {
+        P(room_empty);         // 第一个读者获取读写锁
+    }
+    V(mutex_read);
+    V(write_priority);         // 释放写者优先锁
+    
+    // 读取
+    
+    P(mutex_read);
+    read_count--;
+    if (read_count == 0) {
+        V(room_empty);           // 最后一个读者释放读写锁
+    }
+    V(mutex_read);
+}
+
+void writer() {
+    P(mutex_write);
+    write_count++;
+    if (write_count == 1) {
+        P(write_priority);     // 第一个写者阻止新读者
+    }
+    V(mutex_write);
+    
+    P(room_empty);             // 获取读写锁
+    
+	// 写入
+	
+    V(room_empty);
+    
+    P(mutex_write);
+    write_count--;
+    if (write_count == 0) {
+        V(write_priority);     // 最后一个写者允许新读者
+    }
+    V(mutex_write);
+}
+2. 寿司店问题
+假设一个寿司店有5个座位，如果你到达的时候有一个空座位，你可以立刻就坐。但是如果你到达的时候5个座位都是满的有人已经就坐，这就意味着这些人都是一起来吃饭的，那么你需要等待所有的人一起离开才能就坐。编写同步原语，实现这个场景的约束。"><meta name=author content="oNya"><link rel=canonical href=%7b%7b%20.Permalink%20%7d%7d><link crossorigin=anonymous href=/assets/css/stylesheet.79e07885fe54214be03f273758b2bda9bbf1210d3eba9e9b5be2955ca8fdb800.css integrity="sha256-eeB4hf5UIUvgPyc3WLK9qbvxIQ0+up6bW+KVXKj9uAA=" rel="preload stylesheet" as=style><link rel=icon href=https://oNya685.github.io/favicon.ico><link rel=icon type=image/png sizes=16x16 href=https://oNya685.github.io/favicon-16x16.png><link rel=icon type=image/png sizes=32x32 href=https://oNya685.github.io/favicon-32x32.png><link rel=apple-touch-icon href=https://oNya685.github.io/apple-touch-icon.png><link rel=mask-icon href=https://oNya685.github.io/safari-pinned-tab.svg><meta name=theme-color content="#2e2e33"><meta name=msapplication-TileColor content="#2e2e33"><link rel=alternate hreflang=en href=https://oNya685.github.io/posts/buaa/os/homework-4/><noscript><style>#theme-toggle,.top-link{display:none}</style><style>@media(prefers-color-scheme:dark){:root{--theme:rgb(29, 30, 32);--entry:rgb(46, 46, 51);--primary:rgb(218, 218, 219);--secondary:rgb(155, 156, 157);--tertiary:rgb(65, 66, 68);--content:rgb(196, 196, 197);--code-block-bg:rgb(46, 46, 51);--code-bg:rgb(55, 56, 62);--border:rgb(51, 51, 51)}.list{background:var(--theme)}.list:not(.dark)::-webkit-scrollbar-track{background:0 0}.list:not(.dark)::-webkit-scrollbar-thumb{border-color:var(--theme)}}</style></noscript><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel=stylesheet><link rel=preconnect href=https://static.zeoseven.com crossorigin><link rel=stylesheet href=https://static.zeoseven.com/zsft/372/main/result.css onerror='this.href="https://static-host.zeoseven.com/zsft/372/main/result.css"'><link rel=stylesheet href=https://static.zeoseven.com/zsft/25/main/result.css onerror='this.href="https://static-host.zeoseven.com/zsft/25/main/result.css"'><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.css integrity=sha384-MlJdn/WNKDGXveldHDdyRP1R4CTHr3FeuDNfhsLPYrq2t0UBkUdK2jyTnXPEK1NQ crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/katex.min.js integrity=sha384-VQ8d8WVFw0yHhCk5E8I86oOhv48xLpnDZx5T9GogA/Y84DcCKWXDmSDfn13bzFZY crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.15.2/dist/contrib/auto-render.min.js integrity=sha384-+XBljXPPiv+OzfbB3cVmLHf4hdUFHlWNZN5spNQ7rmHTXpd7WvJum6fIACpNNfIR crossorigin=anonymous onload=renderMathInElement(document.body)></script><script>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"$",right:"$",display:!1}]})})</script><meta property="og:url" content="https://oNya685.github.io/posts/buaa/os/homework-4/"><meta property="og:site_name" content="oNya's Blog"><meta property="og:title" content="[BUAA-OS] 理论作业 4"><meta property="og:description" content="点此查看作业源文件 1. 读者写者问题（写者优先） 共享读; 互斥写、读写互斥; 写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）。 semaphore room_empty = 1; // 读写互斥 semaphore mutex_read = 1; // 保护 read_count semaphore mutex_write = 1; // 保护 write_count semaphore write_priority = 1; // 写者优先锁 int read_count = 0, write_count = 0; void reader() { P(write_priority); // 检查是否有写者等待 P(mutex_read); read_count++; if (read_count == 1) { P(room_empty); // 第一个读者获取读写锁 } V(mutex_read); V(write_priority); // 释放写者优先锁 // 读取 P(mutex_read); read_count--; if (read_count == 0) { V(room_empty); // 最后一个读者释放读写锁 } V(mutex_read); } void writer() { P(mutex_write); write_count++; if (write_count == 1) { P(write_priority); // 第一个写者阻止新读者 } V(mutex_write); P(room_empty); // 获取读写锁 // 写入 V(room_empty); P(mutex_write); write_count--; if (write_count == 0) { V(write_priority); // 最后一个写者允许新读者 } V(mutex_write); } 2. 寿司店问题 假设一个寿司店有5个座位，如果你到达的时候有一个空座位，你可以立刻就坐。但是如果你到达的时候5个座位都是满的有人已经就坐，这就意味着这些人都是一起来吃饭的，那么你需要等待所有的人一起离开才能就坐。编写同步原语，实现这个场景的约束。"><meta property="og:locale" content="zh-cn"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-04-17T21:25:00+08:00"><meta property="article:modified_time" content="2025-04-17T21:25:00+08:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="[BUAA-OS] 理论作业 4"><meta name=twitter:description content="点此查看作业源文件
+
+1. 读者写者问题（写者优先）
+
+共享读;
+互斥写、读写互斥;
+写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）。
+
+
+semaphore room_empty = 1;      // 读写互斥
+semaphore mutex_read = 1;      // 保护 read_count
+semaphore mutex_write = 1;     // 保护 write_count
+semaphore write_priority = 1;  // 写者优先锁
+int read_count = 0, write_count = 0;
+
+void reader() {
+    P(write_priority);         // 检查是否有写者等待
+    P(mutex_read);
+    read_count++;
+    if (read_count == 1) {
+        P(room_empty);         // 第一个读者获取读写锁
+    }
+    V(mutex_read);
+    V(write_priority);         // 释放写者优先锁
+    
+    // 读取
+    
+    P(mutex_read);
+    read_count--;
+    if (read_count == 0) {
+        V(room_empty);           // 最后一个读者释放读写锁
+    }
+    V(mutex_read);
+}
+
+void writer() {
+    P(mutex_write);
+    write_count++;
+    if (write_count == 1) {
+        P(write_priority);     // 第一个写者阻止新读者
+    }
+    V(mutex_write);
+    
+    P(room_empty);             // 获取读写锁
+    
+	// 写入
+	
+    V(room_empty);
+    
+    P(mutex_write);
+    write_count--;
+    if (write_count == 0) {
+        V(write_priority);     // 最后一个写者允许新读者
+    }
+    V(mutex_write);
+}
+2. 寿司店问题
+假设一个寿司店有5个座位，如果你到达的时候有一个空座位，你可以立刻就坐。但是如果你到达的时候5个座位都是满的有人已经就坐，这就意味着这些人都是一起来吃饭的，那么你需要等待所有的人一起离开才能就坐。编写同步原语，实现这个场景的约束。"><script type=application/ld+json>{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Posts","item":"https://oNya685.github.io/posts/"},{"@type":"ListItem","position":2,"name":"北京航空航天大学","item":"https://oNya685.github.io/posts/buaa/"},{"@type":"ListItem","position":3,"name":"操作系统","item":"https://oNya685.github.io/posts/buaa/os/"},{"@type":"ListItem","position":4,"name":"[BUAA-OS] 理论作业 4","item":"https://oNya685.github.io/posts/buaa/os/homework-4/"}]}</script><script type=application/ld+json>{"@context":"https://schema.org","@type":"BlogPosting","headline":"[BUAA-OS] 理论作业 4","name":"[BUAA-OS] 理论作业 4","description":"点此查看作业源文件 1. 读者写者问题（写者优先） 共享读; 互斥写、读写互斥; 写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）。 semaphore room_empty = 1; // 读写互斥 semaphore mutex_read = 1; // 保护 read_count semaphore mutex_write = 1; // 保护 write_count semaphore write_priority = 1; // 写者优先锁 int read_count = 0, write_count = 0; void reader() { P(write_priority); // 检查是否有写者等待 P(mutex_read); read_count++; if (read_count == 1) { P(room_empty); // 第一个读者获取读写锁 } V(mutex_read); V(write_priority); // 释放写者优先锁 // 读取 P(mutex_read); read_count--; if (read_count == 0) { V(room_empty); // 最后一个读者释放读写锁 } V(mutex_read); } void writer() { P(mutex_write); write_count++; if (write_count == 1) { P(write_priority); // 第一个写者阻止新读者 } V(mutex_write); P(room_empty); // 获取读写锁 // 写入 V(room_empty); P(mutex_write); write_count--; if (write_count == 0) { V(write_priority); // 最后一个写者允许新读者 } V(mutex_write); } 2. 寿司店问题 假设一个寿司店有5个座位，如果你到达的时候有一个空座位，你可以立刻就坐。但是如果你到达的时候5个座位都是满的有人已经就坐，这就意味着这些人都是一起来吃饭的，那么你需要等待所有的人一起离开才能就坐。编写同步原语，实现这个场景的约束。\n","keywords":[],"articleBody":"点此查看作业源文件 1. 读者写者问题（写者优先） 共享读; 互斥写、读写互斥; 写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）。 semaphore room_empty = 1; // 读写互斥 semaphore mutex_read = 1; // 保护 read_count semaphore mutex_write = 1; // 保护 write_count semaphore write_priority = 1; // 写者优先锁 int read_count = 0, write_count = 0; void reader() { P(write_priority); // 检查是否有写者等待 P(mutex_read); read_count++; if (read_count == 1) { P(room_empty); // 第一个读者获取读写锁 } V(mutex_read); V(write_priority); // 释放写者优先锁 // 读取 P(mutex_read); read_count--; if (read_count == 0) { V(room_empty); // 最后一个读者释放读写锁 } V(mutex_read); } void writer() { P(mutex_write); write_count++; if (write_count == 1) { P(write_priority); // 第一个写者阻止新读者 } V(mutex_write); P(room_empty); // 获取读写锁 // 写入 V(room_empty); P(mutex_write); write_count--; if (write_count == 0) { V(write_priority); // 最后一个写者允许新读者 } V(mutex_write); } 2. 寿司店问题 假设一个寿司店有5个座位，如果你到达的时候有一个空座位，你可以立刻就坐。但是如果你到达的时候5个座位都是满的有人已经就坐，这就意味着这些人都是一起来吃饭的，那么你需要等待所有的人一起离开才能就坐。编写同步原语，实现这个场景的约束。\nsemaphore mutex = 1; // 保护共享变量 semaphore batch_lock = 1; // 批次锁 semaphore waiting = 0; // 等待新批次 int count = 0; // 当前批次人数 void customer() { CONSUME: P(mutex); if (count == 0) { // 新批次开始 P(batch_lock); // 获取批次锁 } if (count \u003c 5) { count++; V(mutex); // 就坐 // 离开 P(mutex); count--; if (count == 0) { // 批次结束，唤醒等待者 V(batch_lock); for (int i = 0; i \u003c 5; i++) { V(waiting); // 唤醒最多5人 } } V(mutex); } else { V(mutex); P(waiting); // 等待新批次 // 上一批次结束，被唤醒 goto CONSUME; } } 3. 进门问题。 （1）请给出P、V操作和信号量的物理意义。 信号量的物理意义：信号量是一种同步机制，用于控制多个进程/线程对共享资源的访问。可以看作是一个计数器，表示当前可用的资源数量或某种状态。 P操作的物理意义：表示申请资源。在互斥访问中，P(S) 相当于加锁。 V操作的物理意义：表示释放资源，如果有进程在等待该资源，则唤醒其中一个。在互斥访问中，V(S) 相当于解锁。 （2）一个软件公司有5名员工，每人刷卡上班。员工刷卡后需要等待，直到所有员工都刷卡后才能进入公司。为了避免拥挤，公司要求员工一个一个通过大门。所有员工都进入后，最后进入的员工负责关门。请用P、V操作实现员工之间的同步关系。 semaphore barrier = 0; // 等待所有员工到达 semaphore door = 1; // 控制逐个通过 semaphore mutex = 1; // 保护计数器 int count = 0; void employee() { P(mutex); count++; if (count == 5) { V(barrier); // 第5人触发屏障 } V(mutex); P(barrier); // 所有员工等待在此 V(barrier); // 保持屏障信号 P(door); // 通过大门 V(door); P(mutex); count--; if (count == 0) { // 关门 } V(mutex); } 4. 搜索-插入-删除问题。 三个线程对一个单链表进行并发的访问，分别进行搜索、插入和删除。搜索线程仅仅读取链表，因此多个搜索线程可以并发。插入线程把数据项插入到链表最后的位置；多个插入线程必须互斥防止同时执行插入操作。但是，一个插入线程可以和多个搜索线程并发执行。最后，删除线程可以从链表中任何一个位置删除数据。一次只能有一个删除线程执行；删除线程之间，删除线程和搜索线程，删除线程和插入线程都不能同时执行。\n请编写三类线程的同步互斥代码，描述这种三路的分类互斥问题。\nsemaphore search_mutex = 1; // 搜索并发控制 semaphore insert_mutex = 1; // 插入互斥 semaphore delete_mutex = 1; // 删除独占 int search_count = 0; void search() { P(search_mutex); search_count++; if (search_count == 1) { P(delete_mutex); // 阻止删除 } V(search_mutex); // 搜索 P(search_mutex); search_count--; if (search_count == 0) { V(delete_mutex); } V(search_mutex); } void insert() { P(insert_mutex); // 插入互斥 // 插入 V(insert_mutex); } void delete() { P(delete_mutex); // 独占删除 // 删除 V(delete_mutex); } ","wordCount":"1217","inLanguage":"en","datePublished":"2025-04-17T21:25:00+08:00","dateModified":"2025-04-17T21:25:00+08:00","author":{"@type":"Person","name":"oNya"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://oNya685.github.io/posts/buaa/os/homework-4/"},"publisher":{"@type":"Organization","name":"oNya's Blog","logo":{"@type":"ImageObject","url":"https://oNya685.github.io/favicon.ico"}}}</script><script src=https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js></script><link rel=stylesheet href=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css><script src=https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js></script></head><body id=top><script>localStorage.getItem("pref-theme")==="dark"?document.body.classList.add("dark"):localStorage.getItem("pref-theme")==="light"?document.body.classList.remove("dark"):window.matchMedia("(prefers-color-scheme: dark)").matches&&document.body.classList.add("dark")</script><header class=header><nav class=nav><div class=logo><a href=https://oNya685.github.io/ accesskey=h title="主页 | oNya's Blog (Alt + H)"><img src=https://oNya685.github.io/ alt aria-label=logo height=30>主页 | oNya's Blog</a><div class=logo-switches><button id=theme-toggle accesskey=t title="(Alt + T)" aria-label="Toggle theme"><svg id="moon" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg><svg id="sun" width="24" height="18" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></button></div></div><ul id=menu><li><a href=https://oNya685.github.io/archives/ title=归档><span>归档</span></a></li><li><a href=https://oNya685.github.io/categories/ title=分类><span>分类</span></a></li><li><a href=https://oNya685.github.io/tags/ title=标签><span>标签</span></a></li><li><a href=https://oNya685.github.io/links/ title=链接><span>链接</span></a></li><li><a href=https://oNya685.github.io/search/ title=搜索><span>搜索</span></a></li></ul></nav></header><main class=main><article class=post-single><header class=post-header><div class=breadcrumbs><a href=https://oNya685.github.io/>Home</a>&nbsp;»&nbsp;<a href=https://oNya685.github.io/posts/>Posts</a>&nbsp;»&nbsp;<a href=https://oNya685.github.io/posts/buaa/>北京航空航天大学</a>&nbsp;»&nbsp;<a href=https://oNya685.github.io/posts/buaa/os/>操作系统</a></div><h1 class="post-title entry-hint-parent">[BUAA-OS] 理论作业 4</h1><div class=post-meta><span title='2025-04-17 21:25:00 +0800 CST'>2025年4月17日</span>&nbsp;·&nbsp;3 min&nbsp;·&nbsp;1217 words&nbsp;·&nbsp;oNya</div></header><aside id=toc-container class="toc-container wide"><div class=toc><details open><summary accesskey=c title="(Alt + C)"><span class=details>Table of Contents</span></summary><div class=inner><ul><li><a href=#1-%e8%af%bb%e8%80%85%e5%86%99%e8%80%85%e9%97%ae%e9%a2%98%e5%86%99%e8%80%85%e4%bc%98%e5%85%88 aria-label="1. 读者写者问题（写者优先）">1. 读者写者问题（写者优先）</a></li><li><a href=#2-%e5%af%bf%e5%8f%b8%e5%ba%97%e9%97%ae%e9%a2%98 aria-label="2. 寿司店问题">2. 寿司店问题</a></li><li><a href=#3-%e8%bf%9b%e9%97%a8%e9%97%ae%e9%a2%98 aria-label="3. 进门问题。">3. 进门问题。</a><ul><li><a href=#1%e8%af%b7%e7%bb%99%e5%87%bapv%e6%93%8d%e4%bd%9c%e5%92%8c%e4%bf%a1%e5%8f%b7%e9%87%8f%e7%9a%84%e7%89%a9%e7%90%86%e6%84%8f%e4%b9%89 aria-label=（1）请给出P、V操作和信号量的物理意义。>（1）请给出P、V操作和信号量的物理意义。</a></li><li><a href=#2%e4%b8%80%e4%b8%aa%e8%bd%af%e4%bb%b6%e5%85%ac%e5%8f%b8%e6%9c%895%e5%90%8d%e5%91%98%e5%b7%a5%e6%af%8f%e4%ba%ba%e5%88%b7%e5%8d%a1%e4%b8%8a%e7%8f%ad%e5%91%98%e5%b7%a5%e5%88%b7%e5%8d%a1%e5%90%8e%e9%9c%80%e8%a6%81%e7%ad%89%e5%be%85%e7%9b%b4%e5%88%b0%e6%89%80%e6%9c%89%e5%91%98%e5%b7%a5%e9%83%bd%e5%88%b7%e5%8d%a1%e5%90%8e%e6%89%8d%e8%83%bd%e8%bf%9b%e5%85%a5%e5%85%ac%e5%8f%b8%e4%b8%ba%e4%ba%86%e9%81%bf%e5%85%8d%e6%8b%a5%e6%8c%a4%e5%85%ac%e5%8f%b8%e8%a6%81%e6%b1%82%e5%91%98%e5%b7%a5%e4%b8%80%e4%b8%aa%e4%b8%80%e4%b8%aa%e9%80%9a%e8%bf%87%e5%a4%a7%e9%97%a8%e6%89%80%e6%9c%89%e5%91%98%e5%b7%a5%e9%83%bd%e8%bf%9b%e5%85%a5%e5%90%8e%e6%9c%80%e5%90%8e%e8%bf%9b%e5%85%a5%e7%9a%84%e5%91%98%e5%b7%a5%e8%b4%9f%e8%b4%a3%e5%85%b3%e9%97%a8%e8%af%b7%e7%94%a8pv%e6%93%8d%e4%bd%9c%e5%ae%9e%e7%8e%b0%e5%91%98%e5%b7%a5%e4%b9%8b%e9%97%b4%e7%9a%84%e5%90%8c%e6%ad%a5%e5%85%b3%e7%b3%bb aria-label=（2）一个软件公司有5名员工，每人刷卡上班。员工刷卡后需要等待，直到所有员工都刷卡后才能进入公司。为了避免拥挤，公司要求员工一个一个通过大门。所有员工都进入后，最后进入的员工负责关门。请用P、V操作实现员工之间的同步关系。>（2）一个软件公司有5名员工，每人刷卡上班。员工刷卡后需要等待，直到所有员工都刷卡后才能进入公司。为了避免拥挤，公司要求员工一个一个通过大门。所有员工都进入后，最后进入的员工负责关门。请用P、V操作实现员工之间的同步关系。</a></li></ul></li><li><a href=#4-%e6%90%9c%e7%b4%a2-%e6%8f%92%e5%85%a5-%e5%88%a0%e9%99%a4%e9%97%ae%e9%a2%98 aria-label="4. 搜索-插入-删除问题。">4. 搜索-插入-删除问题。</a></li></ul></div></details></div></aside><script>let activeElement,elements;window.addEventListener("DOMContentLoaded",function(){checkTocPosition(),elements=document.querySelectorAll("h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]"),activeElement=elements[0];const t=encodeURI(activeElement.getAttribute("id")).toLowerCase();document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active")},!1),window.addEventListener("resize",function(){checkTocPosition()},!1),window.addEventListener("scroll",()=>{activeElement=Array.from(elements).find(e=>{if(getOffsetTop(e)-window.pageYOffset>0&&getOffsetTop(e)-window.pageYOffset<window.innerHeight/2)return e})||activeElement,elements.forEach(e=>{const t=encodeURI(e.getAttribute("id")).toLowerCase();e===activeElement?document.querySelector(`.inner ul li a[href="#${t}"]`).classList.add("active"):document.querySelector(`.inner ul li a[href="#${t}"]`).classList.remove("active")})},!1);const main=parseInt(getComputedStyle(document.body).getPropertyValue("--article-width"),10),toc=parseInt(getComputedStyle(document.body).getPropertyValue("--toc-width"),10),gap=parseInt(getComputedStyle(document.body).getPropertyValue("--gap"),10);function checkTocPosition(){const e=document.body.scrollWidth;e-main-toc*2-gap*4>0?document.getElementById("toc-container").classList.add("wide"):document.getElementById("toc-container").classList.remove("wide")}function getOffsetTop(e){if(!e.getClientRects().length)return 0;let t=e.getBoundingClientRect(),n=e.ownerDocument.defaultView;return t.top+n.pageYOffset}</script><div class=post-content><p><strong><a href=%e4%bd%9c%e4%b8%9a4.pdf target=_blank>点此查看作业源文件</a></strong></p><h1 id=1-读者写者问题写者优先>1. 读者写者问题（写者优先）<a hidden class=anchor aria-hidden=true href=#1-读者写者问题写者优先>#</a></h1><ol><li>共享读;</li><li>互斥写、读写互斥;</li><li>写者优先于读者（一旦有写者，则后续读者必须等待，唤醒时优先考虑写者）。</li></ol><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span>semaphore room_empty <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;      <span style=color:#75715e>// 读写互斥
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore mutex_read <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;      <span style=color:#75715e>// 保护 read_count
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore mutex_write <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;     <span style=color:#75715e>// 保护 write_count
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore write_priority <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;  <span style=color:#75715e>// 写者优先锁
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> read_count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>, write_count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>reader</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(write_priority);         <span style=color:#75715e>// 检查是否有写者等待
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>P</span>(mutex_read);
+</span></span><span style=display:flex><span>    read_count<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (read_count <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>P</span>(room_empty);         <span style=color:#75715e>// 第一个读者获取读写锁
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(mutex_read);
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(write_priority);         <span style=color:#75715e>// 释放写者优先锁
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 读取
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(mutex_read);
+</span></span><span style=display:flex><span>    read_count<span style=color:#f92672>--</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (read_count <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>V</span>(room_empty);           <span style=color:#75715e>// 最后一个读者释放读写锁
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(mutex_read);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>writer</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(mutex_write);
+</span></span><span style=display:flex><span>    write_count<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (write_count <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>P</span>(write_priority);     <span style=color:#75715e>// 第一个写者阻止新读者
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(mutex_write);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(room_empty);             <span style=color:#75715e>// 获取读写锁
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 写入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(room_empty);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(mutex_write);
+</span></span><span style=display:flex><span>    write_count<span style=color:#f92672>--</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (write_count <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>V</span>(write_priority);     <span style=color:#75715e>// 最后一个写者允许新读者
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(mutex_write);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h1 id=2-寿司店问题>2. 寿司店问题<a hidden class=anchor aria-hidden=true href=#2-寿司店问题>#</a></h1><p>假设一个寿司店有5个座位，如果你到达的时候有一个空座位，你可以立刻就坐。但是如果你到达的时候5个座位都是满的有人已经就坐，这就意味着这些人都是一起来吃饭的，那么你需要等待所有的人一起离开才能就坐。编写同步原语，实现这个场景的约束。</p><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span>semaphore mutex <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;         <span style=color:#75715e>// 保护共享变量
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore batch_lock <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;    <span style=color:#75715e>// 批次锁
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore waiting <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;       <span style=color:#75715e>// 等待新批次
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;               <span style=color:#75715e>// 当前批次人数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>customer</span>() {
+</span></span><span style=display:flex><span>CONSUME:
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(mutex);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (count <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 新批次开始
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#a6e22e>P</span>(batch_lock);       <span style=color:#75715e>// 获取批次锁
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (count <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>5</span>) {
+</span></span><span style=display:flex><span>        count<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>V</span>(mutex);
+</span></span><span style=display:flex><span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 就坐
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 离开
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>P</span>(mutex);
+</span></span><span style=display:flex><span>        count<span style=color:#f92672>--</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (count <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
+</span></span><span style=display:flex><span>            <span style=color:#75715e>// 批次结束，唤醒等待者
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            <span style=color:#a6e22e>V</span>(batch_lock);
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>5</span>; i<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>                <span style=color:#a6e22e>V</span>(waiting); <span style=color:#75715e>// 唤醒最多5人
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>V</span>(mutex);
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>V</span>(mutex);
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>P</span>(waiting);          <span style=color:#75715e>// 等待新批次
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#75715e>// 上一批次结束，被唤醒
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        <span style=color:#66d9ef>goto</span> CONSUME;
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h1 id=3-进门问题>3. 进门问题。<a hidden class=anchor aria-hidden=true href=#3-进门问题>#</a></h1><h2 id=1请给出pv操作和信号量的物理意义>（1）请给出P、V操作和信号量的物理意义。<a hidden class=anchor aria-hidden=true href=#1请给出pv操作和信号量的物理意义>#</a></h2><ol><li>信号量的物理意义：信号量是一种同步机制，用于控制多个进程/线程对共享资源的访问。可以看作是一个计数器，表示当前可用的资源数量或某种状态。</li><li>P操作的物理意义：表示申请资源。在互斥访问中，P(S) 相当于加锁。</li><li>V操作的物理意义：表示释放资源，如果有进程在等待该资源，则唤醒其中一个。在互斥访问中，V(S) 相当于解锁。</li></ol><h2 id=2一个软件公司有5名员工每人刷卡上班员工刷卡后需要等待直到所有员工都刷卡后才能进入公司为了避免拥挤公司要求员工一个一个通过大门所有员工都进入后最后进入的员工负责关门请用pv操作实现员工之间的同步关系>（2）一个软件公司有5名员工，每人刷卡上班。员工刷卡后需要等待，直到所有员工都刷卡后才能进入公司。为了避免拥挤，公司要求员工一个一个通过大门。所有员工都进入后，最后进入的员工负责关门。请用P、V操作实现员工之间的同步关系。<a hidden class=anchor aria-hidden=true href=#2一个软件公司有5名员工每人刷卡上班员工刷卡后需要等待直到所有员工都刷卡后才能进入公司为了避免拥挤公司要求员工一个一个通过大门所有员工都进入后最后进入的员工负责关门请用pv操作实现员工之间的同步关系>#</a></h2><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span>semaphore barrier <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;       <span style=color:#75715e>// 等待所有员工到达
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore door <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;          <span style=color:#75715e>// 控制逐个通过
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore mutex <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;         <span style=color:#75715e>// 保护计数器
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>employee</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(mutex);
+</span></span><span style=display:flex><span>    count<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (count <span style=color:#f92672>==</span> <span style=color:#ae81ff>5</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>V</span>(barrier);          <span style=color:#75715e>// 第5人触发屏障
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(mutex);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(barrier);              <span style=color:#75715e>// 所有员工等待在此
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    <span style=color:#a6e22e>V</span>(barrier);              <span style=color:#75715e>// 保持屏障信号
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(door);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 通过大门
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(door);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(mutex);
+</span></span><span style=display:flex><span>    count<span style=color:#f92672>--</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (count <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 关门
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(mutex);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h1 id=4-搜索-插入-删除问题>4. 搜索-插入-删除问题。<a hidden class=anchor aria-hidden=true href=#4-搜索-插入-删除问题>#</a></h1><p>三个线程对一个单链表进行并发的访问，分别进行搜索、插入和删除。搜索线程仅仅读取链表，因此多个搜索线程可以并发。插入线程把数据项插入到链表最后的位置；多个插入线程必须互斥防止同时执行插入操作。但是，一个插入线程可以和多个搜索线程并发执行。最后，删除线程可以从链表中任何一个位置删除数据。一次只能有一个删除线程执行；删除线程之间，删除线程和搜索线程，删除线程和插入线程都不能同时执行。</p><p>请编写三类线程的同步互斥代码，描述这种三路的分类互斥问题。</p><hr><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span>semaphore search_mutex <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;    <span style=color:#75715e>// 搜索并发控制
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore insert_mutex <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;    <span style=color:#75715e>// 插入互斥
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>semaphore delete_mutex <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;    <span style=color:#75715e>// 删除独占
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> search_count <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>search</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(search_mutex);
+</span></span><span style=display:flex><span>    search_count<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (search_count <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>P</span>(delete_mutex);       <span style=color:#75715e>// 阻止删除
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(search_mutex);
+</span></span><span style=display:flex><span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 搜索
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(search_mutex);
+</span></span><span style=display:flex><span>    search_count<span style=color:#f92672>--</span>;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (search_count <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#a6e22e>V</span>(delete_mutex);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(search_mutex);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>insert</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(insert_mutex);           <span style=color:#75715e>// 插入互斥
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 插入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(insert_mutex);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>delete</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>P</span>(delete_mutex);           <span style=color:#75715e>// 独占删除
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 删除
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>    
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>V</span>(delete_mutex);
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></div><footer class=post-footer><ul class=post-tags></ul></footer></article></main><footer class=footer><span>&copy; 2025 <a href=https://oNya685.github.io/>oNya's Blog</a></span> ·
+<span>Powered by
+<a href=https://gohugo.io/ rel="noopener noreferrer" target=_blank>Hugo</a> &
+        <a href=https://github.com/adityatelange/hugo-PaperMod/ rel=noopener target=_blank>PaperMod</a></span></footer><a href=#top aria-label="go to top" title="Go to Top (Alt + G)" class=top-link id=top-link accesskey=g><svg viewBox="0 0 12 6" fill="currentcolor"><path d="M12 6H0l6-6z"/></svg>
+</a><script>let menu=document.getElementById("menu");menu&&(menu.scrollLeft=localStorage.getItem("menu-scroll-position"),menu.onscroll=function(){localStorage.setItem("menu-scroll-position",menu.scrollLeft)}),document.querySelectorAll('a[href^="#"]').forEach(e=>{e.addEventListener("click",function(e){e.preventDefault();var t=this.getAttribute("href").substr(1);window.matchMedia("(prefers-reduced-motion: reduce)").matches?document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView():document.querySelector(`[id='${decodeURIComponent(t)}']`).scrollIntoView({behavior:"smooth"}),t==="top"?history.replaceState(null,null," "):history.pushState(null,null,`#${t}`)})})</script><script>var mybutton=document.getElementById("top-link");window.onscroll=function(){document.body.scrollTop>800||document.documentElement.scrollTop>800?(mybutton.style.visibility="visible",mybutton.style.opacity="1"):(mybutton.style.visibility="hidden",mybutton.style.opacity="0")}</script><script>document.getElementById("theme-toggle").addEventListener("click",()=>{document.body.className.includes("dark")?(document.body.classList.remove("dark"),localStorage.setItem("pref-theme","light")):(document.body.classList.add("dark"),localStorage.setItem("pref-theme","dark"))})</script><script>document.querySelectorAll("pre > code").forEach(e=>{const n=e.parentNode.parentNode,t=document.createElement("button");t.classList.add("copy-code"),t.innerHTML="copy";function s(){t.innerHTML="copied!",setTimeout(()=>{t.innerHTML="copy"},2e3)}t.addEventListener("click",t=>{if("clipboard"in navigator){navigator.clipboard.writeText(e.textContent),s();return}const n=document.createRange();n.selectNodeContents(e);const o=window.getSelection();o.removeAllRanges(),o.addRange(n);try{document.execCommand("copy"),s()}catch{}o.removeRange(n)}),n.classList.contains("highlight")?n.appendChild(t):n.parentNode.firstChild==n||(e.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName=="TABLE"?e.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(t):e.parentNode.appendChild(t))})</script><script>(function(e,t){var s=document,o="script",n=s.createElement(o),i=s.getElementsByTagName(o)[0];n.src=e,t&&n.addEventListener("load",function(e){t(e)}),i.parentNode.insertBefore(n,i)})("//cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.min.js",function(){pangu.spacingPage()})</script></body></html>

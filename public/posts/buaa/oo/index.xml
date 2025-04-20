@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>面向对象设计与构造 on oNya&#39;s Blog</title>
-    <link>https://oNya685.github.io/posts/buaa/oo/</link>
+    <link>http://localhost:20003/posts/buaa/oo/</link>
     <description>Recent content in 面向对象设计与构造 on oNya&#39;s Blog</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sat, 22 Mar 2025 14:16:55 +0800</lastBuildDate>
-    <atom:link href="https://oNya685.github.io/posts/buaa/oo/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:20003/posts/buaa/oo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>[BUAA-OO] Unit 1 总结</title>
-      <link>https://oNya685.github.io/posts/buaa/oo/unit-1/summary/</link>
+      <link>http://localhost:20003/posts/buaa/oo/unit-1/summary/</link>
       <pubDate>Sat, 22 Mar 2025 14:16:55 +0800</pubDate>
-      <guid>https://oNya685.github.io/posts/buaa/oo/unit-1/summary/</guid>
+      <guid>http://localhost:20003/posts/buaa/oo/unit-1/summary/</guid>
       <description>第一单元博客作业</description>
       <content:encoded><![CDATA[<h1 id="架构简介">架构简介</h1>
 <p>在本单元中，作业要求我们对提供了<strong>形式化表述</strong>的复杂表达式进行<strong>解析和化简</strong>，并要求尽可能简短的输出以度量性能分数。</p>
@@ -167,9 +167,9 @@
     </item>
     <item>
       <title>用Condition干掉notifyAll</title>
-      <link>https://oNya685.github.io/posts/buaa/oo/condition/</link>
+      <link>http://localhost:20003/posts/buaa/oo/condition/</link>
       <pubDate>Mon, 17 Mar 2025 16:04:09 +0800</pubDate>
-      <guid>https://oNya685.github.io/posts/buaa/oo/condition/</guid>
+      <guid>http://localhost:20003/posts/buaa/oo/condition/</guid>
       <description>介绍notify()与notifyAll()的区别，推荐ReentrantLock</description>
       <content:encoded><![CDATA[<p><code>synchronized</code>关键字修饰的局部代码块内，我们能通过<code>wait()</code>, <code>notify()</code>, <code>notifyAll()</code>方法来调控线程之间的协作。</p>
 <h1 id="notify和notifyall是什么"><code>notify()</code>和<code>notifyAll()</code>是什么？</h1>
@@ -513,9 +513,9 @@
     </item>
     <item>
       <title>[BUAA-OO] Unit 1 递归函数调用的解析与计算</title>
-      <link>https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/</link>
+      <link>http://localhost:20003/posts/buaa/oo/unit-1/homework-2-function/</link>
       <pubDate>Wed, 05 Mar 2025 20:48:35 +0000</pubDate>
-      <guid>https://oNya685.github.io/posts/buaa/oo/unit-1/homework-2-function/</guid>
+      <guid>http://localhost:20003/posts/buaa/oo/unit-1/homework-2-function/</guid>
       <description>&lt;h1 id=&#34;函数调用处理机制&#34;&gt;函数调用处理机制&lt;/h1&gt;
 &lt;h2 id=&#34;核心思路&#34;&gt;核心思路&lt;/h2&gt;
 &lt;ol&gt;
