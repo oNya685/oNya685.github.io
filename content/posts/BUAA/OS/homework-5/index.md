@@ -141,14 +141,14 @@ $$\text{priority} = \text{nice} + k_1 \times \text{cpuTime} - k_2 \times \text{w
 
 ## (2) 若系统中的可利用资源 Available 为（0,6,2），系统是否安全？若系统处在安全状态，请给出安全序列；若系统处在非安全状态，简要说明原因。
 
-|                   Work                    | 进程  |                   Need                    |                Allocation                 |              Work+Allocation              | Finish  |
-| :---------------------------------------: | :-: | :---------------------------------------: | :---------------------------------------: | :---------------------------------------: | ------- |
+|                          Work                          | 进程  |                          Need                          |                       Allocation                       |                    Work+Allocation                     | Finish  |
+| :----------------------------------------------------: | :-: | :----------------------------------------------------: | :----------------------------------------------------: | :----------------------------------------------------: | ------- |
 | $\left(\begin{matrix} A && B && C \end{matrix}\right)$ |     | $\left(\begin{matrix} A && B && C \end{matrix}\right)$ | $\left(\begin{matrix} A && B && C \end{matrix}\right)$ | $\left(\begin{matrix} A && B && C \end{matrix}\right)$ |         |
 | $\left(\begin{matrix} 0 && 6 && 2 \end{matrix}\right)$ | P0  | $\left(\begin{matrix} 0 && 0 && 1 \end{matrix}\right)$ | $\left(\begin{matrix} 0 && 0 && 3 \end{matrix}\right)$ | $\left(\begin{matrix} 0 && 6 && 5 \end{matrix}\right)$ | `true`  |
 | $\left(\begin{matrix} 0 && 6 && 5 \end{matrix}\right)$ | P3  | $\left(\begin{matrix} 0 && 6 && 2 \end{matrix}\right)$ | $\left(\begin{matrix} 0 && 0 && 2 \end{matrix}\right)$ | $\left(\begin{matrix} 0 && 6 && 7 \end{matrix}\right)$ | `true`  |
 | $\left(\begin{matrix} 0 && 6 && 7 \end{matrix}\right)$ | P4  | $\left(\begin{matrix} 0 && 6 && 4 \end{matrix}\right)$ | $\left(\begin{matrix} 0 && 0 && 1 \end{matrix}\right)$ | $\left(\begin{matrix} 0 && 6 && 8 \end{matrix}\right)$ | `true`  |
-| $\left(\begin{matrix} 0 && 6 && 8 \end{matrix}\right)$ | P1  | $\left(\begin{matrix} 0 && 7 && 5 \end{matrix}\right)$ | $\left(\begin{matrix} 1 && 0 && 0 \end{matrix}\right)$ |                    ——                     | `false` |
-| $\left(\begin{matrix} 0 && 6 && 8 \end{matrix}\right)$ | P2  | $\left(\begin{matrix} 1 && 0 && 0 \end{matrix}\right)$ | $\left(\begin{matrix} 1 && 3 && 5 \end{matrix}\right)$ |                    ——                     | `false` |
+| $\left(\begin{matrix} 0 && 6 && 8 \end{matrix}\right)$ | P1  | $\left(\begin{matrix} 0 && 7 && 5 \end{matrix}\right)$ | $\left(\begin{matrix} 1 && 0 && 0 \end{matrix}\right)$ |                           ——                           | `false` |
+| $\left(\begin{matrix} 0 && 6 && 8 \end{matrix}\right)$ | P2  | $\left(\begin{matrix} 1 && 0 && 0 \end{matrix}\right)$ | $\left(\begin{matrix} 1 && 3 && 5 \end{matrix}\right)$ |                           ——                           | `false` |
 
 因此，系统处于非安全状态。
 

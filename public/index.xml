@@ -499,6 +499,146 @@ $$\text{priority} = \text{nice} + k_1 \times \text{cpuTime} - k_2 \times \text{w
 ]]></content:encoded>
     </item>
     <item>
+      <title>[BUAA-ML] 第一次实验报告</title>
+      <link>https://oNya685.github.io/posts/buaa/ml/report-1/</link>
+      <pubDate>Sun, 27 Apr 2025 21:42:13 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/ml/report-1/</guid>
+      <description>Linear Regression</description>
+      <content:encoded><![CDATA[<p>机器学习实验报告</p>
+<hr>
+<p>一、数据预处理：归一化与标准化处理<br>
+（一）实验中的预处理方法</p>
+<ol>
+<li>
+<p>是否进行归一化/标准化<br>
+实验中使用了 标准化（Standardization） 处理，具体代码为：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>scaler <span style="color:#f92672">=</span> StandardScaler()
+</span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>fit_transform(X_train)
+</span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>transform(X_test)
+</span></span></code></pre></div><p>• <code>fit_transform</code> 对训练集计算均值和标准差并应用转换。</p>
+<p>• <code>transform</code> 对测试集直接使用训练集的参数进行转换。</p>
+</li>
+<li>
+<p>归一化与标准化的区别<br>
+• 归一化（Normalization）：</p>
+<p>将数据缩放到固定范围（如[0,1]），公式为：<br>
+</p>
+\[
+     x_{\text{norm}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
+     \]<p><br>
+• 标准化（Standardization）：</p>
+<p>将数据调整为均值为0、标准差为1的分布，公式为：<br>
+</p>
+\[
+     x_{\text{std}} = \frac{x - \mu}{\sigma}
+     \]</li>
+<li>
+<p>线性回归对特征尺度敏感的原因<br>
+• 解析解稳定性：参数解析解 \( w = (X^T X)^{-1} X^T y \) 中，若特征尺度差异大，矩阵 \( X^T X \) 的条件数增大，导致求逆不稳定。</p>
+<p>• 梯度下降效率：不同尺度的特征需不同的学习率，尺度差异大会导致收敛速度慢。</p>
+</li>
+</ol>
+<hr>
+<p>二、线性回归目标函数与参数求解<br>
+（一）目标函数与解析解推导</p>
+<ol>
+<li>
+<p>目标函数：<br>
+</p>
+\[
+   J(w) = \sum_{i=1}^N (w^T x_i - y_i)^2
+   \]</li>
+<li>
+<p>解析解推导：<br>
+• 矩阵形式：\( J(w) = (Xw - y)^T (Xw - y) \)</p>
+<p>• 对 \( w \) 求导并令导数为零：</p>
+\[
+     \frac{\partial J(w)}{\partial w} = 2X^T (Xw - y) = 0
+     \]<p><br>
+• 解得：</p>
+\[
+     w = (X^T X)^{-1} X^T y
+     \]</li>
+</ol>
+<p>（二）标准方程组法与梯度下降法的对比</p>
+<ol>
+<li>
+<p>优势：<br>
+• 精确解：直接得到全局最优解，无需迭代调参。</p>
+<p>• 效率高：当特征数 \( d \) 较小时（实验数据集特征数 \( d=8 \)），计算复杂度 \( O(d^3) \) 可接受。</p>
+</li>
+<li>
+<p>劣势：<br>
+• 计算复杂度：若 \( d > 10^4 \)，矩阵求逆计算不可行。</p>
+<p>• 内存限制：存储 \( X^T X \) 需要 \( O(d^2) \) 内存。</p>
+</li>
+</ol>
+<hr>
+<p>三、模型评估指标分析<br>
+（一）指标定义与意义</p>
+<ol>
+<li>
+<p>均方误差（MSE）：<br>
+</p>
+\[
+   \text{MSE} = \frac{1}{N} \sum_{i=1}^N (y_i - \hat{y}_i)^2
+   \]<p><br>
+• 反映预测值与真实值的平均平方误差，值越小越好。</p>
+</li>
+<li>
+<p>均方根误差（RMSE）：<br>
+</p>
+\[
+   \text{RMSE} = \sqrt{\text{MSE}}
+   \]<p><br>
+• 与目标变量单位一致，更易解释误差的实际影响。</p>
+</li>
+<li>
+<p>决定系数（R²）：<br>
+</p>
+\[
+   R^2 = 1 - \frac{\sum_{i=1}^N (y_i - \hat{y}_i)^2}{\sum_{i=1}^N (y_i - \bar{y})^2}
+   \]<p><br>
+• 表示模型解释的方差比例，范围 \( (-\infty, 1] \)，越接近1越好。</p>
+</li>
+</ol>
+<p>（二）R²为负的原因<br>
+• 模型性能极差：当 \( \sum (y_i - \hat{y}_i)^2 > \sum (y_i - \bar{y})^2 \)，即模型预测比直接取均值更差。</p>
+<p>• 可能原因：</p>
+<ol>
+<li>数据存在严重噪声或非线性关系未被捕捉。</li>
+<li>特征与目标变量无关，模型欠拟合。</li>
+</ol>
+<hr>
+<p>四、非线性关系的拟合方法<br>
+（一）问题分析<br>
+直接使用线性回归无法捕捉特征与目标变量之间的非线性关系（如二次函数），导致预测性能下降。</p>
+<p>（二）改进方法</p>
+<ol>
+<li>
+<p>多项式特征扩展：<br>
+• 添加特征的高次项（如 \( x^2, x^3 \)）或交互项（如 \( x_1 x_2 \)）。</p>
+<p>• 代码示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>poly <span style="color:#f92672">=</span> PolynomialFeatures(degree<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>X_poly <span style="color:#f92672">=</span> poly<span style="color:#f92672">.</span>fit_transform(X)
+</span></span></code></pre></div></li>
+<li>
+<p>核方法（Kernel Trick）：<br>
+• 将特征映射到高维空间，间接实现非线性拟合。</p>
+</li>
+<li>
+<p>树模型（如决策树、随机森林）：<br>
+• 直接处理非线性关系，但需牺牲模型可解释性。</p>
+</li>
+</ol>
+<p>（三）实验中的应用建议<br>
+• 在步骤二中引入 <code>PolynomialFeatures</code> 生成多项式特征，再使用线性回归拟合。</p>
+<hr>
+<p>结论<br>
+实验通过标准化处理提升模型稳定性，利用线性回归解析解高效求解参数，并通过评估指标验证模型性能。针对非线性关系，可通过特征工程扩展模型表达能力。</p>
+]]></content:encoded>
+    </item>
+    <item>
       <title>[BUAA-OS] Lab 3 实验报告</title>
       <link>https://oNya685.github.io/posts/buaa/os/lab-3-report/</link>
       <pubDate>Mon, 21 Apr 2025 09:26:00 +0800</pubDate>

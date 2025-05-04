@@ -5,7 +5,7 @@ categories:
 tags: 
 author: 
 showToc: true
-draft: true
+draft: false
 comments: true
 description: Linear Regression
 canonicalURL: "{{ .Permalink }}"
