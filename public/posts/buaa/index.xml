@@ -14,138 +14,114 @@
       <pubDate>Sun, 27 Apr 2025 21:42:13 +0800</pubDate>
       <guid>https://oNya685.github.io/posts/buaa/ml/report-1/</guid>
       <description>Linear Regression</description>
-      <content:encoded><![CDATA[<p>机器学习实验报告</p>
-<hr>
-<p>一、数据预处理：归一化与标准化处理<br>
-（一）实验中的预处理方法</p>
-<ol>
-<li>
-<p>是否进行归一化/标准化<br>
-实验中使用了 标准化（Standardization） 处理，具体代码为：</p>
+      <content:encoded><![CDATA[<h2 id="一实验过程中是否对输入数据进行了归一化或标准化处理试说明这两种方法的区别并分析为什么线性回归模型可能对特征的尺度敏感">一、实验过程中，是否对输入数据进行了归一化或标准化处理？试说明这两种方法的区别，并分析为什么线性回归模型可能对特征的尺度敏感。</h2>
+<h3 id="一实验中的预处理方法">（一）实验中的预处理方法</h3>
+<p>实验中使用了标准化处理：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>scaler <span style="color:#f92672">=</span> StandardScaler()
 </span></span><span style="display:flex;"><span>X_train <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>fit_transform(X_train)
 </span></span><span style="display:flex;"><span>X_test <span style="color:#f92672">=</span> scaler<span style="color:#f92672">.</span>transform(X_test)
-</span></span></code></pre></div><p>• <code>fit_transform</code> 对训练集计算均值和标准差并应用转换。</p>
-<p>• <code>transform</code> 对测试集直接使用训练集的参数进行转换。</p>
+</span></span></code></pre></div><ul>
+<li><code>fit_transform</code>对训练集计算均值和标准差并应用转换。</li>
+<li><code>transform</code>对测试集直接使用训练集的参数进行转换。</li>
+</ul>
+<h3 id="二-归一化与标准化的区别">(二) 归一化与标准化的区别</h3>
+<ol>
+<li>
+<p><strong>归一化 (Normalization)</strong>:<br>
+将数据缩放到固定范围 $[x_{\min}, x_{\max}]$，公式为：</p>
+$$ x_{\text{norm}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}} $$</li>
+<li>
+<p><strong>标准化 (Standardization)</strong>:<br>
+将数据调整为均值为0、标准差为1的分布，公式为：</p>
+$$ x_{std} = \frac{x - \mu}{\sigma} $$</li>
+</ol>
+<h3 id="三-线性回归模型可能对特征的尺度敏感的原因">(三) 线性回归模型可能对特征的尺度敏感的原因</h3>
+<ol>
+<li>
+<p><strong>解析解稳定性</strong><br>
+参数解析解 $w = (X^T X)^{-1} X^T y$ 中，若特征尺度差异大，矩阵 $X^T X$ 的条件数增大，导致求逆不稳定。</p>
 </li>
 <li>
-<p>归一化与标准化的区别<br>
-• 归一化（Normalization）：</p>
-<p>将数据缩放到固定范围（如[0,1]），公式为：<br>
-</p>
-\[
-     x_{\text{norm}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}
-     \]<p><br>
-• 标准化（Standardization）：</p>
-<p>将数据调整为均值为0、标准差为1的分布，公式为：<br>
-</p>
-\[
-     x_{\text{std}} = \frac{x - \mu}{\sigma}
-     \]</li>
-<li>
-<p>线性回归对特征尺度敏感的原因<br>
-• 解析解稳定性：参数解析解 \( w = (X^T X)^{-1} X^T y \) 中，若特征尺度差异大，矩阵 \( X^T X \) 的条件数增大，导致求逆不稳定。</p>
-<p>• 梯度下降效率：不同尺度的特征需不同的学习率，尺度差异大会导致收敛速度慢。</p>
+<p><strong>梯度下降效率</strong><br>
+不同尺度的特征需不同的学习率，尺度差异大会导致收敛速度慢。</p>
 </li>
 </ol>
 <hr>
-<p>二、线性回归目标函数与参数求解<br>
-（一）目标函数与解析解推导</p>
+<h2 id="二对于线性回归目标函数-jw--sum_i1n-wt-x_i---y_i2推导给出参数w的解析解形式并思考对于实验所使用的数据集而言采用标准方程组法求解参数w相较于梯度下降法有何优势或劣势">二、对于线性回归目标函数 $J(w) = \sum_{i=1}^N (w^{T} x_i - y_i)^2$，推导给出参数w的解析解形式，并思考对于实验所使用的数据集而言，采用标准方程组法求解参数w相较于梯度下降法有何优势或劣势。</h2>
+<h3 id="一目标函数与解析解推导">（一）目标函数与解析解推导</h3>
 <ol>
 <li>
-<p>目标函数：<br>
-</p>
-\[
-   J(w) = \sum_{i=1}^N (w^T x_i - y_i)^2
-   \]</li>
+<p><strong>目标函数</strong>:</p>
+$$ J(w) = \sum_{i=1}^N (w^T x_i - y_i)^2 $$</li>
 <li>
-<p>解析解推导：<br>
-• 矩阵形式：\( J(w) = (Xw - y)^T (Xw - y) \)</p>
-<p>• 对 \( w \) 求导并令导数为零：</p>
-\[
-     \frac{\partial J(w)}{\partial w} = 2X^T (Xw - y) = 0
-     \]<p><br>
-• 解得：</p>
-\[
-     w = (X^T X)^{-1} X^T y
-     \]</li>
+<p><strong>解析解推导</strong>:</p>
+</li>
 </ol>
-<p>（二）标准方程组法与梯度下降法的对比</p>
+<p>矩阵形式：$J(w) = (X w - y)^T (X w - y)$</p>
+<p>对w求导并令导数为零：</p>
+$$ \frac{\partial J(w)}{\partial w} = 2 X^T (X w - y) = 0 $$<p><br>
+解得：</p>
+$$ w = (X^T X)^{-1} X^T y $$<h3 id="二标准方程组法相较于梯度下降法的优劣">（二）标准方程组法相较于梯度下降法的优劣</h3>
 <ol>
 <li>
-<p>优势：<br>
-• 精确解：直接得到全局最优解，无需迭代调参。</p>
-<p>• 效率高：当特征数 \( d \) 较小时（实验数据集特征数 \( d=8 \)），计算复杂度 \( O(d^3) \) 可接受。</p>
+<p><strong>优势</strong>:</p>
+<ul>
+<li>直接得到全局最优解，无需迭代调参。</li>
+<li>当特征数d较小时，计算复杂度 $O(d^3)$ 可接受。</li>
+</ul>
 </li>
 <li>
-<p>劣势：<br>
-• 计算复杂度：若 \( d > 10^4 \)，矩阵求逆计算不可行。</p>
-<p>• 内存限制：存储 \( X^T X \) 需要 \( O(d^2) \) 内存。</p>
+<p><strong>劣势</strong>:</p>
+<ul>
+<li>计算复杂度高，过高时矩阵求逆计算不可行。</li>
+<li>存储需要 $O(d^2)$ 内存较大。</li>
+</ul>
 </li>
 </ol>
 <hr>
-<p>三、模型评估指标分析<br>
-（一）指标定义与意义</p>
+<h2 id="三实验中使用的评估指标如均方误差mse均方根误差rmse决定系数r2分别反映了模型的哪些性能如果某次实验的r2值为负可能是什么原因导致的">三、实验中使用的评估指标（如均方误差MSE、均方根误差RMSE、决定系数$R^2$）分别反映了模型的哪些性能？如果某次实验的$R^2$值为负，可能是什么原因导致的？</h2>
+<h3 id="一指标定义与意义">（一）指标定义与意义</h3>
 <ol>
 <li>
-<p>均方误差（MSE）：<br>
+<p><strong>均方误差 (MSE)</strong>:<br>
+反映预测值与真实值的平均平方误差，值越小越好。<br>
 </p>
-\[
-   \text{MSE} = \frac{1}{N} \sum_{i=1}^N (y_i - \hat{y}_i)^2
-   \]<p><br>
-• 反映预测值与真实值的平均平方误差，值越小越好。</p>
-</li>
+$$ \text{MSE} = \frac{1}{N} \sum_{i=1}^N (y_i - \hat{y_i})^2 $$</li>
 <li>
-<p>均方根误差（RMSE）：<br>
+<p><strong>均方根误差 (RMSE)</strong>:<br>
+与目标变量单位一致，更易解释误差的实际影响。<br>
 </p>
-\[
-   \text{RMSE} = \sqrt{\text{MSE}}
-   \]<p><br>
-• 与目标变量单位一致，更易解释误差的实际影响。</p>
-</li>
+$$ \text{RMSE} = \sqrt{\text{MSE}} $$</li>
 <li>
-<p>决定系数（R²）：<br>
-</p>
-\[
-   R^2 = 1 - \frac{\sum_{i=1}^N (y_i - \hat{y}_i)^2}{\sum_{i=1}^N (y_i - \bar{y})^2}
-   \]<p><br>
-• 表示模型解释的方差比例，范围 \( (-\infty, 1] \)，越接近1越好。</p>
+<p><strong>决定系数 ($R^2$)</strong>:<br>
+表示模型解释的方差比例，范围 $(-\infty, 1]$，越接近1越好。</p>
 </li>
 </ol>
-<p>（二）R²为负的原因<br>
-• 模型性能极差：当 \( \sum (y_i - \hat{y}_i)^2 > \sum (y_i - \bar{y})^2 \)，即模型预测比直接取均值更差。</p>
-<p>• 可能原因：</p>
+<h3 id="二r2为负的原因">（二）$R^2$为负的原因</h3>
+$$ R^2 = 1 - \frac{\sum_{i=1}^N (y_i - \bar{y_l})^2}{\sum_{i=1}^N (y_i - \bar{y})^2} $$<ul>
+<li><strong>模型性能极差</strong>：当 $\sum (y_i - \hat{y_l})^2 &gt; \sum (y_i - \bar{y})^2$，即模型预测比直接取均值更差。</li>
+<li><strong>可能原因</strong>:
 <ol>
 <li>数据存在严重噪声或非线性关系未被捕捉。</li>
 <li>特征与目标变量无关，模型欠拟合。</li>
 </ol>
+</li>
+</ul>
 <hr>
-<p>四、非线性关系的拟合方法<br>
-（一）问题分析<br>
-直接使用线性回归无法捕捉特征与目标变量之间的非线性关系（如二次函数），导致预测性能下降。</p>
-<p>（二）改进方法</p>
+<h2 id="四在实验中如果原始数据中存在非线性关系如特征与目标变量呈二次函数关系直接使用线性回归会导致模型性能不佳思考通过何种方式能够更好的拟合特征与目标变量之间的关系">四、在实验中，如果原始数据中存在非线性关系（如特征与目标变量呈二次函数关系），直接使用线性回归会导致模型性能不佳，思考通过何种方式能够更好的拟合特征与目标变量之间的关系。</h2>
+<p>如果原始数据中存在非线性关系，直接使用线性回归无法捕捉特征与目标变量之间的非线性关系，会导致预测性能下降。</p>
+<h3 id="改进方法">改进方法</h3>
 <ol>
-<li>
-<p>多项式特征扩展：<br>
-• 添加特征的高次项（如 \( x^2, x^3 \)）或交互项（如 \( x_1 x_2 \)）。</p>
-<p>• 代码示例：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>poly <span style="color:#f92672">=</span> PolynomialFeatures(degree<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>X_poly <span style="color:#f92672">=</span> poly<span style="color:#f92672">.</span>fit_transform(X)
-</span></span></code></pre></div></li>
-<li>
-<p>核方法（Kernel Trick）：<br>
-• 将特征映射到高维空间，间接实现非线性拟合。</p>
-</li>
-<li>
-<p>树模型（如决策树、随机森林）：<br>
-• 直接处理非线性关系，但需牺牲模型可解释性。</p>
-</li>
+<li><strong>多项式特征扩展</strong>：添加特征的高次项（如$x^2, x^3$）或交互项（如$x_1 x_2$）。</li>
+<li><strong>核方法</strong>：将特征映射到高维空间，间接实现非线性拟合。</li>
+<li><strong>树模型</strong>（如决策树、随机森林）：直接处理非线性关系，牺牲模型可解释性。</li>
 </ol>
-<p>（三）实验中的应用建议<br>
-• 在步骤二中引入 <code>PolynomialFeatures</code> 生成多项式特征，再使用线性回归拟合。</p>
+<p><strong>实验中的应用</strong>：在步骤二中引入<code>sklearn</code>的<code>PolynomialFeatures</code>生成多项式特征，再使用线性回归拟合。</p>
 <hr>
-<p>结论<br>
-实验通过标准化处理提升模型稳定性，利用线性回归解析解高效求解参数，并通过评估指标验证模型性能。针对非线性关系，可通过特征工程扩展模型表达能力。</p>
+<h2 id="五你对本次实验课程内容课程形式实践平台使用等方面有哪些意见及改进建议">五、你对本次实验课程内容、课程形式、实践平台使用等方面有哪些意见及改进建议？</h2>
+<ul>
+<li>实践平台的使用不流畅，且无自动补全，最后使用本地IDE才完成。</li>
+</ul>
 ]]></content:encoded>
     </item>
     <item>
