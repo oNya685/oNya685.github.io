@@ -4,7 +4,7 @@
     <title>Object Oriented on oNya&#39;s Blog</title>
     <link>https://oNya685.github.io/categories/object-oriented/</link>
     <description>Recent content in Object Oriented on oNya&#39;s Blog</description>
-    <generator>Hugo -- 0.146.5</generator>
+    <generator>Hugo -- 0.147.0</generator>
     <language>zh-cn</language>
     <lastBuildDate>Fri, 18 Apr 2025 10:43:00 +0000</lastBuildDate>
     <atom:link href="https://oNya685.github.io/categories/object-oriented/index.xml" rel="self" type="application/rss+xml" />
@@ -15,8 +15,8 @@
       <guid>https://oNya685.github.io/posts/buaa/oo/unit-2/summary/</guid>
       <description>第二单元博客作业</description>
       <content:encoded><![CDATA[<blockquote>
-<p>几千字的流水账真的会有人从头看到尾吗（？
-不按作业的要求顺序来了，有意思的放最前，重要的放其次，其余的往后排。</p></blockquote>
+<p>几千字的流水账真的会有人从头看到尾吗（？</p>
+<p>不按作业的要求顺序来了，有意思的放最前，重要的放其次，其余的往后排。</p></blockquote>
 <h1 id="我们真的需要一台电梯么">我们真的需要一台电梯么？</h1>
 <p>首先，回顾一下作业要求：我们要<strong>模拟</strong>六台电梯的运行、调度，和其开关门、移动、对乘客的接、送行为，其中大部分行为需要等待一定的<strong>现实时间</strong>。而评测要求我们在每一<strong>状态转移完成</strong>时输出一条信息，以供测评<strong>评测机中模拟的电梯状态机</strong>是否在<strong>符合正确性规范</strong>的前提下<strong>完成功能</strong>，并<strong>评测性能</strong>。</p>
 <h2 id="为什么是状态机">为什么是状态机</h2>
@@ -170,8 +170,8 @@ $$\begin{align*}
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#75715e">// MainProcess.java</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">debug</span>() { <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>; }
 </span></span></code></pre></div><blockquote>
-<p>虽然本次作业没有要求课程建议，但是实在很想建议：
-能不能给一个<code>TimableOutput.debug(String string)</code>然后输出内容不计入评测，只供debug时便于人类查看，间接解决掉评测出的bug在本地无法复现的问题？这样只要写好关键步骤的日志，就能快速定位到bug，即使本地无法复现也可以正常修复？</p></blockquote>
+<p>虽然本次作业没有要求课程建议，但是实在很想建议：</p>
+<p>能不能给一个<code>TimableOutput.debug(String string)</code>然后输出内容不计入评测，只供debug时便于人类查看，间接解决掉评测出的bug在本地无法复现的问题？这样只要写好关键步骤的日志，就能快速定位到bug，即使本地无法复现也可以正常修复？</p></blockquote>
 <h1 id="线程安全与层次化设计">线程安全与层次化设计</h1>
 <ol>
 <li><strong>锁的合理使用</strong>

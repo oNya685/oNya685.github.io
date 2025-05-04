@@ -4,10 +4,608 @@
     <title>操作系统 on oNya&#39;s Blog</title>
     <link>https://oNya685.github.io/posts/buaa/os/</link>
     <description>Recent content in 操作系统 on oNya&#39;s Blog</description>
-    <generator>Hugo -- 0.146.5</generator>
+    <generator>Hugo -- 0.147.0</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 17 Apr 2025 21:25:00 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 04 May 2025 14:49:00 +0800</lastBuildDate>
     <atom:link href="https://oNya685.github.io/posts/buaa/os/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[BUAA-OS] 理论作业 5</title>
+      <link>https://oNya685.github.io/posts/buaa/os/homework-5/</link>
+      <pubDate>Sun, 04 May 2025 14:49:00 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/os/homework-5/</guid>
+      <description>&lt;p&gt;&lt;strong&gt;&lt;a href=&#34;%e4%bd%9c%e4%b8%9a5.pdf&#34; target=&#34;_blank&#34;&gt;点此查看作业源文件&lt;/a&gt;
+&lt;/strong&gt;&lt;/p&gt;
+&lt;h1 id=&#34;1-有五个进程p1p2p3p4p5它们同时依次进入就绪队列它们的优先数和需要的处理器时间如下表&#34;&gt;1. 有五个进程P1、P2、P3、P4、P5，它们同时依次进入就绪队列，它们的优先数和需要的处理器时间如下表&lt;/h1&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;进程&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;处理器时间&lt;/th&gt;
+          &lt;th style=&#34;text-align: center&#34;&gt;优先级&lt;!-- raw HTML omitted --&gt;（数小优先级高）&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;P1&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$10$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$3$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;P2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$1$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$1$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;P3&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$2$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$3$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;P4&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$1$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$4$&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;P5&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$5$&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;$2$&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;忽略进行调度等所花费的时间，回答下列问题：&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<p><strong><a href="%e4%bd%9c%e4%b8%9a5.pdf" target="_blank">点此查看作业源文件</a>
+</strong></p>
+<h1 id="1-有五个进程p1p2p3p4p5它们同时依次进入就绪队列它们的优先数和需要的处理器时间如下表">1. 有五个进程P1、P2、P3、P4、P5，它们同时依次进入就绪队列，它们的优先数和需要的处理器时间如下表</h1>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">进程</th>
+          <th style="text-align: center">处理器时间</th>
+          <th style="text-align: center">优先级<!-- raw HTML omitted -->（数小优先级高）</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">P1</td>
+          <td style="text-align: center">$10$</td>
+          <td style="text-align: center">$3$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P2</td>
+          <td style="text-align: center">$1$</td>
+          <td style="text-align: center">$1$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P3</td>
+          <td style="text-align: center">$2$</td>
+          <td style="text-align: center">$3$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P4</td>
+          <td style="text-align: center">$1$</td>
+          <td style="text-align: center">$4$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P5</td>
+          <td style="text-align: center">$5$</td>
+          <td style="text-align: center">$2$</td>
+      </tr>
+  </tbody>
+</table>
+<p>忽略进行调度等所花费的时间，回答下列问题：</p>
+<h2 id="1-写出采用先来先服务短作业进程优先非抢占式的优先数和轮转法等调度算法进程执行的次序其中轮转法的时间片为2">(1) 写出采用“先来先服务”、“短作业（进程）优先”、“非抢占式的优先数”和“轮转法”等调度算法，进程执行的次序。（其中轮转法的时间片为2）</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">调度算法</th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+          <th style="text-align: center"></th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">先来先服务</td>
+          <td style="text-align: center">P1</td>
+          <td style="text-align: center">P2</td>
+          <td style="text-align: center">P3</td>
+          <td style="text-align: center">P4</td>
+          <td style="text-align: center">P5</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">短作业（进程）优先</td>
+          <td style="text-align: center">P2</td>
+          <td style="text-align: center">P4</td>
+          <td style="text-align: center">P3</td>
+          <td style="text-align: center">P5</td>
+          <td style="text-align: center">P1</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">非抢占式的优先数</td>
+          <td style="text-align: center">P2</td>
+          <td style="text-align: center">P5</td>
+          <td style="text-align: center">P1</td>
+          <td style="text-align: center">P3</td>
+          <td style="text-align: center">P4</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">轮转法</td>
+          <td style="text-align: center">P1: 2</td>
+          <td style="text-align: center">P2: 3</td>
+          <td style="text-align: center">P3: 5</td>
+          <td style="text-align: center">P4: 6</td>
+          <td style="text-align: center">P5: 8</td>
+          <td style="text-align: center">P1: 10</td>
+          <td style="text-align: center">P5: 12</td>
+          <td style="text-align: center">P1: 14</td>
+          <td style="text-align: center">P5: 15</td>
+          <td style="text-align: center">P1: 17</td>
+          <td style="text-align: center">P1: 19</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="2-分别计算上述算法中各进程的周转时间和等待时间以及平均周转时间">(2) 分别计算上述算法中各进程的周转时间和等待时间，以及平均周转时间。</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">调度算法</th>
+          <th style="text-align: center">P1等待时间</th>
+          <th style="text-align: center">P2等待时间</th>
+          <th style="text-align: center">P3等待时间</th>
+          <th style="text-align: center">P4等待时间</th>
+          <th style="text-align: center">P5等待时间</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">先来先服务</td>
+          <td style="text-align: center">$0$</td>
+          <td style="text-align: center">$10$</td>
+          <td style="text-align: center">$11$</td>
+          <td style="text-align: center">$13$</td>
+          <td style="text-align: center">$14$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">短作业（进程）优先</td>
+          <td style="text-align: center">$9$</td>
+          <td style="text-align: center">$0$</td>
+          <td style="text-align: center">$2$</td>
+          <td style="text-align: center">$1$</td>
+          <td style="text-align: center">$4$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">非抢占式的优先数</td>
+          <td style="text-align: center">$6$</td>
+          <td style="text-align: center">$0$</td>
+          <td style="text-align: center">$16$</td>
+          <td style="text-align: center">$18$</td>
+          <td style="text-align: center">$1$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">轮转法</td>
+          <td style="text-align: center">$0$</td>
+          <td style="text-align: center">$2$</td>
+          <td style="text-align: center">$3$</td>
+          <td style="text-align: center">$5$</td>
+          <td style="text-align: center">$6$</td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">调度算法</th>
+          <th style="text-align: center">P1周转时间</th>
+          <th style="text-align: center">P2周转时间</th>
+          <th style="text-align: center">P3周转时间</th>
+          <th style="text-align: center">P4周转时间</th>
+          <th style="text-align: center">P5周转时间</th>
+          <th style="text-align: center">平均周转时间$T$</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">先来先服务</td>
+          <td style="text-align: center">$10$</td>
+          <td style="text-align: center">$11$</td>
+          <td style="text-align: center">$13$</td>
+          <td style="text-align: center">$14$</td>
+          <td style="text-align: center">$19$</td>
+          <td style="text-align: center">$13.4$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">短作业（进程）优先</td>
+          <td style="text-align: center">$19$</td>
+          <td style="text-align: center">$1$</td>
+          <td style="text-align: center">$4$</td>
+          <td style="text-align: center">$2$</td>
+          <td style="text-align: center">$9$</td>
+          <td style="text-align: center">$7$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">非抢占式的优先数</td>
+          <td style="text-align: center">$16$</td>
+          <td style="text-align: center">$1$</td>
+          <td style="text-align: center">$18$</td>
+          <td style="text-align: center">$19$</td>
+          <td style="text-align: center">$6$</td>
+          <td style="text-align: center">$12$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">轮转法</td>
+          <td style="text-align: center">$19$</td>
+          <td style="text-align: center">$3$</td>
+          <td style="text-align: center">$5$</td>
+          <td style="text-align: center">$6$</td>
+          <td style="text-align: center">$15$</td>
+          <td style="text-align: center">$9.6$</td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="2-假设某系统使用时间片轮转调度算法进行cpu调度时间片大小为5ms系统共10个进程初始时均处于就绪队列执行结束前仅处于执行态或就绪态若队尾的进程p所需的cpu时间最短时间为25ms不考虑系统开销则进程p的周转时间为">2. 假设某系统使用时间片轮转调度算法进行CPU调度，时间片大小为5ms，系统共10个进程，初始时均处于就绪队列，执行结束前仅处于执行态或就绪态。若队尾的进程P所需的CPU时间最短，时间为25ms，不考虑系统开销，则进程P的周转时间为？</h1>
+<p>0-45ms在依次执行其他进程，45-50ms首次执行进程P，P剩余所需CPU时间20ms。</p>
+<p>由于进程P所需的CPU时间最短，所以每周期执行进程P前都需要45ms依次执行其他进程，50ms为一周期。</p>
+<p>以此类推，第195-200ms第四次执行进程P，P剩余所需CPU时间5ms。第200-245ms依次执行其他进程，第245-250ms第五次执行进程P，250ms时进程P执行结束。</p>
+<p>故进程P的周转时间为250ms。</p>
+<h1 id="3-某个进程调度程序采用基于优先数priority的调度策略即选择优先数最小的进程运行运行创建时由用户指定一个nice作为静态优先数为了动态调整优先数引入运行时间cputime和等待时间waittime初值为0进程处于执行态时cputime定时加1且waittime置0进程处于就绪态时cputime置0waittime定时加1">3. 某个进程调度程序采用基于优先数(priority)的调度策略，即选择优先数最小的进程运行，运行创建时由用户指定一个nice作为静态优先数。为了动态调整优先数，引入运行时间cpuTime和等待时间waitTime，初值为0。进程处于执行态时，cpuTime定时加1，且waitTime置0；进程处于就绪态时，cpuTime置0，waitTime定时加1。</h1>
+<h2 id="1-若调度程序只将nice的值作为进程优先级即priority--nice则可能出现饥饿现象为什么">(1) 若调度程序只将nice的值作为进程优先级，即priority = nice，则可能出现饥饿现象。为什么？</h2>
+<p>当调度程序仅将用户指定的静态优先数 <code>nice</code> 作为进程优先级时，静态优先级无法动态调整。</p>
+<p>若系统中持续有低 <code>nice</code> 值（高优先级）的进程到达，高 <code>nice</code> 值（低优先级）的进程可能因无法获得 CPU 时间而长期处于就绪队列，导致饥饿。低 <code>nice</code> 值的进程可能因优先级高而持续占用 CPU，即使其实际运行时间较长或资源需求不合理，也会挤压其他进程的执行机会。</p>
+<h2 id="2-使用nicecputimewaittime设计一种动态优先数计算方法以避免产生饥饿现象并说明waittime的作用">(2) 使用nice，cpuTime，waitTime设计一种动态优先数计算方法，以避免产生饥饿现象，并说明waitTime的作用</h2>
+<p>设计动态优先数公式：</p>
+$$\text{priority} = \text{nice} + k_1 \times \text{cpuTime} - k_2 \times \text{waitTime}, k_1 > 0, k_2 > 0$$<p>• <code>k1 &gt; 0</code>：惩罚 CPU 占用时间长的进程（防止 CPU 霸占）。</p>
+<p>• <code>k2 &gt; 0</code>：补偿等待时间长的进程（避免饥饿）。</p>
+<p>• <code>cpuTime</code> 的作用：进程运行时，<code>cpuTime</code> 定时增加。若进程长期占用 CPU，其优先级会因 <code>cpuTime</code> 增大而降低，从而让出 CPU 给其他进程。</p>
+<p>• <code>waitTime</code> 的作用：进程就绪时，<code>waitTime</code> 定时增加。其值越大，优先级提升越多，确保长时间等待的进程能被及时调度，通过补偿等待时间，确保低优先级进程最终能被调度，避免饥饿。</p>
+<h1 id="4-死锁">4. 死锁</h1>
+<h2 id="1-有m个同类资源供n个进程共享若每个进程最多申请k个资源k1采用银行家算法分配资源为保证系统不发生死锁则各进程的最大需求量之和为并说明理由">(1) 有m个同类资源供n个进程共享，若每个进程最多申请k个资源（k&gt;=1），采用银行家算法分配资源，为保证系统不发生死锁，则各进程的最大需求量之和为？并说明理由</h2>
+<p>最坏情况下，每个进程均已分配$k-1$个资源，此时要保证存在至少一个安全序列。则剩余资源$m-n\times (k-1) \geq 1$，即需求量之和$nk\leq m+n-1$。</p>
+<p>因此，各进程的最大需求量之和为$m+n-1$。</p>
+<h2 id="2-有8台打印机由k个进程竞争使用每个进程最多使用3台打印机求k的最大值使系统可能发生死锁">(2) 有8台打印机，由K个进程竞争使用，每个进程最多使用3台打印机。求K的最大值，使系统可能发生死锁。</h2>
+<p>为使系统发生死锁，$3\times K \geq 8 + K$，即$K \geq 4$。所以：</p>
+<p>使系统不发生死锁的K的最大值为3；</p>
+<p>使系统可能发生死锁的K的最小值为4。</p>
+<h2 id="3-某系统有n台互斥使用的同类设备三个并发进程分别需要345台设备求n的最小值使系统不发生死锁">(3) 某系统有n台互斥使用的同类设备，三个并发进程分别需要3，4，5台设备。求n的最小值，使系统不发生死锁。</h2>
+<p>假设给三个并发进程已经分别发配了2，3，4台设备，则剩余资源$n-2-3-4\geq 1$，即$n \geq 10$。</p>
+<p>故使系统不发生死锁的最小值为10。</p>
+<h1 id="5-什么是进程之间的同步关系什么是进程之间的互斥关系">5. 什么是进程之间的同步关系？什么是进程之间的互斥关系？</h1>
+<ul>
+<li>互斥：某一资源同时只允许一个访问者对其进行访问，具有唯一性和排它性</li>
+<li>同步：是指在互斥的基础上（大多数情况），通过其它机制实现访问者对资源的有序访问</li>
+</ul>
+<h1 id="6-假设具有5个进程的进程集合p-p0p1p2p3p4系统中有三类资源abc假设在某时刻有如下状态">6. 假设具有5个进程的进程集合P= {P0,P1,P2,P3,P4}，系统中有三类资源A,B,C，假设在某时刻有如下状态：</h1>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">进程</th>
+          <th style="text-align: center">Allocation</th>
+          <th style="text-align: center">Max</th>
+          <th style="text-align: center">Available</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P0</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 3 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 4 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 4 &amp;&amp; 0 \end{matrix}\right)$</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P1</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 0 &amp;&amp; 0 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 7 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P2</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 3 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 2 &amp;&amp; 3 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P3</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 2 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 4 \end{matrix}\right)$</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">P4</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 1 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center"></td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="1-根据上表内容当前系统是否处于安全状态">(1) 根据上表内容，当前系统是否处于安全状态？</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">Work</th>
+          <th style="text-align: center">进程</th>
+          <th style="text-align: center">Need</th>
+          <th style="text-align: center">Allocation</th>
+          <th style="text-align: center">Work+Allocation</th>
+          <th>Finish</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 4 &amp;&amp; 0 \end{matrix}\right)$</td>
+          <td style="text-align: center">P2</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 0 &amp;&amp; 0 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 3 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 2 &amp;&amp; 7 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td><code>true</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 2 &amp;&amp; 7 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center">P0</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 1 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 3 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 2 &amp;&amp; 7 &amp;&amp; 8 \end{matrix}\right)$</td>
+          <td><code>true</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 2 &amp;&amp; 7 &amp;&amp; 8 \end{matrix}\right)$</td>
+          <td style="text-align: center">P1</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 7 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 0 &amp;&amp; 0 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 3 &amp;&amp; 7 &amp;&amp; 8 \end{matrix}\right)$</td>
+          <td><code>true</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 3 &amp;&amp; 7 &amp;&amp; 8 \end{matrix}\right)$</td>
+          <td style="text-align: center">P3</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 2 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 2 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 3 &amp;&amp; 7 &amp;&amp; 10 \end{matrix}\right)$</td>
+          <td><code>true</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 3 &amp;&amp; 7 &amp;&amp; 10 \end{matrix}\right)$</td>
+          <td style="text-align: center">P4</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 4 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 1 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 3 &amp;&amp; 7 &amp;&amp; 11 \end{matrix}\right)$</td>
+          <td><code>true</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>当前系统处于安全状态，存在安全序列：$\text{P2} \to \text{P0} \to \text{P1} \to \text{P3} \to \text{P4}$</p>
+<h2 id="2-若系统中的可利用资源-available-为062系统是否安全若系统处在安全状态请给出安全序列若系统处在非安全状态简要说明原因">(2) 若系统中的可利用资源 Available 为（0,6,2），系统是否安全？若系统处在安全状态，请给出安全序列；若系统处在非安全状态，简要说明原因。</h2>
+<table>
+  <thead>
+      <tr>
+          <th style="text-align: center">Work</th>
+          <th style="text-align: center">进程</th>
+          <th style="text-align: center">Need</th>
+          <th style="text-align: center">Allocation</th>
+          <th style="text-align: center">Work+Allocation</th>
+          <th>Finish</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} A &amp;&amp; B &amp;&amp; C \end{matrix}\right)$</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 2 \end{matrix}\right)$</td>
+          <td style="text-align: center">P0</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 1 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 3 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td><code>true</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center">P3</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 2 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 2 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 7 \end{matrix}\right)$</td>
+          <td><code>true</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 7 \end{matrix}\right)$</td>
+          <td style="text-align: center">P4</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 4 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 0 &amp;&amp; 1 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 8 \end{matrix}\right)$</td>
+          <td><code>true</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 8 \end{matrix}\right)$</td>
+          <td style="text-align: center">P1</td>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 7 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 0 &amp;&amp; 0 \end{matrix}\right)$</td>
+          <td style="text-align: center">——</td>
+          <td><code>false</code></td>
+      </tr>
+      <tr>
+          <td style="text-align: center">$\left(\begin{matrix} 0 &amp;&amp; 6 &amp;&amp; 8 \end{matrix}\right)$</td>
+          <td style="text-align: center">P2</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 0 &amp;&amp; 0 \end{matrix}\right)$</td>
+          <td style="text-align: center">$\left(\begin{matrix} 1 &amp;&amp; 3 &amp;&amp; 5 \end{matrix}\right)$</td>
+          <td style="text-align: center">——</td>
+          <td><code>false</code></td>
+      </tr>
+  </tbody>
+</table>
+<p>因此，系统处于非安全状态。</p>
+<ol>
+<li>部分进程可执行：
+<ul>
+<li>初始可用资源 <code>(0,6,2)</code> 可满足 P0（Need <code>(0,0,1)</code>），执行后释放资源，可用资源更新为 <code>(0,6,5)</code>。</li>
+<li>资源 <code>(0,6,5)</code> 可满足 P3（Need <code>(0,6,2)</code>），执行后可用资源更新为 <code>(0,6,7)</code>。</li>
+<li>资源 <code>(0,6,7)</code> 可满足 P4（Need <code>(0,6,4)</code>），执行后可用资源更新为 <code>(0,6,8)</code>。</li>
+</ul>
+</li>
+<li>剩余进程无法执行：
+<ul>
+<li>P1 需要 <code>B=7</code>，但当前可用 <code>B=6</code>，资源不足。</li>
+<li>P2 需要 <code>A=1</code>，但当前可用 <code>A=0</code>，资源不足。</li>
+</ul>
+</li>
+<li>无法形成完整安全序列：
+<ul>
+<li><code>P0 → P3 → P4</code> 可执行，但剩余进程 P1 和 P2 的资源需求无法满足，无法形成完整安全序列。</li>
+</ul>
+</li>
+</ol>
+]]></content:encoded>
+    </item>
+    <item>
+      <title>[BUAA-OS] Lab 3 实验报告</title>
+      <link>https://oNya685.github.io/posts/buaa/os/lab-3-report/</link>
+      <pubDate>Mon, 21 Apr 2025 09:26:00 +0800</pubDate>
+      <guid>https://oNya685.github.io/posts/buaa/os/lab-3-report/</guid>
+      <description>&lt;h1 id=&#34;一思考题&#34;&gt;一、思考题&lt;/h1&gt;
+&lt;h2 id=&#34;thinking-31&#34;&gt;Thinking 3.1&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;请结合MOS中的页目录自映射应用解释代码中 &lt;code&gt;e-&amp;gt;env_pgdir[PDX(UVPT)] = PADDR(e-&amp;gt;env_pgdir) | PTE_V&lt;/code&gt; 的含义。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;code&gt;UVPT&lt;/code&gt;是用户页表的起始虚拟地址，所以&lt;code&gt;e-&amp;gt;env_pgdir[PDX(UVPT)]&lt;/code&gt;是当前进程的虚拟内存中，&lt;code&gt;UVPT&lt;/code&gt;地址所在的页目录项。而&lt;code&gt;e-&amp;gt;env_pgdir&lt;/code&gt;是当前进程页目录的虚拟地址，&lt;code&gt;PADDR(e-&amp;gt;env_pgdir)&lt;/code&gt;则是其物理地址，&lt;code&gt;| PTE_V&lt;/code&gt;是附上权限位。&lt;/p&gt;</description>
+      <content:encoded><![CDATA[<h1 id="一思考题">一、思考题</h1>
+<h2 id="thinking-31">Thinking 3.1</h2>
+<blockquote>
+<p>请结合MOS中的页目录自映射应用解释代码中 <code>e-&gt;env_pgdir[PDX(UVPT)] = PADDR(e-&gt;env_pgdir) | PTE_V</code> 的含义。</p></blockquote>
+<hr>
+<p><code>UVPT</code>是用户页表的起始虚拟地址，所以<code>e-&gt;env_pgdir[PDX(UVPT)]</code>是当前进程的虚拟内存中，<code>UVPT</code>地址所在的页目录项。而<code>e-&gt;env_pgdir</code>是当前进程页目录的虚拟地址，<code>PADDR(e-&gt;env_pgdir)</code>则是其物理地址，<code>| PTE_V</code>是附上权限位。</p>
+<p>这句赋值语句的含义是，将访问<code>UVPT</code>时解析的页目录项映射到的页框号设置为页目录的物理地址所在页的页框号，并附上权限位。</p>
+<h2 id="thinking-32">Thinking 3.2</h2>
+<blockquote>
+<p>elf_load_seg 以函数指针的形式，接受外部自定义的回调函数 map_page。请你找到与之相关的data这一参数在此处的来源，并思考它的作用。没有这个参数可不可以？为什么？</p></blockquote>
+<hr>
+<p>data 是传入<code>load_icode</code>函数的参数中的指向一个进程控制块的指针(<code>struct Env *</code>)。</p>
+<p>不能没有这个参数。它的作用是传入<code>load_icode_mapper</code>类型转换为进程控制块指针，获取其<code>env_pgdir</code>并对其进程空间执行<code>page_insert</code>。缺少该参数则无法正常运行<code>load_icode_mapper</code>。</p>
+<h2 id="thinking-33">Thinking 3.3</h2>
+<blockquote>
+<p>结合 elf_load_seg 的参数和实现，考虑该函数需要处理哪些页面加载的情况。</p></blockquote>
+<hr>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">elf_load_seg</span>(Elf32_Phdr <span style="color:#f92672">*</span>ph, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>bin, <span style="color:#66d9ef">elf_mapper_t</span> map_page, <span style="color:#66d9ef">void</span> <span style="color:#f92672">*</span>data) {
+</span></span><span style="display:flex;"><span>	u_long va <span style="color:#f92672">=</span> ph<span style="color:#f92672">-&gt;</span>p_vaddr;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">size_t</span> bin_size <span style="color:#f92672">=</span> ph<span style="color:#f92672">-&gt;</span>p_filesz;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">size_t</span> sgsize <span style="color:#f92672">=</span> ph<span style="color:#f92672">-&gt;</span>p_memsz;
+</span></span><span style="display:flex;"><span>	u_int perm <span style="color:#f92672">=</span> PTE_V;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (ph<span style="color:#f92672">-&gt;</span>p_flags <span style="color:#f92672">&amp;</span> PF_W) {
+</span></span><span style="display:flex;"><span>		perm <span style="color:#f92672">|=</span> PTE_D;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">int</span> r;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">size_t</span> i;
+</span></span><span style="display:flex;"><span>	u_long offset <span style="color:#f92672">=</span> va <span style="color:#f92672">-</span> <span style="color:#a6e22e">ROUNDDOWN</span>(va, PAGE_SIZE);
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 1.非页对齐的段起始地址  
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当段的虚拟地址va不是页对齐的（offset != 0），函数会先映射一个不完整的页，加载文件中对应的部分数据到该页的偏移位置。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> (offset <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> ((r <span style="color:#f92672">=</span> <span style="color:#a6e22e">map_page</span>(data, va, offset, perm, bin,
+</span></span><span style="display:flex;"><span>				  <span style="color:#a6e22e">MIN</span>(bin_size, PAGE_SIZE <span style="color:#f92672">-</span> offset))) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> r;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 2.逐页加载文件数据
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 对于段中包含文件数据的部分（bin_size范围内），函数分页处理，每页调用map_page，将文件数据加载到对应虚拟地址。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">/* Step 1: load all content of bin into memory. */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> (i <span style="color:#f92672">=</span> offset <span style="color:#f92672">?</span> <span style="color:#a6e22e">MIN</span>(bin_size, PAGE_SIZE <span style="color:#f92672">-</span> offset) <span style="color:#f92672">:</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> bin_size; i <span style="color:#f92672">+=</span> PAGE_SIZE) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> ((r <span style="color:#f92672">=</span> <span style="color:#a6e22e">map_page</span>(data, va <span style="color:#f92672">+</span> i, <span style="color:#ae81ff">0</span>, perm, bin <span style="color:#f92672">+</span> i, <span style="color:#a6e22e">MIN</span>(bin_size <span style="color:#f92672">-</span> i, PAGE_SIZE))) <span style="color:#f92672">!=</span>
+</span></span><span style="display:flex;"><span>		    <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> r;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 3.内存扩展分配与零初始化
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#75715e">// 当段的内存大小sgsize大于文件大小bin_size时，函数继续分配页并初始化为零，确保段在内存中完整分配。
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">/* Step 2: alloc pages to reach `sgsize` when `bin_size` &lt; `sgsize`. */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">while</span> (i <span style="color:#f92672">&lt;</span> sgsize) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> ((r <span style="color:#f92672">=</span> <span style="color:#a6e22e">map_page</span>(data, va <span style="color:#f92672">+</span> i, <span style="color:#ae81ff">0</span>, perm, NULL, <span style="color:#a6e22e">MIN</span>(sgsize <span style="color:#f92672">-</span> i, PAGE_SIZE))) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> r;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		i <span style="color:#f92672">+=</span> PAGE_SIZE;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h2 id="thinking-34">Thinking 3.4</h2>
+<blockquote>
+<p>思考上面这一段话，并根据自己在Lab2中的理解，回答：</p>
+<ul>
+<li>你认为这里的env_tf.cp0_epc存储的是物理地址还是虚拟地址?</li>
+</ul></blockquote>
+<hr>
+<p><code>epc</code>存储的是<strong>虚拟地址</strong>。</p>
+<h2 id="thinking-35">Thinking 3.5</h2>
+<blockquote>
+<p>试找出0、1、2、3号异常处理函数的具体实现位置。8号异常（系统调用）涉及的do_syscall()函数将在Lab4中实现。</p></blockquote>
+<hr>
+<p>0、1、2、3号异常处理函数的具体实现在<code>genex.S</code>中。</p>
+<h2 id="thinking-36">Thinking 3.6</h2>
+<blockquote>
+<p>阅读entry.S、genex.S和env_asm.S这几个文件，并尝试说出时钟中断在哪些时候开启，在哪些时候关闭。</p></blockquote>
+<hr>
+<p>在<code>entry.S</code>中关闭时钟中断；
+在<code>env_asm.S</code>中重置时钟；
+在<code>genex.S</code>中开启时钟中断。</p>
+<h2 id="thinking-37">Thinking 3.7</h2>
+<blockquote>
+<p>阅读相关代码，思考操作系统是怎么根据时钟中断切换进程的。</p></blockquote>
+<hr>
+<p>在进程运行时触发时钟中断，跳转<code>exc_gen_entry</code>，进入<code>hande_int</code>，从而通过<code>schedule</code>进行调度切换进程。</p>
+<h1 id="二难点分析与实验体会">二、难点分析与实验体会</h1>
+<h2 id="1-进程的内存空间分布">1. 进程的内存空间分布</h2>
+<ul>
+<li>进程的内存空间由页目录和页表进行管理，页目录项自映射使得页目录本身的物理地址能够被映射到虚拟地址空间（如<code>UVPT</code>）。这为内核提供了直接访问进程页目录的能力，方便进行页表操作和内存空间的管理。</li>
+<li>进程的用户态页面（如代码段、数据段、堆栈等）通过页目录和页表进行映射，系统调用<code>elf_load_seg</code>等函数时，会根据 ELF 文件的程序头部信息，将文件中的代码和数据段加载到相应的虚拟地址，并设置正确的页权限。</li>
+</ul>
+<h2 id="2-中断的处理流程">2. 中断的处理流程</h2>
+<ul>
+<li>中断处理从硬件触发开始，CPU在检测到中断信号后，会暂停当前进程的执行，保存当前的执行上下文（如<code>cp0_epc</code>寄存器保存中断发生时的指令指针），并将控制权转移到中断处理程序。</li>
+<li>时钟中断通过<code>genex.S</code>中的异常处理入口<code>exc_gen_entry</code>进行处理。内核会根据中断类型调用相应的处理函数，如时钟中断主要用于进程调度，通过调用<code>schedule</code>函数实现进程的切换。</li>
+<li>中断处理需要考虑中断源的多样性，包括时钟中断、外部设备中断、软件异常等，并执行相应的处理逻辑。</li>
+</ul>
+<h1 id="三原创说明">三、原创说明</h1>
+<p>无参考资料。</p>
+]]></content:encoded>
+    </item>
     <item>
       <title>[BUAA-OS] 理论作业 4</title>
       <link>https://oNya685.github.io/posts/buaa/os/homework-4/</link>
